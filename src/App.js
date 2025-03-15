@@ -23,7 +23,7 @@ function Header() {
 function HeaderElements() {
   return (
     <header className="header container">
-      <img src="/images/logo.png" className="logo" alt="logo" />
+      <img src="images/logo.png" className="logo" alt="" />
       <nav>
         <ul className="nav-ul">
           <li>პარტნიორი კომპანიები</li>
@@ -104,11 +104,11 @@ function PartnerCompaniesElements({
 }) {
   return (
     <div className="card">
-      <img src={img} className="card-main-img" alt="img" />
+      <img src={img} className="card-main-img" alt="" />
       <div className="card-details">
         <div className="company-card-name">
           <h2>{companyName}</h2>
-          <img src={companyImg} className="company-img" alt="img" />
+          <img src={companyImg} className="company-img" alt="" />
         </div>
         <div className="about-company-div">
           <p>{aboutCompany}</p>
