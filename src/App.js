@@ -39,7 +39,6 @@ function MainBody() {
   return (
     <div className="container main-body">
       <BodyElements
-        h1Tag={"ინტერტექნიკსი"}
         pTag={"უმაღლესი ხარისხის სამშენებლო ტექნიკა"}
         button={"დაგვიკავშირდით"}
       />
@@ -47,13 +46,16 @@ function MainBody() {
   );
 }
 
-function BodyElements({ h1Tag, pTag, button }) {
+function BodyElements({ pTag, button }) {
   return (
     <main>
       <section className="main-body-elements">
-        <h1>{h1Tag}</h1>
+        <h1>
+          <span className="span-white">ინტერ</span>
+          <span className="span-red">ტექნიკსი</span>{" "}
+        </h1>
         <p>{pTag}</p>
-        <button>{button}</button>
+        <button className="body-elements-button">{button}</button>
       </section>
     </main>
   );
@@ -63,14 +65,32 @@ function PartnerCompanies() {
   return (
     <div className="partner-companies container">
       <h1 className="partner-company-h1">პარტნიორი კომპანიები</h1>
-      <PartnerCompaniesElements
-        img={"/images/bobcat.webp"}
-        companyName={"Bobcat"}
-        companyImg={"/images/bobcat-logo.png"}
-        aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
+      <div className="company-components">
+        <PartnerCompaniesElements
+          img={"/images/bobcat.webp"}
+          companyName={"Bobcat"}
+          companyImg={"/images/bobcat-logo.png"}
+          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
           დამხმარე მოწყობილობები.`}
-        companyLink={`https://www.bobcat.com/cis/en`}
-      />
+          companyLink={`https://www.bobcat.com/cis/en`}
+        />
+        <PartnerCompaniesElements
+          img={"/images/bobcat.webp"}
+          companyName={"Bobcat"}
+          companyImg={"/images/bobcat-logo.png"}
+          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
+          დამხმარე მოწყობილობები.`}
+          companyLink={`https://www.bobcat.com/cis/en`}
+        />
+        <PartnerCompaniesElements
+          img={"/images/bobcat.webp"}
+          companyName={"Bobcat"}
+          companyImg={"/images/bobcat-logo.png"}
+          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
+          დამხმარე მოწყობილობები.`}
+          companyLink={`https://www.bobcat.com/cis/en`}
+        />
+      </div>
     </div>
   );
 }
@@ -104,7 +124,7 @@ function PartnerCompaniesElements({
 function AboutUs() {
   return (
     <div className="container">
-      <h1>ჩვენ შესახებ</h1>
+      <h1 className="about-us-h1">ჩვენ შესახებ</h1>
       <AboutUsElements />
     </div>
   );
