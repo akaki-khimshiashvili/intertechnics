@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import PartnerCompanies from "./PartnerCompanies";
+import partnerCompanies from "./partnerCompanies.json";
 import "./App.css";
 
 function App() {
@@ -6,7 +8,7 @@ function App() {
     <div>
       <Header />
       <MainBody />
-      <PartnerCompanies />
+      <PartnerCompaniesComponent />
       <AboutUs />
       <Footer />
     </div>
@@ -62,18 +64,8 @@ function BodyElements({ pTag, button }) {
   );
 }
 
-function PartnerCompanies() {
-  const [partnerCompany, setPartnerCompany] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/partner-companies");
-      const data = await res.json();
-      setPartnerCompany(data.companies);
-      console.log(partnerCompany);
-    }
-    fetchData();
-  }, [partnerCompany]);
+function PartnerCompaniesComponent() {
+  const partnerCompany = partnerCompanies.companies;
 
   return (
     <div className="partner-companies container">

@@ -1,9 +1,9 @@
 import React from "react";
 import PartnerCompanyElements from "./PartnerCompanyElements";
 
-export function PartnerCompanies({ partnerCompanies }) {
+export default function PartnerCompanies({ partnerCompanies }) {
   return (
-    <div>
+    <div className="partner-companies-grid">
       {partnerCompanies.map((partnerCompany) => (
         <PartnerCompanyElements
           key={partnerCompany.id}

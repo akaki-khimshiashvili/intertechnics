@@ -5,7 +5,7 @@
       "name": "Bobcat",
       "description": "მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი დამხმარე მოწყობილობები.",
       "website": "https://www.bobcat.com/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/bobcat-logo.png"
     },
     {
@@ -13,7 +13,7 @@
       "name": "Kubota",
       "description": "კომპანია ინტერტექნიკსი 2022 წლიდან წარმოადგენს კუბოტას ძრავებისა და სათადარიგო ნაწილების ოფიციალურ დილერს საქართველოში. გავცემთ გარანტიას კუბოტას ძრავზე და გთავაზობთ სერვისით მომსახურებას.",
       "website": "https://www.kubota.com/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/kubota-logo.png"
     },
     {
@@ -29,7 +29,7 @@
       "name": "Hbm-Nobas",
       "description": "სხვადასხვა ტიპისა და ზომის გრეიდერები.",
       "website": "http://www.gp.ag/hbm-nobas/Start/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/hbm-nobas-logo.png"
     },
     {
@@ -37,7 +37,7 @@
       "name": "Putzmeister",
       "description": "ბეტონის სტაციონარული, მობილური და გვირაბის ტუმბოები, ცემენტო-ქვიშის მიწოდებისა და სალესი ტუმბოები. ბეტონის მობილური მიქსერები.",
       "website": "https://www.putzmeister.com",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/putzmeister-logo.png"
     },
     {
@@ -45,7 +45,7 @@
       "name": "Kaeser Gmbh",
       "description": "ჰაერის ინდუსტრიული დანიშნულების სტაციონარული და სამშენებლო დანიშნულების მობილური კომპრესორები.",
       "website": "https://www.kaeser.com/int-en/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/kaeser-logo.png"
     },
     {
@@ -53,7 +53,7 @@
       "name": "Ins-Makina",
       "description": "ბეტონის სტაციონარული და მობილური კვანძები, ქვა–ღორღის სარეცხი და დამხარისხებელი მობილური დანადგარები.",
       "website": "https://www.insmakina.com/ru/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/ins-makina-logo.png"
     },
     {
@@ -61,7 +61,7 @@
       "name": "Aliva",
       "description": "ალივას აპარატურა ცნობილია აპარატების უმაღლესი ხარისხითა და ფუნქციონალურობით. როტორული აპარატების გარდა, ალივა ერთ-ერთი წამყვანი მწარმოებელია ცეცხლგამძლე, ფოლადის ინდუსტრიისა და სპეციალური აღჭურვილობისთვის.",
       "website": "https://www2.normet.com/aliva/",
-      "imageUrl": "",
+      "imageUrl": null,
       "logoImageUrl": "/images/logos/aliva-logo.png"
     }
   ]
