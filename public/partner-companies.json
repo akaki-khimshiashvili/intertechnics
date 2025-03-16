@@ -1,0 +1,68 @@
+{
+  "companies": [
+    {
+      "id": 1,
+      "name": "Bobcat",
+      "description": "მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი დამხმარე მოწყობილობები.",
+      "website": "https://www.bobcat.com/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/bobcat-logo.png"
+    },
+    {
+      "id": 2,
+      "name": "Kubota",
+      "description": "კომპანია ინტერტექნიკსი 2022 წლიდან წარმოადგენს კუბოტას ძრავებისა და სათადარიგო ნაწილების ოფიციალურ დილერს საქართველოში. გავცემთ გარანტიას კუბოტას ძრავზე და გთავაზობთ სერვისით მომსახურებას.",
+      "website": "https://www.kubota.com/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/kubota-logo.png"
+    },
+    {
+      "id": 3,
+      "name": "AMMANN",
+      "description": "ასფალტის ქარხნები",
+      "website": "https://www.ammann.com/en/plants/asphalt-plants",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/ammann-logo.png"
+    },
+    {
+      "id": 4,
+      "name": "Hbm-Nobas",
+      "description": "სხვადასხვა ტიპისა და ზომის გრეიდერები.",
+      "website": "http://www.gp.ag/hbm-nobas/Start/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/hbm-nobas-logo.png"
+    },
+    {
+      "id": 5,
+      "name": "Putzmeister",
+      "description": "ბეტონის სტაციონარული, მობილური და გვირაბის ტუმბოები, ცემენტო-ქვიშის მიწოდებისა და სალესი ტუმბოები. ბეტონის მობილური მიქსერები.",
+      "website": "https://www.putzmeister.com",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/putzmeister-logo.png"
+    },
+    {
+      "id": 6,
+      "name": "Kaeser Gmbh",
+      "description": "ჰაერის ინდუსტრიული დანიშნულების სტაციონარული და სამშენებლო დანიშნულების მობილური კომპრესორები.",
+      "website": "https://www.kaeser.com/int-en/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/kaeser-logo.png"
+    },
+    {
+      "id": 7,
+      "name": "Ins-Makina",
+      "description": "ბეტონის სტაციონარული და მობილური კვანძები, ქვა–ღორღის სარეცხი და დამხარისხებელი მობილური დანადგარები.",
+      "website": "https://www.insmakina.com/ru/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/ins-makina-logo.png"
+    },
+    {
+      "id": 8,
+      "name": "Aliva",
+      "description": "ალივას აპარატურა ცნობილია აპარატების უმაღლესი ხარისხითა და ფუნქციონალურობით. როტორული აპარატების გარდა, ალივა ერთ-ერთი წამყვანი მწარმოებელია ცეცხლგამძლე, ფოლადის ინდუსტრიისა და სპეციალური აღჭურვილობისთვის.",
+      "website": "https://www2.normet.com/aliva/",
+      "imageUrl": "",
+      "logoImageUrl": "/images/logos/aliva-logo.png"
+    }
+  ]
+}

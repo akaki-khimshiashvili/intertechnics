@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -23,7 +24,7 @@ function Header() {
 function HeaderElements() {
   return (
     <header className="header container">
-      <img src="images/logo.png" className="logo" alt="" />
+      <img src="./images/logo.png" className="logo" alt="" />
       <nav>
         <ul className="nav-ul">
           <li>პარტნიორი კომპანიები</li>
@@ -62,64 +63,53 @@ function BodyElements({ pTag, button }) {
 }
 
 function PartnerCompanies() {
+  const [partnerCompany, setPartnerCompany] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("/partner-companies");
+      const data = await res.json();
+      setPartnerCompany(data.companies);
+      console.log(partnerCompany);
+    }
+    fetchData();
+  }, [partnerCompany]);
+
   return (
     <div className="partner-companies container">
       <h1 className="partner-company-h1">პარტნიორი კომპანიები</h1>
       <div className="company-components">
-        <PartnerCompaniesElements
-          img={"/images/bobcat.webp"}
-          companyName={"Bobcat"}
-          companyImg={"/images/bobcat-logo.png"}
-          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
-          დამხმარე მოწყობილობები.`}
-          companyLink={`https://www.bobcat.com/cis/en`}
-        />
-        <PartnerCompaniesElements
-          img={"/images/bobcat.webp"}
-          companyName={"Bobcat"}
-          companyImg={"/images/bobcat-logo.png"}
-          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
-          დამხმარე მოწყობილობები.`}
-          companyLink={`https://www.bobcat.com/cis/en`}
-        />
-        <PartnerCompaniesElements
-          img={"/images/bobcat.webp"}
-          companyName={"Bobcat"}
-          companyImg={"/images/bobcat-logo.png"}
-          aboutCompany={`მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი
-          დამხმარე მოწყობილობები.`}
-          companyLink={`https://www.bobcat.com/cis/en`}
-        />
+        <PartnerCompanies partnerCompanies={partnerCompany} />
       </div>
     </div>
   );
 }
 
-function PartnerCompaniesElements({
-  img,
-  companyName,
-  companyImg,
-  aboutCompany,
-  companyLink,
-}) {
-  return (
-    <div className="card">
-      <img src={img} className="card-main-img" alt="" />
-      <div className="card-details">
-        <div className="company-card-name">
-          <h2>{companyName}</h2>
-          <img src={companyImg} className="company-img" alt="" />
-        </div>
-        <div className="about-company-div">
-          <p>{aboutCompany}</p>
-          <a href={companyLink}>
-            <em>{companyLink}</em>
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
+// function PartnerCompaniesElements({
+//   img,
+//   companyName,
+//   companyImg,
+//   aboutCompany,
+//   companyLink,
+// }) {
+//   return (
+//     <div className="card">
+//       <img src={img} className="card-main-img" alt="" />
+//       <div className="card-details">
+//         <div className="company-card-name">
+//           <h2>{companyName}</h2>
+//           <img src={companyImg} className="company-img" alt="" />
+//         </div>
+//         <div className="about-company-div">
+//           <p>{aboutCompany}</p>
+//           <a href={companyLink}>
+//             <em>{companyLink}</em>
+//           </a>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function AboutUs() {
   return (
