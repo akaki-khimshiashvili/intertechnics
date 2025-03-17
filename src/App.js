@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
 import PartnerCompanies from "./PartnerCompanies";
 import partnerCompanies from "./partnerCompanies.json";
 import "./App.css";
+// import kubota from "./Kubota-Logo.png";
+import contactUs from "./contactUs.json";
+import ContactUsInfo from "./ContactUsInfo";
+
+import logo from "./logo.png";
 
 function App() {
   return (
@@ -10,6 +14,7 @@ function App() {
       <MainBody />
       <PartnerCompaniesComponent />
       <AboutUs />
+      <ContactUs />
       <Footer />
     </div>
   );
@@ -26,12 +31,23 @@ function Header() {
 function HeaderElements() {
   return (
     <header className="header container">
-      <img src="./images/logo.png" className="logo" alt="" />
       <nav>
         <ul className="nav-ul">
-          <li>პარტნიორი კომპანიები</li>
-          <li>ჩვენ შესახებ</li>
-          <li>კონტაქტი</li>
+          <li>
+            <a href="#" className="nav-button">
+              პარტნიორი კომპანიები
+            </a>
+          </li>
+          <li>
+            <a href="#" className="nav-button">
+              ჩვენ შესახებ
+            </a>
+          </li>
+          <li>
+            <a href="#" className="nav-button">
+              კონტაქტი
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -53,10 +69,7 @@ function BodyElements({ pTag, button }) {
   return (
     <main>
       <section className="main-body-elements">
-        <h1>
-          <span className="span-white">ინტერ</span>
-          <span className="span-red">ტექნიკსი</span>{" "}
-        </h1>
+        <img src={logo} className="logo" alt="" />
         <p>{pTag}</p>
         <button className="body-elements-button">{button}</button>
       </section>
@@ -65,6 +78,7 @@ function BodyElements({ pTag, button }) {
 }
 
 function PartnerCompaniesComponent() {
+  // Json objects assignment
   const partnerCompany = partnerCompanies.companies;
 
   return (
@@ -76,32 +90,6 @@ function PartnerCompaniesComponent() {
     </div>
   );
 }
-
-// function PartnerCompaniesElements({
-//   img,
-//   companyName,
-//   companyImg,
-//   aboutCompany,
-//   companyLink,
-// }) {
-//   return (
-//     <div className="card">
-//       <img src={img} className="card-main-img" alt="" />
-//       <div className="card-details">
-//         <div className="company-card-name">
-//           <h2>{companyName}</h2>
-//           <img src={companyImg} className="company-img" alt="" />
-//         </div>
-//         <div className="about-company-div">
-//           <p>{aboutCompany}</p>
-//           <a href={companyLink}>
-//             <em>{companyLink}</em>
-//           </a>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 
 function AboutUs() {
   return (
@@ -115,7 +103,7 @@ function AboutUs() {
 function AboutUsElements() {
   return (
     <div>
-      <p>
+      <p className="about-us-text">
         <span>
           Intertechnics LTD-ის მთავარი მიზანია საბაზრო წილისა და
           კომპეტენტუნარიანობის შენარჩუნება ცვალებად ქართულ ბაზარზე.
@@ -139,10 +127,22 @@ function AboutUsElements() {
   );
 }
 
+function ContactUs() {
+  const company = contactUs.company;
+  const contacts = contactUs.contacts;
+  const address = contactUs.address;
+  return (
+    <div>
+      <ContactUsInfo contacts={contacts} address={address} />
+    </div>
+  );
+}
+
 function Footer() {
   return (
     <footer className="footer container">
-      &copy; 2005 – {new Date().getFullYear()} — Intertechnics LTD
+      <span className="copyright">&copy;</span> 2005 –{" "}
+      {new Date().getFullYear()} — Intertechnics LTD
     </footer>
   );
 }
