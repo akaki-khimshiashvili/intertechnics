@@ -4,6 +4,8 @@ import "./App.css";
 // import kubota from "./Kubota-Logo.png";
 import contactUs from "./contactUs.json";
 import ContactUsInfo from "./ContactUsInfo";
+import "leaflet/dist/leaflet.css";
+import LocationMap from "./LocationMap";
 
 import logo from "./logo.png";
 
@@ -94,7 +96,7 @@ function PartnerCompaniesComponent() {
 function AboutUs() {
   return (
     <div className="container">
-      <h1 className="about-us-h1">ჩვენ შესახებ</h1>
+      <h2 className="about-us-h2">ჩვენ შესახებ</h2>
       <AboutUsElements />
     </div>
   );
@@ -132,8 +134,10 @@ function ContactUs() {
   const contacts = contactUs.contacts;
   const address = contactUs.address;
   return (
-    <div>
+    <div className="container">
+      <h2 className="contactus-h2">დაგვიკავშირდით</h2>
       <ContactUsInfo contacts={contacts} address={address} />
+      <LocationMap />
     </div>
   );
 }
