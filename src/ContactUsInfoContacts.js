@@ -4,7 +4,7 @@ export default function ContactUsInfoContacts({ contact }) {
   return (
     <div className="contacts-div">
       <div className="contacts-div-elements">
-        <img />
+        <img src="" alt="" />
         <p className="contacts-p">
           {contact.name}, {contact.position}:{" "}
           <span className="phone-number">{contact.phone}</span>

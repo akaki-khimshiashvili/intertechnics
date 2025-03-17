@@ -36,17 +36,17 @@ function HeaderElements() {
       <nav>
         <ul className="nav-ul">
           <li>
-            <a href="#" className="nav-button">
+            <a href="#partner-company-id" className="nav-button">
               პარტნიორი კომპანიები
             </a>
           </li>
           <li>
-            <a href="#" className="nav-button">
+            <a href="#about-us-id" className="nav-button">
               ჩვენ შესახებ
             </a>
           </li>
           <li>
-            <a href="#" className="nav-button">
+            <a href="#contactus-id" className="nav-button">
               კონტაქტი
             </a>
           </li>
@@ -85,7 +85,9 @@ function PartnerCompaniesComponent() {
 
   return (
     <div className="partner-companies container">
-      <h1 className="partner-company-h1">პარტნიორი კომპანიები</h1>
+      <h1 className="partner-company-h1" id="partner-company-id">
+        პარტნიორი კომპანიები
+      </h1>
       <div className="company-components">
         <PartnerCompanies partnerCompanies={partnerCompany} />
       </div>
@@ -96,7 +98,9 @@ function PartnerCompaniesComponent() {
 function AboutUs() {
   return (
     <div className="container">
-      <h2 className="about-us-h2">ჩვენ შესახებ</h2>
+      <h2 className="about-us-h2" id="about-us-id">
+        ჩვენ შესახებ
+      </h2>
       <AboutUsElements />
     </div>
   );
@@ -130,12 +134,13 @@ function AboutUsElements() {
 }
 
 function ContactUs() {
-  const company = contactUs.company;
   const contacts = contactUs.contacts;
   const address = contactUs.address;
   return (
     <div className="container">
-      <h2 className="contactus-h2">დაგვიკავშირდით</h2>
+      <h2 className="contactus-h2" id="contactus-id">
+        დაგვიკავშირდით
+      </h2>
       <ContactUsInfo contacts={contacts} address={address} />
       <LocationMap />
     </div>
