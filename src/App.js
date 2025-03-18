@@ -16,6 +16,7 @@ function App() {
       <PartnerCompaniesComponent />
       <AboutUs />
       <ContactUs />
+
       <Footer />
     </div>
   );
@@ -72,7 +73,9 @@ function BodyElements({ pTag, button }) {
       <section className="main-body-elements">
         <img src={logo} className="logo" alt="" />
         <p>{pTag}</p>
-        <button className="body-elements-button">{button}</button>
+        <button className="body-elements-button">
+          <a href="#contactus-id">{button}</a>
+        </button>
       </section>
     </main>
   );

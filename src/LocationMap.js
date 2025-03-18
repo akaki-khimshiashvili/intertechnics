@@ -26,15 +26,17 @@ export default function LocationMap() {
   }, [location]);
 
   return (
-    <MapContainer
-      center={[location.lat, location.lon]}
-      zoom={15}
-      style={{ height: "400px", width: "100%" }}
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={[location.lat, location.lon]} icon={customIcon}>
-        <Popup>ინტერტექნიკსი / Intertechnics</Popup>
-      </Marker>
-    </MapContainer>
+    <div className="locationmap-div">
+      <MapContainer
+        center={[location.lat, location.lon]}
+        zoom={15}
+        style={{ height: "400px", width: "100%" }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={[location.lat, location.lon]} icon={customIcon}>
+          <Popup>ინტერტექნიკსი / Intertechnics</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 }
