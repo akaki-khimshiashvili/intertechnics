@@ -1,7 +1,6 @@
 import PartnerCompanies from "./PartnerCompanies";
 import partnerCompanies from "./partnerCompanies.json";
 import "./App.css";
-// import kubota from "./Kubota-Logo.png";
 import contactUs from "./contactUs.json";
 import ContactUsInfo from "./ContactUsInfo";
 import "leaflet/dist/leaflet.css";
