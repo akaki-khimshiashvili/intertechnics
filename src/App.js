@@ -5,8 +5,8 @@ import contactUs from "./contactUs.json";
 import ContactUsInfo from "./ContactUsInfo";
 import "leaflet/dist/leaflet.css";
 import LocationMap from "./LocationMap";
-
 import logo from "./logo.png";
+import SliderComponent from "./SliderComponent";
 
 function App() {
   return (
@@ -16,7 +16,6 @@ function App() {
       <PartnerCompaniesComponent />
       <AboutUs />
       <ContactUs />
-
       <Footer />
     </div>
   );
@@ -59,10 +58,14 @@ function HeaderElements() {
 function MainBody() {
   return (
     <div className="container main-body">
-      <BodyElements
-        pTag={"უმაღლესი ხარისხის სამშენებლო ტექნიკა"}
-        button={"დაგვიკავშირდით"}
-      />
+      <SliderComponent />
+      <div className="transparent-div "></div>
+      <div className="inner">
+        <BodyElements
+          pTag={"უმაღლესი ხარისხის სამშენებლო ტექნიკა"}
+          button={"დაგვიკავშირდით"}
+        />
+      </div>
     </div>
   );
 }

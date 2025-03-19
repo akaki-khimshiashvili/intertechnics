@@ -1,0 +1,7 @@
+{
+  "images": [
+    { "id": 1, "img": "/images/1.jpg", "alt": "Image 1" },
+    { "id": 2, "img": "/images/4.jpg", "alt": "Image 4" },
+    { "id": 3, "img": "/images/3.jpg", "alt": "Image 3" }
+  ]
+}
