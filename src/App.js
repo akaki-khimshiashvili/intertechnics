@@ -59,7 +59,6 @@ function MainBody() {
   return (
     <div className="container main-body">
       <SliderComponent />
-      <div className="transparent-div "></div>
       <div className="inner">
         <BodyElements
           pTag={"უმაღლესი ხარისხის სამშენებლო ტექნიკა"}
