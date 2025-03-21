@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import LocationMap from "./LocationMap";
 import logo from "./logo.png";
 import SliderComponent from "./SliderComponent";
+import Socials from "./Socials";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function BodyElements({ pTag, button }) {
         <button className="body-elements-button">
           <a href="#contactus-id">{button}</a>
         </button>
+        <Socials />
       </section>
     </main>
   );

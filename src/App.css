@@ -35,6 +35,87 @@ a {
   cursor: pointer;
 }
 
+.socials-ul {
+  position: fixed;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content; /* Ensures the container only takes as much width as needed */
+  height: fit-content;
+  background-color: #28282b;
+  right: 0;
+  top: 25%;
+  z-index: 1000;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.socials-ul li {
+  padding: 5px;
+}
+
+.socials-ul li a {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  justify-content: center;
+  line-height: 100%;
+  font-size: 20px;
+  background-color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff;
+  z-index: 10;
+}
+
+.socials-ul li a .icon {
+  position: relative;
+  color: #262626;
+  transition: 0.5s;
+  z-index: 3;
+}
+
+.socials-ul li a:hover .icon {
+  color: #fff;
+  transform: rotateY(360deg);
+}
+
+.socials-ul li a:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f00;
+  transition: 0.5s;
+  z-index: 2;
+}
+
+.socials-ul li a:hover:before {
+  top: 0;
+}
+
+.socials-ul li:nth-child(1) a:before {
+  background: #3b5999;
+}
+
+.socials-ul li:nth-child(2) a:before {
+  background: #55acee;
+}
+
+.socials-ul li:nth-child(3) a:before {
+  background: #0077b5;
+}
+
+.socials-ul li:nth-child(4) a:before {
+  background: #dd4b39;
+}
+
 .container {
   padding-inline: 12.5%;
 }
@@ -316,6 +397,24 @@ main section {
 }
 
 @media (max-width: 1368px) {
+  .socials-ul {
+    position: unset;
+    gap: 5px;
+    flex-direction: row;
+    width: fit-content; /* Ensures the container only takes as much width as needed */
+    height: fit-content;
+    background-color: transparent;
+    right: 0;
+    top: 25%;
+    z-index: 1000;
+    border-radius: 5px;
+  }
+
+  .socials-ul li a {
+    width: 30px;
+    height: 30px;
+  }
+
   .container {
     padding-inline: 5%;
   }
@@ -372,6 +471,11 @@ main section {
 @media (max-width: 768px) {
   .nav-ul li a {
     font-size: 16px;
+  }
+
+  .socials-ul li a {
+    width: 25px;
+    height: 25px;
   }
 
   .main-body {

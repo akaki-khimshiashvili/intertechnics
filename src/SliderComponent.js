@@ -18,7 +18,9 @@ export default function SliderComponent() {
         pagination={true}
         modules={[Pagination, Autoplay]}
         className="mySwiper"
-        autoplay={{ delay: 6000, disableOnInteraction: false }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        speed={2500}
+        loop={true}
       >
         {sliderImages.map((image) => (
           <SwiperSlide>
