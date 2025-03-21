@@ -189,6 +189,21 @@ main section {
   transition: all 0.5s ease;
 }
 
+.onhover-text {
+  position: absolute;
+  bottom: 2%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.onhover-text-span {
+  text-decoration: underline;
+  font-size: 20px;
+}
+
 .card::before {
   content: "";
   position: absolute;
@@ -210,6 +225,15 @@ main section {
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  .onhover-text {
+    opacity: 1;
+    pointer-events: auto;
+    letter-spacing: 1.5px;
+  }
+}
+
+.onhover-text:hover {
+  color: rgba(255, 0, 0, 0.5);
 }
 
 .card:hover::before {
@@ -311,6 +335,14 @@ main section {
     height: 200px;
   }
 
+  .onhover-text {
+    font-size: 14px;
+
+    .onhover-text-span {
+      font-size: 16px;
+    }
+  }
+
   .about-us-h2 {
     font-size: 30px;
   }
@@ -357,6 +389,14 @@ main section {
 
   .card {
     height: 170px;
+  }
+
+  .onhover-text {
+    font-size: 12px;
+
+    .onhover-text-span {
+      font-size: 14px;
+    }
   }
 
   .about-us-h2 {
@@ -423,6 +463,14 @@ main section {
 
   .card {
     height: 130px;
+  }
+
+  .onhover-text {
+    font-size: 8px;
+
+    .onhover-text-span {
+      font-size: 10px;
+    }
   }
 
   .partner-companies-grid {
