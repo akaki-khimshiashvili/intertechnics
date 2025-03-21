@@ -1,7 +1,9 @@
 {
   "images": [
-    { "id": 1, "img": "/images/1.jpg", "alt": "Image 1" },
-    { "id": 2, "img": "/images/4.jpg", "alt": "Image 4" },
-    { "id": 3, "img": "/images/3.jpg", "alt": "Image 3" }
+    { "id": 1, "img": "/images/5.jpg", "alt": "Image 1" },
+    { "id": 2, "img": "/images/2jpg.jpg", "alt": "Image 2" },
+    { "id": 3, "img": "/images/3.jpg", "alt": "Image 3" },
+    { "id": 4, "img": "/images/4.jpg", "alt": "Image 4" },
+    { "id": 5, "img": "/images/6.jpg", "alt": "Image 5" }
   ]
 }
