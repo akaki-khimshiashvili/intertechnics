@@ -163,6 +163,10 @@ a {
   }
 }
 
+.lang-switcher button {
+  cursor: pointer;
+}
+
 .swiper {
   position: relative;
   width: 100%;
@@ -228,7 +232,7 @@ main section {
     border-radius: 5px;
     border: 1px solid;
     border-color: rgb(255, 0, 0, 0.5);
-    transition: ease-in-out 200ms;
+    transition: ease-in-out 250ms;
   }
 
   a:hover {
