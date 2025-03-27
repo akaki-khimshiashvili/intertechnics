@@ -105,14 +105,6 @@ a {
 }
 
 .socials-ul li:nth-child(2) a:before {
-  background: #55acee;
-}
-
-.socials-ul li:nth-child(3) a:before {
-  background: #0077b5;
-}
-
-.socials-ul li:nth-child(4) a:before {
   background: #dd4b39;
 }
 
@@ -220,7 +212,7 @@ main section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   gap: 25px;
 }
 
@@ -338,13 +330,15 @@ main section {
 }
 
 .partner-company-h1 {
-  margin-block: 20px;
+  font-size: 40px;
+  margin-top: 35px;
+  margin-bottom: 50px;
   text-align: center;
 }
 
 .about-us-h2 {
   font-size: 40px;
-  margin-block: 30px;
+  margin-block: 40px;
   display: inline-block;
 }
 
@@ -360,7 +354,7 @@ main section {
 
 .contactus-h2 {
   font-size: 40px;
-  margin-block: 30px;
+  margin-block: 40px;
 }
 
 .phone-number {
@@ -377,6 +371,18 @@ main section {
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: 300;
+
+  a {
+    letter-spacing: 1px;
+    font-weight: 500;
+    transition: ease-in-out 250ms;
+    width: fit-content;
+  }
+
+  a:hover {
+    color: #f00;
+    text-decoration: 2px underline red;
+  }
 }
 
 .locationmap-div {
@@ -393,7 +399,7 @@ main section {
 }
 
 .copyright {
-  color: #ffbf00;
+  color: red;
 }
 
 @media (max-width: 1368px) {
@@ -471,6 +477,10 @@ main section {
 @media (max-width: 768px) {
   .nav-ul li a {
     font-size: 16px;
+  }
+
+  .socials-ul li a {
+    font-size: 15px;
   }
 
   .socials-ul li a {

@@ -1,13 +1,14 @@
-import PartnerCompanies from "./PartnerCompanies";
-import partnerCompanies from "./partnerCompanies.json";
+import PartnerCompanies from "./components/PartnerCompanies";
 import "./App.css";
-import contactUs from "./contactUs.json";
-import ContactUsInfo from "./ContactUsInfo";
+import ContactUsInfo from "./components/ContactUsInfo";
 import "leaflet/dist/leaflet.css";
-import LocationMap from "./LocationMap";
+import LocationMap from "./components/LocationMap";
 import logo from "./logo.png";
 import SliderComponent from "./SliderComponent";
-import Socials from "./Socials";
+import Socials from "./components/Socials";
+import getranslation from "./locales/getranslation.json";
+import HeaderLi from "./components/HeaderLi";
+import AboutUsText from "./components/AboutUsText";
 
 function App() {
   return (
@@ -31,25 +32,18 @@ function Header() {
 }
 
 function HeaderElements() {
+  const headerElement = getranslation.headerElements.navItems;
   return (
     <header className="header container">
       <nav>
         <ul className="nav-ul">
-          <li>
-            <a href="#partner-company-id" className="nav-button">
-              პარტნიორი კომპანიები
-            </a>
-          </li>
-          <li>
-            <a href="#about-us-id" className="nav-button">
-              ჩვენ შესახებ
-            </a>
-          </li>
-          <li>
-            <a href="#contactus-id" className="nav-button">
-              კონტაქტი
-            </a>
-          </li>
+          {headerElement.map((element) => (
+            <HeaderLi
+              key={element.id}
+              link={element.link}
+              content={element.name}
+            />
+          ))}
         </ul>
       </nav>
     </header>
@@ -57,14 +51,12 @@ function HeaderElements() {
 }
 
 function MainBody() {
+  const mainBodyJS = getranslation.mainBody.bodyElements;
   return (
     <div className="container main-body">
       <SliderComponent />
       <div className="inner">
-        <BodyElements
-          pTag={"უმაღლესი ხარისხის სამშენებლო ტექნიკა"}
-          button={"დაგვიკავშირდით"}
-        />
+        <BodyElements pTag={mainBodyJS.pTag} button={mainBodyJS.button} />
       </div>
     </div>
   );
@@ -87,12 +79,13 @@ function BodyElements({ pTag, button }) {
 
 function PartnerCompaniesComponent() {
   // Json objects assignment
-  const partnerCompany = partnerCompanies.companies;
+  const partnerCompany = getranslation.partnerCompanies.companies;
+  const partnerCompanyH1 = getranslation.partnerCompanies.partnerCompaniesH1;
 
   return (
     <div className="partner-companies container">
       <h1 className="partner-company-h1" id="partner-company-id">
-        პარტნიორი კომპანიები
+        {partnerCompanyH1}
       </h1>
       <div className="company-components">
         <PartnerCompanies partnerCompanies={partnerCompany} />
@@ -102,10 +95,11 @@ function PartnerCompaniesComponent() {
 }
 
 function AboutUs() {
+  const aboutUs = getranslation.aboutUs;
   return (
     <div className="container">
       <h2 className="about-us-h2" id="about-us-id">
-        ჩვენ შესახებ
+        {aboutUs.title}
       </h2>
       <AboutUsElements />
     </div>
@@ -113,41 +107,34 @@ function AboutUs() {
 }
 
 function AboutUsElements() {
+  const aboutUsSpan = getranslation.aboutUs.text;
   return (
     <div>
       <p className="about-us-text">
-        <span>
-          Intertechnics LTD-ის მთავარი მიზანია საბაზრო წილისა და
-          კომპეტენტუნარიანობის შენარჩუნება ცვალებად ქართულ ბაზარზე.
-        </span>
-        <span>
-          კომპანია პარტნიორობს მოწინავე საგზაო-სამშენებლო ტექნიკის მწარმოებელ
-          ბრენდებთან 2005 წლიდან. ეს ურთიერთობები უზრუნველყოფს ინოვაციებისა და
-          უმაღლესი ხარისხის ტექნიკის შემოდინებას ქართულ სამშენებლო სივრცეში.
-        </span>
-        <span>
-          პარტნიორობის პირველ ეტაპს არსებულ და პოტენციურ კლიენტებთან წარმოადგენს
-          ინფორმაციის წვდომადობა და სანდოობა მოთხოვნად პროდუქციაზე.
-        </span>
-        <span>
-          ჩვენი ჯგუფი დაკომპლექტებულია პროფესიონალებით, რომლებიც ყოველწლიურად
-          გადიან გადამზადებას და იღრმავებენ გამოცდილებას, უშუალოდ პარტნიორი
-          ფირმების ეგიდით გამართულ ტრენინგებზე.
-        </span>
+        {aboutUsSpan.map((element) => (
+          <AboutUsText key={element.id} text={element.content} />
+        ))}
       </p>
     </div>
   );
 }
 
 function ContactUs() {
-  const contacts = contactUs.contacts;
-  const address = contactUs.address;
+  const contacts = getranslation.company.contacts;
+  const address = getranslation.company.address;
+  const contactUsEmail = getranslation.company.email;
+  const contactUsH1 = getranslation.company.title;
   return (
     <div className="container">
-      <h2 className="contactus-h2" id="contactus-id">
-        დაგვიკავშირდით
-      </h2>
-      <ContactUsInfo contacts={contacts} address={address} />
+      <h1 className="contactus-h2" id="contactus-id">
+        {contactUsH1}
+      </h1>
+      <ContactUsInfo
+        contacts={contacts}
+        address={address}
+        contactUs={contactUsEmail}
+      />
+
       <LocationMap />
     </div>
   );

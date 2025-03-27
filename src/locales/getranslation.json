@@ -1,0 +1,149 @@
+{
+  "company": {
+    "title": "დაგვიკავშირდით",
+    "name": "Intertechnics Ltd",
+    "address": {
+      "head_office": "პეტრე იბერის ქ. 6, თბილისი, საქართველო",
+      "service_center": "დიდი დიღომი, ანდრონიკაშვილის ქ. 28"
+    },
+    "contacts": [
+      {
+        "id": 1,
+        "name": "პაატა მოსეშვილი",
+        "position": "დირექტორი",
+        "phone": "599 50 25 17",
+        "icon": "director_icon.png"
+      },
+      {
+        "id": 2,
+        "name": "ვახო ხიმშიაშვილი",
+        "position": "გაყიდვების მენეჯერი",
+        "phone": "597 78 78 15",
+        "icon": "sales_manager_icon.png"
+      },
+      {
+        "id": 3,
+        "name": "პეტრე ოძელაშვილი",
+        "position": "სათადარიგო ნაწილების მაღაზია",
+        "phone": "599 20 92 49",
+        "icon": "spare_parts_icon.png"
+      },
+      {
+        "id": 4,
+        "name": "ნიკოლოზ შალამბერიძე",
+        "position": "გაყიდვების მენეჯერი",
+        "phone": "591 702 517",
+        "icon": "spare_parts_icon.png"
+      }
+    ],
+    "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
+  },
+  "aboutUs": {
+    "title": "ჩვენ შესახებ",
+    "text": [
+      {
+        "id": 1,
+        "content": "Intertechnics LTD-ის მთავარი მიზანია საბაზრო წილისა და კომპეტენტუნარიანობის შენარჩუნება ცვალებად ქართულ ბაზარზე."
+      },
+      {
+        "id": 2,
+        "content": "კომპანია პარტნიორობს მოწინავე საგზაო-სამშენებლო ტექნიკის მწარმოებელ ბრენდებთან 2005 წლიდან. ეს ურთიერთობები უზრუნველყოფს ინოვაციებისა და უმაღლესი ხარისხის ტექნიკის შემოდინებას ქართულ სამშენებლო სივრცეში."
+      },
+      {
+        "id": 3,
+        "content": "პარტნიორობის პირველ ეტაპს არსებულ და პოტენციურ კლიენტებთან წარმოადგენს ინფორმაციის წვდომადობა და სანდოობა მოთხოვნად პროდუქციაზე."
+      },
+      {
+        "id": 1,
+        "content": "ჩვენი ჯგუფი დაკომპლექტებულია პროფესიონალებით, რომლებიც ყოველწლიურად გადიან გადამზადებას და იღრმავებენ გამოცდილებას, უშუალოდ პარტნიორი ფირმების ეგიდით გამართულ ტრენინგებზე."
+      }
+    ]
+  },
+  "partnerCompanies": {
+    "partnerCompaniesH1": "პარტნიორი კომპანიები",
+    "companies": [
+      {
+        "id": 1,
+        "name": "Bobcat",
+        "description": "მინი სატვირთელები და ექსკავატორები, ტელესკოპური სატვირთელები და მათი დამხმარე მოწყობილობები.",
+        "website": "https://www.bobcat.com/",
+        "companyLogo": "/images/bobcat-logo.png"
+      },
+      {
+        "id": 2,
+        "name": "Kubota",
+        "description": "კომპანია ინტერტექნიკსი 2022 წლიდან წარმოადგენს კუბოტას ძრავებისა და სათადარიგო ნაწილების ოფიციალურ დილერს საქართველოში. გავცემთ გარანტიას კუბოტას ძრავზე და გთავაზობთ სერვისით მომსახურებას.",
+        "website": "https://www.kubota.com/",
+        "companyLogo": "/images/kubota-logo.png"
+      },
+      {
+        "id": 3,
+        "name": "AMMANN",
+        "description": "ასფალტის ქარხნები",
+        "website": "https://www.ammann.com/en/plants/asphalt-plants",
+        "companyLogo": "/images/amman-logo.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Hbm-Nobas",
+        "description": "სხვადასხვა ტიპისა და ზომის გრეიდერები.",
+        "website": "http://www.gp.ag/hbm-nobas/Start/",
+        "companyLogo": "/images/hbm-nobas-logo1.png"
+      },
+      {
+        "id": 5,
+        "name": "Putzmeister",
+        "description": "ბეტონის სტაციონარული, მობილური და გვირაბის ტუმბოები, ცემენტო-ქვიშის მიწოდებისა და სალესი ტუმბოები. ბეტონის მობილური მიქსერები.",
+        "website": "https://www.putzmeister.com",
+        "companyLogo": "/images/putzmeister-logo.png"
+      },
+      {
+        "id": 6,
+        "name": "Kaeser Gmbh",
+        "description": "ჰაერის ინდუსტრიული დანიშნულების სტაციონარული და სამშენებლო დანიშნულების მობილური კომპრესორები.",
+        "website": "https://www.kaeser.com/int-en/",
+        "companyLogo": "/images/kaeser-logo.png"
+      },
+      {
+        "id": 7,
+        "name": "Ins-Makina",
+        "description": "ბეტონის სტაციონარული და მობილური კვანძები, ქვა–ღორღის სარეცხი და დამხარისხებელი მობილური დანადგარები.",
+        "website": "https://www.insmakina.com/ru/",
+        "companyLogo": "/images/ins-makina-logo.svg"
+      },
+      {
+        "id": 8,
+        "name": "Aliva",
+        "description": "ალივას აპარატურა ცნობილია აპარატების უმაღლესი ხარისხითა და ფუნქციონალურობით. როტორული აპარატების გარდა, ალივა ერთ-ერთი წამყვანი მწარმოებელია ცეცხლგამძლე, ფოლადის ინდუსტრიისა და სპეციალური აღჭურვილობისთვის.",
+        "website": "https://www2.normet.com/aliva/",
+        "companyLogo": "/images/aliva-logo.png"
+      }
+    ]
+  },
+  "headerElements": {
+    "navItems": [
+      {
+        "id": 1,
+        "name": "პარტნიორი კომპანიები",
+        "link": "#partner-company-id"
+      },
+      {
+        "id": 2,
+        "name": "ჩვენ შესახებ",
+        "link": "#about-us-id"
+      },
+      {
+        "id": 3,
+        "name": "კონტაქტი",
+        "link": "#contactus-id"
+      }
+    ]
+  },
+  "mainBody": {
+    "sliderComponent": true,
+    "bodyElements": {
+      "pTag": "უმაღლესი ხარისხის სამშენებლო ტექნიკა",
+      "button": "დაგვიკავშირდით"
+    }
+  }
+}

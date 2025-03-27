@@ -1,0 +1,149 @@
+{
+  "company": {
+    "title": "Contact Us",
+    "name": "Intertechnics Ltd",
+    "address": {
+      "head_office": "Petr Iberis St. 6, Tbilisi, Georgia",
+      "service_center": "Didi Digomi, Andronikashvili St. 28"
+    },
+    "contacts": [
+      {
+        "id": 1,
+        "name": "Paata Mosheshvili",
+        "position": "Director",
+        "phone": "599 50 25 17",
+        "icon": "director_icon.png"
+      },
+      {
+        "id": 2,
+        "name": "Vakho Khimshiashvili",
+        "position": "Sales Manager",
+        "phone": "597 78 78 15",
+        "icon": "sales_manager_icon.png"
+      },
+      {
+        "id": 3,
+        "name": "Petre Odzelashvili",
+        "position": "Spare Parts Store",
+        "phone": "599 20 92 49",
+        "icon": "spare_parts_icon.png"
+      },
+      {
+        "id": 4,
+        "name": "Nikoloz Shalamberidze",
+        "position": "Sales Manager",
+        "phone": "591 702 517",
+        "icon": "spare_parts_icon.png"
+      }
+    ],
+    "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
+  },
+  "aboutUs": {
+    "title": "About Us",
+    "text": [
+      {
+        "id": 1,
+        "content": "The main goal of Intertechnics LTD is to maintain market share and competence in the changing Georgian market."
+      },
+      {
+        "id": 2,
+        "content": "Since 2005, the company has been partnering with leading manufacturers of road construction machinery. These relationships ensure the introduction of innovations and high-quality machinery into the Georgian construction market."
+      },
+      {
+        "id": 3,
+        "content": "The first stage of the partnership involves the availability and reliability of information about the demanded products for existing and potential clients."
+      },
+      {
+        "id": 1,
+        "content": "Our team consists of professionals who undergo annual training and deepen their experience through training organized under the guidance of partner companies."
+      }
+    ]
+  },
+  "partnerCompanies": {
+    "partnerCompaniesH1": "Partner Companies",
+    "companies": [
+      {
+        "id": 1,
+        "name": "Bobcat",
+        "description": "Mini loaders and excavators, telescopic handlers and their auxiliary equipment.",
+        "website": "https://www.bobcat.com/",
+        "companyLogo": "/images/bobcat-logo.png"
+      },
+      {
+        "id": 2,
+        "name": "Kubota",
+        "description": "Intertechnics has been an official dealer of Kubota engines and spare parts in Georgia since 2022. We offer a warranty on Kubota engines and provide service support.",
+        "website": "https://www.kubota.com/",
+        "companyLogo": "/images/kubota-logo.png"
+      },
+      {
+        "id": 3,
+        "name": "AMMANN",
+        "description": "Asphalt plants",
+        "website": "https://www.ammann.com/en/plants/asphalt-plants",
+        "companyLogo": "/images/amman-logo.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Hbm-Nobas",
+        "description": "Various types and sizes of graders.",
+        "website": "http://www.gp.ag/hbm-nobas/Start/",
+        "companyLogo": "/images/hbm-nobas-logo1.png"
+      },
+      {
+        "id": 5,
+        "name": "Putzmeister",
+        "description": "Stationary, mobile, and tunnel concrete pumps, cement-sand delivery and sale pumps. Mobile concrete mixers.",
+        "website": "https://www.putzmeister.com",
+        "companyLogo": "/images/putzmeister-logo.png"
+      },
+      {
+        "id": 6,
+        "name": "Kaeser Gmbh",
+        "description": "Stationary and mobile industrial air compressors for construction and industrial applications.",
+        "website": "https://www.kaeser.com/int-en/",
+        "companyLogo": "/images/kaeser-logo.png"
+      },
+      {
+        "id": 7,
+        "name": "Ins-Makina",
+        "description": "Stationary and mobile concrete plants, mobile equipment for washing and classifying gravel and stone.",
+        "website": "https://www.insmakina.com/ru/",
+        "companyLogo": "/images/ins-makina-logo.svg"
+      },
+      {
+        "id": 8,
+        "name": "Aliva",
+        "description": "Aliva's equipment is known for its high quality and functionality. In addition to rotary machines, Aliva is one of the leading manufacturers of fire-resistant, steel industry, and special equipment.",
+        "website": "https://www2.normet.com/aliva/",
+        "companyLogo": "/images/aliva-logo.png"
+      }
+    ]
+  },
+  "headerElements": {
+    "navItems": [
+      {
+        "id": 1,
+        "name": "Partner Companies",
+        "link": "#partner-company-id"
+      },
+      {
+        "id": 2,
+        "name": "About Us",
+        "link": "#about-us-id"
+      },
+      {
+        "id": 3,
+        "name": "Contact",
+        "link": "#contactus-id"
+      }
+    ]
+  },
+  "mainBody": {
+    "sliderComponent": true,
+    "bodyElements": {
+      "pTag": "High-quality construction equipment",
+      "button": "Contact Us"
+    }
+  }
+}
