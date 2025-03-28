@@ -445,7 +445,13 @@ main section {
 
   .main-body-elements {
     margin: auto;
-    & p {
+    width: 80%;
+
+    .logo {
+      width: 100%;
+    }
+
+    .after-logo p {
       text-align: center;
       font-size: 18px;
     }
