@@ -82,6 +82,7 @@ a {
 .socials-ul li a:hover .icon {
   color: #fff;
   transform: rotateY(360deg);
+  pointer-events: none !important;
 }
 
 .socials-ul li a:before {
@@ -163,20 +164,29 @@ a {
   }
 }
 
+.lang-switcher {
+  height: 30px;
+}
+
 .lang-switcher button {
   cursor: pointer;
+}
+
+.after-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 .swiper {
   position: relative;
   width: 100%;
-  height: 80vh;
+  height: calc(100vh - 54px);
 }
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -222,13 +232,13 @@ main section {
 
 .body-elements-button {
   all: unset;
-
+  padding: 5px;
   a {
     color: white;
     cursor: pointer;
     font-size: 18px;
     letter-spacing: 2px;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid;
     border-color: rgb(255, 0, 0, 0.5);
@@ -440,6 +450,16 @@ main section {
     }
   }
 
+  .body-elements-button {
+    all: unset;
+    a {
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+    }
+  }
+
   .card {
     height: 200px;
   }
@@ -504,6 +524,17 @@ main section {
       font-size: 18px;
     }
   }
+  .lang-switcher {
+    height: 22.5px;
+  }
+
+  .lang-switcher button p img {
+    width: 30px;
+  }
+
+  .lang-switcher button p img {
+    width: 30px;
+  }
 
   .card {
     height: 170px;
@@ -544,6 +575,28 @@ main section {
 
   .phone-number {
     font-size: 18px;
+  }
+}
+
+@media (max-height: 450px) {
+  .main-body-elements {
+    margin: auto;
+    width: 80%;
+    padding-inline: 0;
+    padding-block: 10px;
+    gap: 15px;
+    .logo {
+      width: 60%;
+    }
+    .after-logo {
+      gap: 5px;
+      p {
+        font-size: 15px;
+      }
+      button a {
+        font-size: 12px;
+      }
+    }
   }
 }
 

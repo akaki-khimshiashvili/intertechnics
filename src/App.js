@@ -62,9 +62,9 @@ function LanguageSwitcher() {
       <button onClick={switchLanguage}>
         <p>
           {lang === "ka" ? (
-            <img src={enflag} alt="English" width="40" height="40" />
+            <img src={enflag} alt="English" width="40" />
           ) : (
-            <img src={geflag} alt="ქართული" width="40" height="40" />
+            <img src={geflag} alt="ქართული" width="40" />
           )}
         </p>
       </button>
@@ -91,12 +91,14 @@ function BodyElements({ pTag, button }) {
     <main>
       <section className="main-body-elements">
         <img src={logo} className="logo" alt="" />
-        <p>{pTag}</p>
-        <button className="body-elements-button">
-          <a href="#contactus-id">{button}</a>
-        </button>
-        <LanguageSwitcher />
-        <Socials />
+        <div className="after-logo">
+          <p>{pTag}</p>
+          <button className="body-elements-button">
+            <a href="#contactus-id">{button}</a>
+          </button>
+          <Socials />
+          <LanguageSwitcher />
+        </div>
       </section>
     </main>
   );
