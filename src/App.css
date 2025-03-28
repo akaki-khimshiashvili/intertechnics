@@ -444,6 +444,7 @@ main section {
   }
 
   .main-body-elements {
+    margin: auto;
     & p {
       text-align: center;
       font-size: 18px;
@@ -457,6 +458,16 @@ main section {
       cursor: pointer;
       font-size: 16px;
       letter-spacing: 1.5px;
+    }
+  }
+
+  .logo {
+    width: 90%;
+  }
+
+  .after-logo {
+    p {
+      font-size: 30px;
     }
   }
 
