@@ -12,6 +12,7 @@ import AboutUsText from "./components/AboutUsText";
 import { LangContext } from "./LangContext";
 import geflag from "./ge1.svg";
 import enflag from "./gb.svg";
+
 function App() {
   return (
     <div>
@@ -36,7 +37,6 @@ function Header() {
 function HeaderElements() {
   const { t } = useContext(LangContext);
   const headerElement = t.headerElements.navItems;
-  // const headerElement = getranslation.headerElements.navItems;
   return (
     <header className="header container">
       <nav>
@@ -75,7 +75,6 @@ function LanguageSwitcher() {
 function MainBody() {
   const { t } = useContext(LangContext);
   const mainBodyJS = t.mainBody.bodyElements;
-  // const mainBodyJS = getranslation.mainBody.bodyElements;
   return (
     <div className="container main-body">
       <SliderComponent />
@@ -108,10 +107,6 @@ function PartnerCompaniesComponent() {
   const { t } = useContext(LangContext);
   const partnerCompany = t.partnerCompanies.companies;
   const partnerCompanyH1 = t.partnerCompanies.partnerCompaniesH1;
-  // Json objects assignment
-  // const partnerCompany = getranslation.partnerCompanies.companies;
-  // const partnerCompanyH1 = getranslation.partnerCompanies.partnerCompaniesH1;
-
   return (
     <div className="partner-companies container">
       <h1 className="partner-company-h1" id="partner-company-id">
@@ -127,7 +122,6 @@ function PartnerCompaniesComponent() {
 function AboutUs() {
   const { t } = useContext(LangContext);
   const aboutUs = t.aboutUs;
-  // const aboutUs = getranslation.aboutUs;
   return (
     <div className="container">
       <h2 className="about-us-h2" id="about-us-id">
@@ -141,7 +135,6 @@ function AboutUs() {
 function AboutUsElements() {
   const { t } = useContext(LangContext);
   const aboutUsSpan = t.aboutUs.text;
-  // const aboutUsSpan = getranslation.aboutUs.text;
   return (
     <div>
       <p className="about-us-text">
@@ -159,10 +152,6 @@ function ContactUs() {
   const address = t.company.address;
   const contactUsEmail = t.company.email;
   const contactUsH1 = t.company.title;
-  // const contacts = getranslation.company.contacts;
-  // const address = getranslation.company.address;
-  // const contactUsEmail = getranslation.company.email;
-  // const contactUsH1 = getranslation.company.title;
   return (
     <div className="container">
       <h1 className="contactus-h2" id="contactus-id">
