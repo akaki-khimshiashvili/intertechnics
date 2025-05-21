@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PartnerCompanies from "./components/PartnerCompanies";
 import "./App.css";
 import ContactUsInfo from "./components/ContactUsInfo";
@@ -12,33 +12,73 @@ import AboutUsText from "./components/AboutUsText";
 import { LangContext } from "./LangContext";
 import geflag from "./ge1.svg";
 import enflag from "./gb.svg";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Machines from "./components/Machines";
+import EditMachine from "./components/EditMachine";
 
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/machines" element={<Machines />} />
+        <Route path="/edit-machine/:id" element={<EditMachine />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function Homepage() {
+  return (
+    <>
       <MainBody />
       <PartnerCompaniesComponent />
       <AboutUs />
       <ContactUs />
       <Footer />
-    </div>
+    </>
   );
 }
 
 function Header() {
   return (
-    <div>
+    <header className="header container">
       <HeaderElements />
-    </div>
+    </header>
   );
 }
 
 function HeaderElements() {
   const { t } = useContext(LangContext);
   const headerElement = t.headerElements.navItems;
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setIsLoggedIn(false);
+    setShowLoginForm(false);
+    setShowRegisterForm(false);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setShowLoginForm(false);
+    setShowRegisterForm(false);
+  };
+
+  const handleRegisterSuccess = () => {
+    setShowRegisterForm(false);
+  };
+
   return (
-    <header className="header container">
+    <>
       <nav>
         <ul className="nav-ul">
           {headerElement.map((element) => (
@@ -50,7 +90,39 @@ function HeaderElements() {
           ))}
         </ul>
       </nav>
-    </header>
+
+      {isLoggedIn ? (
+        <div className="logout-div">
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="login-register-buttons">
+          <button
+            className="login-btn"
+            onClick={() => {
+              setShowLoginForm((prev) => !prev);
+              setShowRegisterForm(false);
+            }}
+          >
+            Login
+          </button>
+          <button
+            className="register-btn"
+            onClick={() => {
+              setShowRegisterForm((prev) => !prev);
+              setShowLoginForm(false);
+            }}
+          >
+            Register
+          </button>
+        </div>
+      )}
+
+      {showLoginForm && <Login onLogin={handleLoginSuccess} />}
+      {showRegisterForm && <Register onRegister={handleRegisterSuccess} />}
+    </>
   );
 }
 
@@ -107,6 +179,7 @@ function PartnerCompaniesComponent() {
   const { t } = useContext(LangContext);
   const partnerCompany = t.partnerCompanies.companies;
   const partnerCompanyH1 = t.partnerCompanies.partnerCompaniesH1;
+
   return (
     <div className="partner-companies container">
       <h1 className="partner-company-h1" id="partner-company-id">
@@ -114,6 +187,14 @@ function PartnerCompaniesComponent() {
       </h1>
       <div className="company-components">
         <PartnerCompanies partnerCompanies={partnerCompany} />
+      </div>
+      <div className="partner-companies-machines">
+        <div className="partner-companies-machines">
+          <Link to="/machines" className="nav-link machine-link">
+            <span className="machine-component">Machines</span>
+            <span className="machine-span">click to view</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -162,7 +243,6 @@ function ContactUs() {
         address={address}
         contactUs={contactUsEmail}
       />
-
       <LocationMap />
     </div>
   );
