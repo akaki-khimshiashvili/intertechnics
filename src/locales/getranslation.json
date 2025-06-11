@@ -1,7 +1,11 @@
 {
   "company": {
-    "title": "დაგვიკავშირდით",
+    "title": "კონტაქტი",
     "name": "Intertechnics Ltd",
+    "machines": {
+      "name": "ტექნიკის კატალოგი",
+      "link": "/machines"
+    },
     "address": {
       "head_office": "ოფისი/მაღაზია მდებარეობს ქ. თბილისი პეტრე იბერის ქუჩა ნ6",
       "service_center": "სერვის მომსახურების ცენტრი , დიდი დიღომი ლუარსაბ ანდრონიკაშვილის ნ28/ ლუარსაბ ანდრონიკაშვილის ნ6"
@@ -136,11 +140,6 @@
         "id": 3,
         "name": "კონტაქტი",
         "link": "#contactus-id"
-      },
-      {
-        "id": 4,
-        "name": "ტექნიკა",
-        "link": "/machines"
       }
     ]
   },
@@ -155,6 +154,32 @@
     "machines_title": "ტექნიკა",
     "machines_button": "მთავარ გვერდზე დაბრუნება",
     "machines_description": [
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      },
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      },
       {
         "name": "Bobcat S630",
         "description": [

@@ -522,6 +522,26 @@ main section {
   opacity: 1;
 }
 
+.body-elements-machines-button {
+  background-color: transparent;
+  font-size: 32px;
+  font-weight: 300;
+  padding: 8px;
+  background-color: rgb(255, 0, 0, 0.6);
+
+  border-radius: 5px;
+  color: #fff;
+  letter-spacing: 1.4px;
+  border: 1px solid red;
+  transition: ease-in-out 250ms;
+  cursor: pointer;
+}
+
+.body-elements-machines-button:hover {
+  background-color: red;
+  scale: 1.05;
+}
+
 @media (max-width: 1368px) {
   .socials-ul {
     position: unset;
@@ -534,6 +554,10 @@ main section {
     top: 25%;
     z-index: 1000;
     border-radius: 5px;
+  }
+
+  .body-elements-machines-button {
+    font-size: 28px;
   }
 
   .socials-ul li a {
@@ -630,6 +654,10 @@ main section {
 @media (max-width: 768px) {
   .nav-ul li a {
     font-size: 16px;
+  }
+
+  .body-elements-machines-button {
+    font-size: 24px;
   }
 
   .socials-ul li a {
@@ -744,6 +772,10 @@ main section {
 
   .main-body {
     padding-inline: 0;
+  }
+
+  .body-elements-machines-button {
+    font-size: 18px;
   }
 
   .nav-ul li a {

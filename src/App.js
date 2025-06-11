@@ -148,25 +148,37 @@ function LanguageSwitcher() {
 function MainBody() {
   const { t } = useContext(LangContext);
   const mainBodyJS = t.mainBody.bodyElements;
+
   return (
     <div className="container main-body">
       <SliderComponent />
       <div className="inner">
-        <BodyElements pTag={mainBodyJS.pTag} button={mainBodyJS.button} />
+        <BodyElements pTag={mainBodyJS.pTag} />
       </div>
     </div>
   );
 }
 
 function BodyElements({ pTag, button }) {
+  const navigate = useNavigate(); // <-- Initialize navigation
+  const { t } = useContext(LangContext);
+  const machine = t.company.machines;
+
+  const handleNavigateToMachines = () => {
+    navigate("/machines");
+  };
   return (
     <main>
       <section className="main-body-elements">
         <img src={logo} className="logo" alt="" />
         <div className="after-logo">
           <p>{pTag}</p>
-          <button className="body-elements-button">
-            <a href="#contactus-id">{button}</a>
+
+          <button
+            className="body-elements-machines-button"
+            onClick={handleNavigateToMachines}
+          >
+            <span>{machine.name}</span>
           </button>
           <Socials />
           <LanguageSwitcher />

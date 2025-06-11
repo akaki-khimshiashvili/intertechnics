@@ -1,6 +1,10 @@
 {
   "company": {
     "title": "Contact Us",
+    "machines": {
+      "name": "Machines Catalog",
+      "link": "/machines"
+    },
     "name": "Intertechnics Ltd",
     "address": {
       "head_office": "Petr Iberis St. 6, Tbilisi, Georgia",
@@ -136,11 +140,6 @@
         "id": 3,
         "name": "Contact",
         "link": "#contactus-id"
-      },
-      {
-        "id": 4,
-        "name": "Machines",
-        "link": "/machines"
       }
     ]
   },
