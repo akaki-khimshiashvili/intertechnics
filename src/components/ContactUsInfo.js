@@ -1,6 +1,7 @@
 import React from "react";
 import ContactUsInfoAddress from "./ContactUsInfoAddress";
 import ContactUsInfoContacts from "./ContactUsInfoContacts";
+import { Mail } from "lucide-react";
 
 export default function ContactUsInfo({ address, contacts, contactUs }) {
   return (
@@ -10,7 +11,7 @@ export default function ContactUsInfo({ address, contacts, contactUs }) {
         <ContactUsInfoContacts key={contact.id} contact={contact} />
       ))}
       <a href={contactUs.email} target="blanc">
-        intertechnicsltd@gmail.com
+        <Mail width={22} /> intertechnicsltd@gmail.com
       </a>
     </div>
   );

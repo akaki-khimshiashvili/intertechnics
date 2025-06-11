@@ -388,6 +388,9 @@ main section {
     font-weight: 500;
     transition: ease-in-out 250ms;
     width: fit-content;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
   }
 
   a:hover {
@@ -411,6 +414,111 @@ main section {
 
 .copyright {
   color: rgba(255, 255, 0);
+}
+
+.contacts-p {
+  display: flex;
+  gap: 5px;
+}
+
+.contacts-p-div {
+  display: flex;
+  gap: 5px;
+}
+
+.address-p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.machines-title {
+  font-size: 32px;
+  text-align: center;
+  padding-block: 10px;
+}
+
+.back-home-button {
+  display: block;
+  margin: auto;
+  margin-block: 10px;
+  border: 1px solid #28282b;
+  padding: 8px;
+  background: #28282b;
+  font-size: 18px;
+  border-radius: 5px;
+  color: #fff;
+  transition: ease-in-out 300ms;
+  cursor: pointer;
+}
+
+.back-home-button:hover {
+  background: rgba(40, 40, 43, 0.8);
+}
+
+.machines-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 0 auto; /* Center the whole container horizontally */
+  place-items: center;
+
+  padding: 20px;
+}
+
+.machines-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: scale 0.4s ease, box-shadow 0.2s ease;
+}
+
+.machines-card:hover {
+  scale: 1.1;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.machines-card h2 {
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  font-weight: 300;
+  color: yellow;
+  padding: 12px;
+  background-color: #28282b;
+  border-bottom: 1px solid #eee;
+}
+
+.machines-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.machines-p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: yellow;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(40, 40, 43, 0.95);
+  padding: 10px 12px;
+  border-radius: 0 0 8px 8px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.machines-card:hover .machines-p {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 @media (max-width: 1368px) {

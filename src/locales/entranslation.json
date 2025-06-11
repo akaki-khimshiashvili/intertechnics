@@ -136,6 +136,11 @@
         "id": 3,
         "name": "Contact",
         "link": "#contactus-id"
+      },
+      {
+        "id": 4,
+        "name": "Machines",
+        "link": "/machines"
       }
     ]
   },
@@ -145,5 +150,63 @@
       "pTag": "High-quality construction equipment",
       "button": "Contact Us"
     }
+  },
+  "machines": {
+    "machines_title": "Machines",
+    "machines_button": "Back To Home Page",
+    "machines_description": [
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      },
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      },
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      },
+      {
+        "name": "Bobcat S630",
+        "description": [
+          "ძრავი: Kubota/4 ცილ/Diesel",
+          "ტვირთამწეობა: 1050 კგ",
+          "აწევის სიმაღლე: 3,1 მ",
+          "წონა: 3496 კგ",
+          "სიმძლავრე: 74 ცხ/ძ",
+          "კაბინა: გათბობა/კონდინცირებით",
+          "გარანტია: 2წელი/2000 სთ"
+        ],
+        "machine_image": "/images/machines/bobcat-s630.jfif"
+      }
+    ]
   }
 }

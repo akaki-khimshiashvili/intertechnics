@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PartnerCompanies from "./components/PartnerCompanies";
 import "./App.css";
 import ContactUsInfo from "./components/ContactUsInfo";
@@ -7,16 +7,49 @@ import LocationMap from "./components/LocationMap";
 import logo from "./logo.png";
 import SliderComponent from "./SliderComponent";
 import Socials from "./components/Socials";
-import HeaderLi from "./components/HeaderLi";
 import AboutUsText from "./components/AboutUsText";
 import { LangContext } from "./LangContext";
 import geflag from "./ge1.svg";
 import enflag from "./gb.svg";
+import MachinesComponent from "./components/MachinesComponent";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <Header />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/machines" element={<Machines />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+}
+
+function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const scrollToId = location.state?.scrollToId;
+
+    if (scrollToId) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollToId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+
+        navigate(location.pathname, { replace: true });
+      }, 100);
+    }
+  }, [location, navigate]);
+
+  return (
+    <div>
       <MainBody />
       <PartnerCompaniesComponent />
       <AboutUs />
@@ -34,19 +67,59 @@ function Header() {
   );
 }
 
+function Machines() {
+  const { t } = useContext(LangContext);
+  const machinesTitle = t.machines.machines_title;
+  const machinesButton = t.machines.machines_button;
+  const machines = t.machines.machines_description;
+  return (
+    <div className="container">
+      <h2 className="machines-title">{machinesTitle}</h2>
+      <MachinesComponent machines={machines} machinesButton={machinesButton} />
+    </div>
+  );
+}
+
 function HeaderElements() {
   const { t } = useContext(LangContext);
   const headerElement = t.headerElements.navItems;
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = (element) => {
+    const isHashLink = element.link.startsWith("#");
+
+    if (isHashLink) {
+      const scrollToId = element.link.substring(1);
+
+      if (location.pathname !== "/") {
+        navigate("/", { state: { scrollToId } });
+      } else {
+        const el = document.getElementById(scrollToId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate(element.link);
+    }
+  };
+
   return (
     <header className="header container">
       <nav>
         <ul className="nav-ul">
           {headerElement.map((element) => (
-            <HeaderLi
-              key={element.id}
-              link={element.link}
-              content={element.name}
-            />
+            <li key={element.id}>
+              <a
+                className="nav-button"
+                href={element.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick(element);
+                }}
+              >
+                {element.name}
+              </a>
+            </li>
           ))}
         </ul>
       </nav>
