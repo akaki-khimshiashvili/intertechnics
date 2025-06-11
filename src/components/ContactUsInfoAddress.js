@@ -5,15 +5,13 @@ import { MapPinned } from "lucide-react";
 export default function ContactUsInfoAddress({ address }) {
   return (
     <>
-      <div>
-        <p className="address-p">
-          <MapPinned width={22} /> {address.head_office}
-        </p>
+      <div className="address-p">
+        <MapPinned width={18} />
+        <span>{address.head_office}</span>
       </div>
-      <div>
-        <p className="address-p">
-          <Wrench width={22} /> {address.service_center}
-        </p>
+      <div className="address-p">
+        <Wrench width={18} />
+        <span>{address.service_center}</span>
       </div>
     </>
   );

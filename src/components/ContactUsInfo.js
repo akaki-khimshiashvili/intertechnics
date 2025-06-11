@@ -11,7 +11,7 @@ export default function ContactUsInfo({ address, contacts, contactUs }) {
         <ContactUsInfoContacts key={contact.id} contact={contact} />
       ))}
       <a href={contactUs.email} target="blanc">
-        <Mail width={22} /> intertechnicsltd@gmail.com
+        <Mail width={22} /> <span>intertechnicsltd@gmail.com</span>
       </a>
     </div>
   );

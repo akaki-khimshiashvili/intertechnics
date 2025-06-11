@@ -423,6 +423,7 @@ main section {
 
 .contacts-p-div {
   display: flex;
+  align-items: center;
   gap: 5px;
 }
 
@@ -613,6 +614,12 @@ main section {
 
   .contactUsInfo-div {
     font-size: 18px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 
   .phone-number {
@@ -697,6 +704,14 @@ main section {
 
   .phone-number {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .contacts-p {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 }
 

@@ -5,14 +5,15 @@ export default function ContactUsInfoContacts({ contact }) {
   return (
     <div className="contacts-div">
       <div className="contacts-div-elements">
-        <img src="" alt="" />
-        <p className="contacts-p">
+        <div className="contacts-p">
           <div className="contacts-p-div">
-            <Phone width={22} />
-            {contact.name}, {contact.position}:{" "}
+            <Phone width={18} />
+            <span>
+              {contact.name}, {contact.position}
+            </span>
           </div>
           <span className="phone-number">{contact.phone}</span>
-        </p>
+        </div>
       </div>
     </div>
   );
