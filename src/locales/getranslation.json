@@ -78,7 +78,7 @@
         "name": "Kubota",
         "description": "კომპანია ინტერტექნიკსი 2022 წლიდან წარმოადგენს კუბოტას ძრავებისა და სათადარიგო ნაწილების ოფიციალურ დილერს საქართველოში. გავცემთ გარანტიას კუბოტას ძრავზე და გთავაზობთ სერვისით მომსახურებას.",
         "website": "https://www.kubota.com/",
-        "companyLogo": "/images/kubota-logo.png"
+        "companyLogo": "/images/Kubota-Logo.png"
       },
       {
         "id": 3,
@@ -117,10 +117,10 @@
       },
       {
         "id": 8,
-        "name": "Aliva",
-        "description": "ალივას აპარატურა ცნობილია აპარატების უმაღლესი ხარისხითა და ფუნქციონალურობით. როტორული აპარატების გარდა, ალივა ერთ-ერთი წამყვანი მწარმოებელია ცეცხლგამძლე, ფოლადის ინდუსტრიისა და სპეციალური აღჭურვილობისთვის.",
-        "website": "https://www2.normet.com/aliva/",
-        "companyLogo": "/images/aliva-logo.png"
+        "name": "Kmayco",
+        "description": "Kmayco's equipment is known for its high quality and functionality. In addition to rotary machines, Kmayco is one of the leading manufacturers of fire-resistant, steel industry, and special equipment.",
+        "website": "https://www.kmayco.de/en#Leistungen",
+        "companyLogo": "/images/kmayco.png"
       }
     ]
   },
@@ -154,71 +154,6 @@
     "machines_title": "ტექნიკა",
     "machines_button": "მთავარ გვერდზე დაბრუნება",
     "machines_description": [
-      {
-        "name": "Bobcat S630",
-        "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
-        ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
-      },
-      {
-        "name": "Bobcat S630",
-        "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
-        ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
-      },
-      {
-        "name": "Bobcat S630",
-        "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
-        ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
-      },
-      {
-        "name": "Bobcat S630",
-        "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
-        ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
-      },
-      {
-        "name": "Bobcat S630",
-        "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
-        ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
-      },
       {
         "name": "Bobcat S630",
         "description": [

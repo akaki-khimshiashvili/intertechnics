@@ -2,7 +2,7 @@
   "name": "intertechnics-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://intertechnics.netlify.app/",
+  "homepage": "https://www.intertechnics.ge",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
