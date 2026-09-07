@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LangContext } from "../LangContext";
+import kkIcon from "../kk-icon.png";
 
 export default function Footer() {
   const { t } = useContext(LangContext);
@@ -56,6 +57,15 @@ export default function Footer() {
       <p className="footer-copyright">
         <span className="copyright">&copy;</span> 2005 – {new Date().getFullYear()} — Intertechnics LTD
       </p>
+      <a
+        className="footer-credit"
+        href="https://akaki-khimshiashvili.github.io/Portfolio/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>Powered by</span>
+        <img src={kkIcon} alt="KK" />
+      </a>
     </footer>
   );
 }
