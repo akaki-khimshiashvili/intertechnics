@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Reveal from "./Reveal";
 
 function MachinesComponent({ machines, machinesButton }) {
   const navigate = useNavigate();
@@ -13,19 +14,27 @@ function MachinesComponent({ machines, machinesButton }) {
         {machinesButton}
       </button>
       <div className="machines-container">
-        {machines.map((machine, id) => (
-          <div key={id} className="machines-card">
-            <h2>{machine.name}</h2>
-            <img src={machine.machine_image} alt={machine.machine_title} />
-            <p className="machines-p">
-              {machine.description.map((line, index) => (
-                <span key={index}>
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </p>
-          </div>
+        {machines.map((machine, i) => (
+          <Reveal as="div" index={i} key={i} className="machines-card">
+            <div
+              className="machines-card-image"
+              style={{ backgroundImage: `url(${machine.machine_image})` }}
+            />
+            <div className="machines-card-body">
+              <h2>{machine.name}</h2>
+              <ul className="machines-specs">
+                {machine.description.map((line, index) => {
+                  const [label, value] = line.split(":");
+                  return (
+                    <li key={index}>
+                      <span className="spec-label">{label}</span>
+                      <span className="spec-value">{value ?? ""}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </Reveal>
         ))}
       </div>
     </>

@@ -42,6 +42,19 @@
     ],
     "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
   },
+  "hero": {
+    "heading": "საქართველოს სამშენებლო ტექნიკის პარტნიორი 2005 წლიდან",
+    "subheading": "Bobcat-ის, Kubota-ს, AMMANN-ის, Putzmeister-ის, Kaeser-ის და სხვა წამყვანი ბრენდების ოფიციალური დილერი, სათადარიგო ნაწილებისა და პროფესიონალური სერვისის სრული მხარდაჭერით.",
+    "cta": "ტექნიკის კატალოგი"
+  },
+  "trustStrip": {
+    "stats": [
+      { "id": 1, "value": "2005", "label": "დაარსების წელი" },
+      { "id": 2, "value": "8", "label": "პარტნიორი ბრენდი" },
+      { "id": 3, "value": "4", "label": "სპეციალისტი გამოძახებით" }
+    ]
+  },
+  "tagline": "2005 წლიდან ვამარაგებთ საქართველოს სამშენებლო კომპანიებსა და საგზაო სამუშაოების გუნდებს გამძლე და საიმედო ტექნიკით — სათადარიგო ნაწილებისა და სერვისის სრული მხარდაჭერით, რათა თქვენი ტექნიკა ყოველთვის მზად იყოს სამუშაოდ.",
   "aboutUs": {
     "title": "ჩვენ შესახებ",
     "text": [
@@ -118,7 +131,7 @@
       {
         "id": 8,
         "name": "Kmayco",
-        "description": "Kmayco's equipment is known for its high quality and functionality. In addition to rotary machines, Kmayco is one of the leading manufacturers of fire-resistant, steel industry, and special equipment.",
+        "description": "Kmayco-ს დანადგარები ცნობილია მაღალი ხარისხითა და ფუნქციონალურობით. საბრუნი მანქანების გარდა, Kmayco ცეცხლგამძლე, ლითონურგიული და სპეციალური დანიშნულების დანადგარების ერთ-ერთი წამყვანი მწარმოებელია.",
         "website": "https://www.kmayco.de/en#Leistungen",
         "companyLogo": "/images/kmayco.png"
       }
@@ -143,12 +156,10 @@
       }
     ]
   },
-  "mainBody": {
-    "sliderComponent": true,
-    "bodyElements": {
-      "pTag": "უმაღლესი ხარისხის სამშენებლო ტექნიკა",
-      "button": "დაგვიკავშირდით"
-    }
+  "machineTeaser": {
+    "heading": "გამორჩეული ტექნიკა",
+    "body": "კომპაქტური და საიმედო არჩევანი შეზღუდული სივრცის სამუშაო ობიექტებისთვის — მაღალი აწევის შესაძლებლობით, მსუბუქი კონსტრუქციითა და გათბობის სისტემით აღჭურვილი კაბინით, რომელიც ხანგრძლივი სამუშაო ცვლებისთვის არის შექმნილი.",
+    "cta": "სრული სპეციფიკაციები"
   },
   "machines": {
     "machines_title": "ტექნიკა",
@@ -165,8 +176,13 @@
           "კაბინა: გათბობა/კონდინცირებით",
           "გარანტია: 2წელი/2000 სთ"
         ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
+        "machine_image": "/images/machines/bobcat-s630.jpg"
       }
     ]
+  },
+  "notFound": {
+    "title": "გვერდი ვერ მოიძებნა",
+    "body": "თქვენ მიერ მოძებნილი გვერდი არ არსებობს ან გადატანილია.",
+    "cta": "მთავარ გვერდზე დაბრუნება"
   }
 }

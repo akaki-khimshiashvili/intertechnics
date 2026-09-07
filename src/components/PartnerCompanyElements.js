@@ -1,17 +1,25 @@
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function PartnerCompanyElements({ partnerCompany }) {
   return (
-    <div className="card">
-      <img src={partnerCompany.companyLogo} className="card-main-img" alt="" />
+    <a
+      className="card"
+      href={partnerCompany.website}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src={partnerCompany.companyLogo}
+        className="card-main-img"
+        alt={`${partnerCompany.name} logo`}
+      />
       <div className="onhover-text">
-        <a href={partnerCompany.website} target="blanc">
-          <p>
-            Visit{" "}
-            <span className="onhover-text-span">{partnerCompany.name}</span>
-          </p>
-        </a>
+        <p>
+          <span className="onhover-text-span">{partnerCompany.name}</span>
+          <ArrowUpRight width={16} />
+        </p>
       </div>
-    </div>
+    </a>
   );
 }

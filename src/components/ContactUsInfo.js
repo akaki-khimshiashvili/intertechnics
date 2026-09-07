@@ -7,11 +7,11 @@ export default function ContactUsInfo({ address, contacts, contactUs }) {
   return (
     <div className="contactUsInfo-div">
       <ContactUsInfoAddress address={address} />
-      {contacts.map((contact) => (
-        <ContactUsInfoContacts key={contact.id} contact={contact} />
+      {contacts.map((contact, i) => (
+        <ContactUsInfoContacts key={contact.id} contact={contact} index={i} />
       ))}
-      <a href={contactUs.email} target="blanc">
-        <Mail width={22} /> <span>intertechnicsltd@gmail.com</span>
+      <a href={contactUs.email} target="_blank" rel="noopener noreferrer">
+        <Mail width={20} /> <span>intertechnicsltd@gmail.com</span>
       </a>
     </div>
   );

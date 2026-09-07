@@ -42,6 +42,19 @@
     ],
     "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
   },
+  "hero": {
+    "heading": "Georgia's construction equipment partner since 2005",
+    "subheading": "Official dealer for Bobcat, Kubota, AMMANN, Putzmeister, Kaeser and more, backed by spare parts and service.",
+    "cta": "View machines"
+  },
+  "trustStrip": {
+    "stats": [
+      { "id": 1, "value": "2005", "label": "Founded" },
+      { "id": 2, "value": "8", "label": "Partner brands" },
+      { "id": 3, "value": "4", "label": "Specialists on call" }
+    ]
+  },
+  "tagline": "Since 2005 we've supplied Georgia's builders and road crews with equipment that doesn't quit, backed by the parts and service to keep it running.",
   "aboutUs": {
     "title": "About Us",
     "text": [
@@ -51,7 +64,7 @@
       },
       {
         "id": 2,
-        "content": "Since 2005, the company has been partnering with leading manufacturers of road construction machinery. These relationships ensure the introduction of innovations and high-quality machinery into the Georgian construction market."
+        "content": "Since 2005, the company has been partnering with leading manufacturers of road construction machinery. These relationships ensure the introduction of innovations and high quality machinery into the Georgian construction market."
       },
       {
         "id": 3,
@@ -97,7 +110,7 @@
       {
         "id": 5,
         "name": "Putzmeister",
-        "description": "Stationary, mobile, and tunnel concrete pumps, cement-sand delivery and sale pumps. Mobile concrete mixers.",
+        "description": "Stationary, mobile, and tunnel concrete pumps, cement sand delivery and sale pumps. Mobile concrete mixers.",
         "website": "https://www.putzmeister.com",
         "companyLogo": "/images/putzmeister-logo.png"
       },
@@ -118,7 +131,7 @@
       {
         "id": 8,
         "name": "Kmayco",
-        "description": "Kmayco's equipment is known for its high quality and functionality. In addition to rotary machines, Kmayco is one of the leading manufacturers of fire-resistant, steel industry, and special equipment.",
+        "description": "Kmayco's equipment is known for its high quality and functionality. In addition to rotary machines, Kmayco is one of the leading manufacturers of fire resistant, steel industry, and special equipment.",
         "website": "https://www.kmayco.de/en#Leistungen",
         "companyLogo": "/images/kmayco.png"
       }
@@ -143,12 +156,10 @@
       }
     ]
   },
-  "mainBody": {
-    "sliderComponent": true,
-    "bodyElements": {
-      "pTag": "High-quality construction equipment",
-      "button": "Contact Us"
-    }
+  "machineTeaser": {
+    "heading": "Featured machine",
+    "body": "A compact, reliable choice for tight job sites, with high lift, low weight, and a heated cab built for long shifts.",
+    "cta": "See full specs"
   },
   "machines": {
     "machines_title": "Machines",
@@ -157,16 +168,21 @@
       {
         "name": "Bobcat S630",
         "description": [
-          "ძრავი: Kubota/4 ცილ/Diesel",
-          "ტვირთამწეობა: 1050 კგ",
-          "აწევის სიმაღლე: 3,1 მ",
-          "წონა: 3496 კგ",
-          "სიმძლავრე: 74 ცხ/ძ",
-          "კაბინა: გათბობა/კონდინცირებით",
-          "გარანტია: 2წელი/2000 სთ"
+          "Engine: Kubota / 4 cyl / Diesel",
+          "Load capacity: 1050 kg",
+          "Lift height: 3.1 m",
+          "Weight: 3496 kg",
+          "Power: 74 hp",
+          "Cabin: Heated / air conditioned",
+          "Warranty: 2 years / 2000 h"
         ],
-        "machine_image": "/images/machines/bobcat-s630.jfif"
+        "machine_image": "/images/machines/bobcat-s630.jpg"
       }
     ]
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "cta": "Back to homepage"
   }
 }
