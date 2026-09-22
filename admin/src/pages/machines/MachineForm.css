@@ -1,0 +1,307 @@
+.machine-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 760px;
+}
+
+.machine-form-section {
+  background: var(--color-white);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.machine-form-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.machine-form-hint {
+  margin-top: -8px;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+.machine-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.machine-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink-muted);
+}
+
+.machine-field input,
+.machine-field select,
+.machine-field textarea {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-ink);
+  background: var(--color-white);
+  box-sizing: border-box;
+}
+
+.machine-field textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.machine-field input:focus-visible,
+.machine-field select:focus-visible,
+.machine-field textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.machine-field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.combo-select-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+}
+
+.combo-select-input-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+/* min-width: 0 is required here — a flex item's default min-width is its
+   content's intrinsic size, and a bare <input> is wide enough on its own to
+   overflow a narrow (220px) form-grid column when placed next to the save
+   button. This lets it actually shrink to fit instead of pushing the button
+   out past the column and under whatever field is next to it. */
+.combo-select-input-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-ink);
+  box-sizing: border-box;
+}
+
+.combo-select-save {
+  flex-shrink: 0;
+  font: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  cursor: pointer;
+}
+
+.combo-select-save:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.combo-select-save:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.combo-select-confirmed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  background: var(--color-paper-dim);
+}
+
+.combo-select-confirmed-value {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-success);
+  overflow-wrap: anywhere;
+}
+
+.combo-select-back {
+  flex-shrink: 0;
+  font: inherit;
+  font-size: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-ink-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.combo-select-back:hover {
+  color: var(--color-ink);
+}
+
+.machine-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.machine-checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+}
+
+.specs-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.specs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+}
+
+.specs-row input {
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  font: inherit;
+  font-size: 14px;
+}
+
+.specs-row-remove {
+  border: 1px solid var(--color-steel);
+  background: var(--color-white);
+  color: var(--color-danger);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 36px;
+}
+
+.specs-add-btn {
+  align-self: flex-start;
+  border: 1px dashed var(--color-steel);
+  background: var(--color-paper-dim);
+  color: var(--color-ink);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.specs-add-btn:hover {
+  background: var(--color-steel);
+}
+
+.photo-preview {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+}
+
+.photo-preview img {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  display: block;
+}
+
+.photos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photo-thumb {
+  position: relative;
+  width: 110px;
+  height: 90px;
+}
+
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+}
+
+.photo-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font: inherit;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(23, 22, 15, 0.7);
+  color: #fff;
+  cursor: pointer;
+}
+
+.machine-form-error {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
+.machine-form-success {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-success);
+}
+
+.machine-form-submit {
+  align-self: flex-start;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 26px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.machine-form-submit:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.machine-form-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

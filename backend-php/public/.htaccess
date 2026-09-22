@@ -1,0 +1,51 @@
+RewriteEngine On
+
+# Redirect to HTTPS first (same host) — before anything else.
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Pass the Authorization header through to PHP. Apache/LiteSpeed (LSAPI)
+# strips it from $_SERVER['HTTP_AUTHORIZATION'] by default; CGIPassAuth is
+# the directive built for this on FastCGI/LSAPI setups, the RewriteRule
+# below is a fallback for hosts that don't honor it. (AuthMiddleware also
+# checks REDIRECT_HTTP_AUTHORIZATION/apache_request_headers() as a second
+# line of defense, independent of this file.)
+CGIPassAuth On
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Serve uploaded images directly (and let them be cached hard, they never change).
+RewriteCond %{REQUEST_URI} ^/uploads/.+\.(webp|jpe?g|png|gif)$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Deny direct access to anything outside public/, then route everything else through index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Cross-Origin-Opener-Policy "same-origin"
+    Header set Content-Security-Policy "default-src 'none'"
+    Header always set Strict-Transport-Security "max-age=86400; includeSubDomains"
+</IfModule>
+
+<FilesMatch "\.(webp|jpe?g|png|gif)$">
+    <IfModule mod_headers.c>
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header unset Content-Security-Policy
+        Header unset X-Frame-Options
+    </IfModule>
+</FilesMatch>
+
+ServerSignature Off
+
+# On shared hosting where this app's own folder is nested inside the main
+# domain's public_html (so it can be blocked there with a parent-level
+# "Require all denied"), that deny cascades down through every subdirectory
+# including this one unless explicitly overridden. This re-grants access
+# for this specific folder.
+Require all granted

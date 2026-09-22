@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap");
+
+/* Same palette as the public site's design tokens (src/styles/tokens.css in
+   the main React app) so the admin panel reads as part of the same brand. */
+:root {
+  --color-ink: #17160f;
+  --color-ink-soft: #28282b;
+  --color-ink-muted: #56564f;
+  --color-paper: #fafaf7;
+  --color-paper-dim: #f0efe9;
+  --color-steel: #d9d7cd;
+  --color-steel-dark: #3a3a36;
+  --color-accent: #f2b705;
+  --color-accent-hover: #ffca1f;
+  --color-accent-ink: #17160f;
+  --color-white: #ffffff;
+  --color-danger: #c4453a;
+  --color-danger-hover: #a83a30;
+  --color-success: #3f8f5f;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 1px 2px rgba(23, 22, 15, 0.06), 0 8px 24px rgba(23, 22, 15, 0.06);
+
+  --font-sans: "Noto Sans", "Noto Sans Georgian", system-ui, -apple-system, sans-serif;
+
+  color-scheme: light;
+  font: 16px/1.5 var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--color-ink);
+  background: var(--color-paper-dim);
+}
+
+button {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}

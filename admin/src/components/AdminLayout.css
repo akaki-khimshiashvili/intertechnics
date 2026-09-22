@@ -1,0 +1,91 @@
+.admin-layout {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.9rem 1.5rem;
+  background: var(--color-ink);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.admin-header-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1rem;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.admin-nav {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.admin-nav a {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.admin-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-white);
+}
+
+.admin-nav a.active {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.admin-header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.admin-header-user button {
+  font: inherit;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.admin-header-user button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-content {
+  flex: 1;
+  padding: 28px 24px 60px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .admin-header {
+    padding: 0.75rem 1rem;
+  }
+  .admin-content {
+    padding: 20px 16px 48px;
+  }
+}

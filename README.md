@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Intertechnics
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Three sibling apps: `frontend/` (public storefront, Create React App), `backend-php/` (PHP API), `admin/` (Vite/React admin panel for managing the machine catalog).
 
-## Available Scripts
+## Running everything locally
 
-In the project directory, you can run:
+**1. Backend API** (PHP + MySQL + nginx via Docker):
 
-### `npm start`
+```
+cd backend-php
+docker compose up -d --build
+docker compose exec php php database/migrate.php
+docker compose exec php php database/create_admin.php   # seeds admin / admin123
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+API is now at http://localhost:8080. See `backend-php/README.md` for the full endpoint list and non-Docker setup.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**2. Admin panel** (Georgian-language machine management UI):
 
-### `npm test`
+```
+cd admin
+npm install
+npm run dev
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open http://localhost:5173, log in with `admin` / `admin123`. Update `admin/.env` (`VITE_API_URL`) if the API isn't on `localhost:8080`.
 
-### `npm run build`
+**3. Storefront**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+cd frontend
+npm install
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Open http://localhost:3000. Set `REACT_APP_API_URL` in `frontend/.env` if the API isn't on `localhost:8080`. The `/machines` page and homepage teaser fetch live data from the API (with a static fallback to the one hardcoded demo machine in the locale files if the API is unreachable, so the site still renders something without a backend). `npm run build` outputs to `frontend/build/`; `netlify.toml` at the repo root points Netlify at `frontend/` as the build base and `build/` as the publish directory.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## What's here
 
-### `npm run eject`
+- **Machine catalog**: managed entirely through the admin panel — name, brand, category, model, year, condition, price (or "price negotiable"), engine/power/weight/capacity specs, an open-ended extra-specs list for anything category-specific, a main image, and a gallery. Only `name` is required; every spec field is nullable.
+- **Search & filtering**: the public `/machines` page has live search plus brand/category/condition filters and price sorting, backed by `GET /machines` query params.
+- **Images**: every upload (admin panel) is converted to WebP — compressed client-side in the browser, then re-encoded server-side via GD (the authoritative step) — and stored under `backend-php/public/uploads/`, same as the reference project.
+- **SEO**: per-route meta tags (title/description/canonical/OG/Twitter) via `frontend/src/hooks/useDocumentMeta.js`, JSON-LD (`Organization` sitewide, `Product` on each machine detail page at `/machines/:slug`), `robots.txt` + `sitemap.xml`, and a fixed Netlify `_redirects` file (the previous `__redirects` had a typo'd filename Netlify never picked up). Note: this is a client-rendered SPA with no server-side rendering, so meta tags set via JS are only visible to crawlers that execute JavaScript (Googlebot does; not all bots do) — full SSR/prerendering would be a further step beyond this pass if needed.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+See `frontend/README.md` for the stock Create React App script docs (`npm test`, `npm run eject`, etc).
