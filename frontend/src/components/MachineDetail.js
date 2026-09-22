@@ -118,16 +118,8 @@ export default function MachineDetail() {
                     key={i}
                     role="button"
                     tabIndex={0}
-                    onClick={() => {
-                      setActiveImage(img);
-                      setLightboxIndex(i);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        setActiveImage(img);
-                        setLightboxIndex(i);
-                      }
-                    }}
+                    onClick={() => setActiveImage(img)}
+                    onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveImage(img)}
                     className={`machine-detail-thumb${img === mainImage ? " machine-detail-thumb-active" : ""}`}
                     style={{ backgroundImage: `url(${assetUrl(img)})` }}
                   />

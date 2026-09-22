@@ -12,6 +12,7 @@ import {
   type Spec,
 } from '../../lib/api'
 import { ComboSelect } from '../../components/ComboSelect'
+import { showToast } from '../../components/Toast'
 import './MachineForm.css'
 
 const CURRENT_YEAR = new Date().getFullYear()
@@ -137,10 +138,11 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   )
   const [specs, setSpecs] = useState<Spec[]>(() => machine?.specs ?? [])
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [knownBrands, setKnownBrands] = useState<string[]>([])
   const [knownCategories, setKnownCategories] = useState<string[]>([])
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({})
+  const nameInputRef = useRef<HTMLInputElement>(null)
 
   const objectUrls = useRef<string[]>([])
   useEffect(() => {
@@ -163,9 +165,24 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   function field<K extends keyof FormState>(key: K) {
     return {
       value: form[key] as string,
-      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-        setForm((prev) => ({ ...prev, [key]: e.target.value }) as FormState),
+      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setForm((prev) => ({ ...prev, [key]: e.target.value }) as FormState)
+        setFieldErrors((prev) => {
+          if (!prev[key]) return prev
+          const next = { ...prev }
+          delete next[key]
+          return next
+        })
+      },
     }
+  }
+
+  function validate(): Partial<Record<keyof FormState, string>> {
+    const errors: Partial<Record<keyof FormState, string>> = {}
+    if (form.name.trim() === '') {
+      errors.name = 'ეს ველი სავალდებულოა — გთხოვთ შეავსოთ'
+    }
+    return errors
   }
 
   function handleMainPhotoChange(e: ChangeEvent<HTMLInputElement>) {
@@ -218,7 +235,16 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
-    setSuccess(null)
+
+    const errors = validate()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setError('გთხოვთ შეავსოთ ყველა სავალდებულო ველი')
+      nameInputRef.current?.focus()
+      nameInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    setFieldErrors({})
     setIsSubmitting(true)
     try {
       const mainImageUrl = mainPhoto ? await resolvePhoto(mainPhoto) : null
@@ -258,10 +284,10 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
 
       if (machine) {
         const updated = await updateMachine(machine.id, payload)
-        setSuccess(`„${updated.name}“ განახლდა`)
+        showToast(`„${updated.name}“ წარმატებით განახლდა`, 'success')
       } else {
         const created = await createMachine(payload)
-        setSuccess(`„${created.name}“ დაემატა`)
+        showToast(`„${created.name}“ წარმატებით დაემატა`, 'success')
         navigate(`/machines/${created.id}/edit`, { replace: true })
       }
     } catch (err) {
@@ -272,13 +298,14 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   }
 
   return (
-    <form className="machine-form" onSubmit={handleSubmit}>
+    <form className="machine-form" onSubmit={handleSubmit} noValidate>
       <section className="machine-form-section">
         <h2>ძირითადი ინფორმაცია</h2>
         <div className="machine-form-grid">
-          <label className="machine-field">
+          <label className={`machine-field${fieldErrors.name ? ' machine-field-invalid' : ''}`}>
             <span>დასახელება *</span>
-            <input type="text" {...field('name')} required />
+            <input type="text" {...field('name')} ref={nameInputRef} aria-invalid={Boolean(fieldErrors.name)} />
+            {fieldErrors.name && <span className="machine-field-error">{fieldErrors.name}</span>}
           </label>
           <label className="machine-field">
             <span>დასახელება (ინგლისურად)</span>
@@ -527,7 +554,6 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
       </section>
 
       {error && <p className="machine-form-error">{error}</p>}
-      {success && <p className="machine-form-success">{success}</p>}
 
       <button type="submit" className="machine-form-submit" disabled={isSubmitting}>
         {isSubmitting ? 'ინახება...' : machine ? 'ცვლილებების შენახვა' : 'ტექნიკის დამატება'}

@@ -73,6 +73,25 @@
   line-height: 1.4;
 }
 
+.machine-field-invalid input,
+.machine-field-invalid select,
+.machine-field-invalid textarea {
+  border-color: var(--color-danger);
+  background: rgba(196, 69, 58, 0.05);
+}
+
+.machine-field-invalid input:focus-visible,
+.machine-field-invalid select:focus-visible,
+.machine-field-invalid textarea:focus-visible {
+  outline-color: var(--color-danger);
+}
+
+.machine-field-error {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-danger);
+}
+
 .combo-select-custom {
   display: flex;
   flex-direction: column;
@@ -275,12 +294,6 @@
   margin: 0;
   font-size: 14px;
   color: var(--color-danger);
-}
-
-.machine-form-success {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-success);
 }
 
 .machine-form-submit {
