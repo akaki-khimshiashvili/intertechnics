@@ -617,7 +617,10 @@ button {
    and the seam doesn't jump. */
 .partner-marquee {
   overflow: hidden;
-  padding-bottom: var(--space-500);
+  /* The featured-machine section below brings its own --space-700 top
+     padding, so match it above and add nothing below — equal gaps on both
+     sides keep the strip centered between the hero and that section. */
+  padding-block: var(--space-700) 0;
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
