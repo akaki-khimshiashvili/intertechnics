@@ -153,7 +153,6 @@ function Partners() {
       <div className="container partners-page page-content">
         <header className="partners-header">
           <h1 className="partners-title">{partners.partnerCompaniesH1}</h1>
-          <p className="partners-intro">{partners.intro}</p>
         </header>
         <ul className="partners-grid">
           {partners.companies.map((partnerCompany, i) => (

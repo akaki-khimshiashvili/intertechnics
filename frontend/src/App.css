@@ -725,14 +725,6 @@ button {
   text-wrap: balance;
 }
 
-.partners-intro {
-  margin-top: var(--space-200);
-  font-size: clamp(var(--text-base), 0.95rem + 0.3vw, var(--text-lg));
-  line-height: 1.6;
-  color: var(--color-ink-muted);
-  text-wrap: pretty;
-}
-
 /* min(100%, …) keeps a single column from overflowing on the narrowest
    phones; beyond that the grid adds columns as room allows. */
 .partners-grid {
@@ -828,18 +820,11 @@ button {
   letter-spacing: -0.01em;
 }
 
-.partner-card-desc {
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-ink-muted);
-  text-wrap: pretty;
-}
-
-/* Pinned to the card's bottom so links line up across a row even when
-   descriptions differ in length. */
+/* Pinned to the card's bottom so links line up across a row even if a
+   long name wraps. */
 .partner-card-link {
   margin-top: auto;
-  padding-top: var(--space-200);
+  padding-top: var(--space-50);
   display: inline-flex;
   align-items: center;
   gap: var(--space-50);

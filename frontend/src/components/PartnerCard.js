@@ -18,7 +18,6 @@ export default function PartnerCard({ partnerCompany, visitLabel }) {
       </div>
       <div className="partner-card-body">
         <h2 className="partner-card-name">{partnerCompany.name}</h2>
-        <p className="partner-card-desc">{partnerCompany.description}</p>
         <span className="partner-card-link">
           {visitLabel}
           <ArrowUpRight width={16} height={16} aria-hidden="true" />
