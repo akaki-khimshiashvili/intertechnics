@@ -10,13 +10,11 @@ export default function LanguageSwitcher() {
     <div className="lang-switcher">
       <button
         onClick={switchLanguage}
-        aria-label={lang === "ka" ? "Switch to English" : "ქართულ ენაზე გადართვა"}
+        aria-label={
+          lang === "ka" ? "Switch to English" : "ქართულ ენაზე გადართვა"
+        }
       >
-        <img
-          src={lang === "ka" ? enflag : geflag}
-          alt={lang === "ka" ? "English" : "ქართული"}
-          width="28"
-        />
+        {lang === "ka" ? "Eng" : "ქართ"}
       </button>
     </div>
   );

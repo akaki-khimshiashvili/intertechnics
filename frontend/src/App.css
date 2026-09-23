@@ -255,14 +255,9 @@ button {
 }
 
 .site-header .lang-switcher button {
-  display: flex;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-
-.site-header .lang-switcher button:active {
-  transform: scale(0.9);
+  border: 1px solid currentColor;
+  color: var(--color-white);
+  padding: 2px 4px;
 }
 
 .site-header-cta {
