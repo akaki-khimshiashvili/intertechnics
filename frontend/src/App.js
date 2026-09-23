@@ -33,7 +33,10 @@ function App() {
             <React.Fragment key={prefix || "ka"}>
               <Route path={prefix || "/"} element={<Home />} />
               <Route path={`${prefix}/machines`} element={<Machines />} />
-              <Route path={`${prefix}/machines/:slug`} element={<MachineDetail />} />
+              <Route
+                path={`${prefix}/machines/:slug`}
+                element={<MachineDetail />}
+              />
             </React.Fragment>
           ))}
           <Route path="*" element={<NotFoundPage />} />
@@ -50,7 +53,10 @@ function PageViewTracker() {
   useEffect(() => {
     // Short settle so an immediate redirect (e.g. a returning English
     // visitor sent from / to /en) is counted once, not twice.
-    const handle = setTimeout(() => track("page_view", { path: basePath, lang }), 400);
+    const handle = setTimeout(
+      () => track("page_view", { path: basePath, lang }),
+      400,
+    );
     return () => clearTimeout(handle);
   }, [basePath, lang]);
 
@@ -66,7 +72,9 @@ function Home() {
     const scrollToId = location.state?.scrollToId;
     if (scrollToId) {
       setTimeout(() => {
-        document.getElementById(scrollToId)?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById(scrollToId)
+          ?.scrollIntoView({ behavior: "smooth" });
         navigate(location.pathname, { replace: true });
       }, 100);
     }
@@ -82,8 +90,9 @@ function Home() {
     <div>
       <Hero
         heading={t.hero.heading}
-        subheading={t.hero.subheading}
-        ctaLabel={t.hero.cta}
+        company={t.hero.company}
+        ctaPrimary={t.hero.ctaPrimary}
+        ctaSecondary={t.hero.ctaSecondary}
       />
       <TrustStrip />
 

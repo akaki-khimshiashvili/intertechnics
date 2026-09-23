@@ -43,9 +43,10 @@
     "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
   },
   "hero": {
-    "heading": "საქართველოს სამშენებლო ტექნიკის პარტნიორი 2005 წლიდან",
-    "subheading": "Bobcat-ის, Kubota-ს, AMMANN-ის, Putzmeister-ის, Kaeser-ის და სხვა წამყვანი ბრენდების ოფიციალური დილერი, სათადარიგო ნაწილებისა და პროფესიონალური სერვისის სრული მხარდაჭერით.",
-    "cta": "ტექნიკის კატალოგი"
+    "company": "ᲘᲜᲢᲔᲠᲢᲔᲥᲜᲘᲙᲡᲘ",
+    "heading": "უმაღლესი ხარისხის სამშენებლო ტექნიკის ოფიციალური დილერი საქართველოში 2005 წლიდან",
+    "ctaPrimary": "ᲓᲐᲒᲕᲘᲙᲐᲕᲨᲘᲠᲓᲘᲗ",
+    "ctaSecondary": "ᲢᲔᲥᲜᲘᲙᲘᲡ ᲙᲐᲢᲐᲚᲝᲒᲘ"
   },
   "trustStrip": {
     "stats": [

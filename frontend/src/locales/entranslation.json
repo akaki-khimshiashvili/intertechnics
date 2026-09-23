@@ -43,9 +43,10 @@
     "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
   },
   "hero": {
-    "heading": "Georgia's construction equipment partner since 2005",
-    "subheading": "Official dealer for Bobcat, Kubota, AMMANN, Putzmeister, Kaeser and more, backed by spare parts and service.",
-    "cta": "View machines"
+    "company": "INTERTECHNICS",
+    "heading": "Official dealer of high-quality construction machinery in Georgia since 2005",
+    "ctaPrimary": "Get in touch",
+    "ctaSecondary": "View machines"
   },
   "trustStrip": {
     "stats": [

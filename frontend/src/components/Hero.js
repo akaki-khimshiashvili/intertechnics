@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LangContext } from "../LangContext";
-import logo from "../logo.png";
 import Socials from "./Socials";
 
 const heroImages = [
@@ -11,7 +10,7 @@ const heroImages = [
   "/images/3.jpg",
 ];
 
-export default function Hero({ heading, subheading, ctaLabel }) {
+export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
   const navigate = useNavigate();
   const { localize } = useContext(LangContext);
 
@@ -35,29 +34,96 @@ export default function Hero({ heading, subheading, ctaLabel }) {
       <div className="hero-scrim" />
 
       <div className="hero-content container">
-        <a
-          className="hero-logo-link"
-          href={localize("/")}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(localize("/"));
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        >
-          <img src={logo} className="logo" alt="Intertechnics" />
-        </a>
         <div className="hero-copy">
+          <p className="hero-title">{company}</p>
           <h1>{heading}</h1>
-          <p>{subheading}</p>
           <div className="hero-actions">
+            <a className="cta-primary" href="tel:">
+              <span>{ctaPrimary}</span>
+            </a>
             <button
-              className="body-elements-machines-button"
+              className="cta-secondary"
               onClick={() => navigate(localize("/machines"))}
             >
-              <span>{ctaLabel}</span>
+              <span>{ctaSecondary}</span>
             </button>
           </div>
           <Socials />
+
+          <div className="google-reviews">
+            5.0
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#f2b705"
+              className="size-6"
+              width={16}
+              height={16}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#f2b705"
+              className="size-6"
+              width={16}
+              height={16}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#f2b705"
+              className="size-6"
+              width={16}
+              height={16}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#f2b705"
+              className="size-6"
+              width={16}
+              height={16}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#f2b705"
+              className="size-6"
+              width={16}
+              height={16}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            (12)
+          </div>
         </div>
       </div>
     </section>

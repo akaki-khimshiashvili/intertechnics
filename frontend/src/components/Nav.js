@@ -39,20 +39,25 @@ export default function Nav() {
       return;
     }
     setSolid(false);
-    const observer = new IntersectionObserver(([entry]) => setSolid(!entry.isIntersecting));
+    const observer = new IntersectionObserver(([entry]) =>
+      setSolid(!entry.isIntersecting),
+    );
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [location.pathname, basePath]);
 
   const handleClick = (element, source = "nav") => {
-    if (element.link === "#contactus-id") track("contact_click", { source, lang });
+    if (element.link === "#contactus-id")
+      track("contact_click", { source, lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);
       if (basePath !== "/") {
         navigate(localize("/"), { state: { scrollToId } });
       } else {
-        document.getElementById(scrollToId)?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById(scrollToId)
+          ?.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       navigate(localize(element.link));
@@ -82,7 +87,11 @@ export default function Nav() {
               {navItems.map((item) => (
                 <li key={item.id}>
                   <a
-                    href={item.link.startsWith("#") ? item.link : localize(item.link)}
+                    href={
+                      item.link.startsWith("#")
+                        ? item.link
+                        : localize(item.link)
+                    }
                     onClick={(e) => {
                       e.preventDefault();
                       handleClick(item);
@@ -96,22 +105,15 @@ export default function Nav() {
           </nav>
 
           <div className="site-header-actions">
-            <a className="nav-phone" href="tel:+995599502517" onClick={() => track("phone_click", { source: "nav", lang })}>
+            <a
+              className="nav-phone"
+              href="tel:+995599502517"
+              onClick={() => track("phone_click", { source: "nav", lang })}
+            >
               <Phone width={16} />
               <span>599 50 25 17</span>
             </a>
             <LanguageSwitcher />
-            <a
-              className="site-header-cta"
-              href={localize("/machines")}
-              aria-current={basePath === "/machines" ? "page" : undefined}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(localize("/machines"));
-              }}
-            >
-              {machinesLabel}
-            </a>
             <button
               className={`nav-burger ${open ? "is-open" : ""}`}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -130,7 +132,9 @@ export default function Nav() {
           {navItems.map((item, i) => (
             <li key={item.id} style={{ transitionDelay: `${i * 60 + 80}ms` }}>
               <a
-                href={item.link.startsWith("#") ? item.link : localize(item.link)}
+                href={
+                  item.link.startsWith("#") ? item.link : localize(item.link)
+                }
                 onClick={(e) => {
                   e.preventDefault();
                   handleClick(item, "mobile_menu");
@@ -158,7 +162,13 @@ export default function Nav() {
           className="nav-overlay-footer"
           style={{ transitionDelay: `${navItems.length * 60 + 140}ms` }}
         >
-          <a className="nav-overlay-call" href="tel:+995599502517" onClick={() => track("phone_click", { source: "mobile_menu", lang })}>
+          <a
+            className="nav-overlay-call"
+            href="tel:+995599502517"
+            onClick={() =>
+              track("phone_click", { source: "mobile_menu", lang })
+            }
+          >
             <Phone width={18} />
             <span>599 50 25 17</span>
           </a>
