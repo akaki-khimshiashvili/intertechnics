@@ -11,6 +11,7 @@ import { track } from "./lib/analytics";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import PartnerCompanies from "./components/PartnerCompanies";
+import PartnerCard from "./components/PartnerCard";
 import AboutUs from "./components/AboutUs";
 import MachineTeaser from "./components/MachineTeaser";
 import ContactUsInfo from "./components/ContactUsInfo";
@@ -32,6 +33,7 @@ function App() {
             <React.Fragment key={prefix || "ka"}>
               <Route path={prefix || "/"} element={<Home />} />
               <Route path={`${prefix}/machines`} element={<Machines />} />
+              <Route path={`${prefix}/partners`} element={<Partners />} />
               <Route
                 path={`${prefix}/machines/:slug`}
                 element={<MachineDetail />}
@@ -94,15 +96,10 @@ function Home() {
         ctaSecondary={t.hero.ctaSecondary}
       />
 
-      <div className="container">
-        <h2 className="partner-company-h1" id="partner-company-id">
-          {t.partnerCompanies.partnerCompaniesH1}
-        </h2>
-      </div>
       <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
 
-      <AboutUs />
       <MachineTeaser />
+      <AboutUs />
 
       <div className="container">
         <h2 className="contactus-h2" id="contactus-id">
@@ -135,6 +132,38 @@ function Machines() {
       <div className="container machines-page page-content">
         <h1 className="machines-title">{t.machines.machines_title}</h1>
         <MachinesComponent machines={t.machines.machines_description} />
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+function Partners() {
+  const { t, lang } = useContext(LangContext);
+  const partners = t.partnerCompanies;
+
+  useDocumentMeta({
+    title: `${partners.partnerCompaniesH1} — Intertechnics LTD`,
+    description: partners.intro,
+    lang,
+  });
+
+  return (
+    <div className="page-shell">
+      <div className="container partners-page page-content">
+        <header className="partners-header">
+          <h1 className="partners-title">{partners.partnerCompaniesH1}</h1>
+        </header>
+        <ul className="partners-grid">
+          {partners.companies.map((partnerCompany, i) => (
+            <li key={partnerCompany.id} style={{ "--i": i }}>
+              <PartnerCard
+                partnerCompany={partnerCompany}
+                visitLabel={partners.visitWebsite}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
       <Footer />
     </div>

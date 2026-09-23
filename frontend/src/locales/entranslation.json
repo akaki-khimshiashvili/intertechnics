@@ -71,6 +71,8 @@
   },
   "partnerCompanies": {
     "partnerCompaniesH1": "Partner Companies",
+    "intro": "Official dealer and service partner for the manufacturers below, with spare parts and warranty support in Georgia.",
+    "visitWebsite": "Visit website",
     "companies": [
       {
         "id": 1,
@@ -140,7 +142,7 @@
       {
         "id": 1,
         "name": "Partner Companies",
-        "link": "#partner-company-id"
+        "link": "/partners"
       },
       {
         "id": 2,

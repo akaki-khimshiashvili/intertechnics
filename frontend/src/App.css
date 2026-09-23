@@ -611,24 +611,16 @@ button {
 
 /* ---------- Partner companies ---------- */
 
-.partner-company-h1 {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-ink-muted);
-  margin-top: var(--space-500);
-  margin-bottom: var(--space-300);
-  text-align: center;
-}
-
 /* Logo marquee: the track holds the logo set twice and slides left by
    exactly one copy (-50%), so the loop restarts seamlessly. Spacing is a
    per-logo padding rather than flex gap, so both halves are the same width
    and the seam doesn't jump. */
 .partner-marquee {
   overflow: hidden;
-  padding-bottom: var(--space-500);
+  /* The featured-machine section below brings its own --space-700 top
+     padding, so match it above and add nothing below — equal gaps on both
+     sides keep the strip centered between the hero and that section. */
+  padding-block: var(--space-700) 0;
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
@@ -711,6 +703,174 @@ button {
 
   .partner-logo[aria-hidden="true"] {
     display: none;
+  }
+}
+
+/* ---------- Partners page ---------- */
+
+.partners-page {
+  padding-top: var(--space-900);
+  padding-bottom: var(--space-700);
+}
+
+.partners-header {
+  max-width: 640px;
+  margin-inline: auto;
+  padding-block: var(--space-300) clamp(2rem, 1.5rem + 2vw, 3rem);
+  text-align: center;
+}
+
+.partners-title {
+  font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* min(100%, …) keeps a single column from overflowing on the narrowest
+   phones; beyond that the grid adds columns as room allows. */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+/* One-time entrance on page load: the cards rise in with a short stagger
+   (--i is each card's index, set inline). No scroll trigger — once they're
+   in, they stay put. */
+.partners-grid > li {
+  display: flex;
+  animation: partner-card-in 500ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@keyframes partner-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-grid > li {
+    animation-name: partner-card-fade;
+    animation-duration: 200ms;
+  }
+
+  @keyframes partner-card-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) ease;
+}
+
+.partner-card:active {
+  transform: scale(0.98);
+  transition-duration: 120ms;
+}
+
+.partner-card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* White stage for the logo so JPG logos with a white box sit seamlessly;
+   the hairline below separates it from the text without a heavy divider. */
+.partner-card-logo {
+  display: grid;
+  place-items: center;
+  height: clamp(120px, 100px + 5vw, 160px);
+  padding: var(--space-300) var(--space-400);
+  border-bottom: 1px solid var(--color-steel);
+}
+
+.partner-card-logo img {
+  max-width: min(200px, 100%);
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.partner-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-75);
+  padding: var(--space-300);
+}
+
+.partner-card-name {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-lh);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Pinned to the card's bottom so links line up across a row even if a
+   long name wraps. */
+.partner-card-link {
+  margin-top: auto;
+  padding-top: var(--space-50);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-50);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.partner-card-link svg {
+  color: var(--color-accent);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .partner-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(23, 22, 15, 0.22);
+    box-shadow: 0 16px 32px -12px rgba(23, 22, 15, 0.18);
+  }
+
+  .partner-card:hover .partner-card-logo img {
+    transform: scale(1.04);
+  }
+
+  .partner-card:hover .partner-card-link svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-card,
+  .partner-card-logo img,
+  .partner-card-link svg {
+    transition:
+      box-shadow var(--dur-base) ease,
+      border-color var(--dur-base) ease;
+  }
+
+  .partner-card:hover,
+  .partner-card:active,
+  .partner-card:hover .partner-card-logo img,
+  .partner-card:hover .partner-card-link svg {
+    transform: none;
   }
 }
 
