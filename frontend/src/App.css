@@ -1000,10 +1000,6 @@ button {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.copyright {
-  color: var(--color-accent);
-}
-
 .footer-credit {
   display: inline-flex;
   align-items: center;
