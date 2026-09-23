@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, RotateCcw } from "lucide-react";
 import { LangContext } from "../LangContext";
-import { assetUrl, cssUrl, getMachineFilters, listMachines } from "../lib/api";
+import { assetUrl, getMachineFilters, listMachines } from "../lib/api";
 import { formatPrice } from "../lib/machineDisplay";
 import Select from "./Select";
 
@@ -28,7 +28,15 @@ function MachineCard({ machine, index, onOpen, conditionLabels }) {
   const card = (
     <>
       <div className="machine-card-media">
-        <div className="machine-card-image" style={{ backgroundImage: cssUrl(machine.image) }} />
+        {machine.image && (
+          <img
+            className="machine-card-image"
+            src={machine.image}
+            alt={machine.name}
+            loading={index < 6 ? "eager" : "lazy"}
+            decoding="async"
+          />
+        )}
         {machine.condition && (
           <span className={`machine-card-badge machine-card-badge--${machine.condition}`}>
             {conditionLabels[machine.condition]}
@@ -75,10 +83,10 @@ function MachineCard({ machine, index, onOpen, conditionLabels }) {
     <a
       className="machine-card machine-card-link machine-card-enter"
       style={enterStyle}
-      href={`/machines/${machine.slug}`}
+      href={machine.href}
       onClick={(e) => {
         e.preventDefault();
-        onOpen(machine.slug);
+        onOpen(machine.href);
       }}
     >
       {card}
@@ -88,7 +96,7 @@ function MachineCard({ machine, index, onOpen, conditionLabels }) {
 
 function MachinesComponent({ machines: staticMachines }) {
   const navigate = useNavigate();
-  const { t, lang } = useContext(LangContext);
+  const { t, lang, localize } = useContext(LangContext);
   const mt = t.machines;
 
   // items: null while the very first fetch hasn't resolved yet (nothing to
@@ -153,6 +161,7 @@ function MachinesComponent({ machines: staticMachines }) {
       return items.map((m) => ({
         id: m.id,
         slug: m.slug,
+        href: localize(`/machines/${m.slug}`),
         name: lang === "en" && m.name_en ? m.name_en : m.name,
         image: assetUrl(m.main_image),
         priceLabel: formatPrice(m, mt),
@@ -165,7 +174,7 @@ function MachinesComponent({ machines: staticMachines }) {
       return staticMachines ? fallbackMachines(staticMachines) : [];
     }
     return null;
-  }, [items, error, staticMachines, lang, mt]);
+  }, [items, error, staticMachines, lang, mt, localize]);
 
   const isLoading = cards === null;
   const hasMore = items !== null && items.length < total;
@@ -273,7 +282,7 @@ function MachinesComponent({ machines: staticMachines }) {
               machine={machine}
               index={i % PAGE_SIZE}
               conditionLabels={conditionLabels}
-              onOpen={(slug) => navigate(`/machines/${slug}`)}
+              onOpen={(href) => navigate(href)}
             />
           ))}
         </div>

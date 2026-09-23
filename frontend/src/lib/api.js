@@ -12,15 +12,6 @@ export function assetUrl(path) {
   return `${API_URL}${path}`;
 }
 
-/**
- * Wraps a URL for a CSS `url()` value. Quoted and escaped so a value can never
- * close the `url(` and add extra layers/declarations.
- */
-export function cssUrl(url) {
-  if (!url) return undefined;
-  return `url("${String(url).replace(/["\\\n\r]/g, (c) => encodeURIComponent(c))}")`;
-}
-
 async function parseError(res, fallback) {
   try {
     const body = await res.json();

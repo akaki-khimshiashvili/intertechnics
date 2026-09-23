@@ -714,8 +714,9 @@ button {
 .machine-teaser-image {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 0;
   transition: opacity var(--dur-slow) var(--ease-out);
 }
@@ -732,10 +733,12 @@ button {
   height: 44px;
   border: none;
   border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   background: rgba(0, 0, 0, 0.45);
   color: var(--color-white);
-  font-size: 28px;
-  line-height: 1;
   cursor: pointer;
   transition: background-color var(--dur-base) ease;
 }
@@ -1415,10 +1418,10 @@ button {
 }
 
 .machine-card-image {
+  display: block;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
   transition: transform 500ms var(--ease-out);
 }
 
@@ -1611,13 +1614,28 @@ button {
 }
 
 .machine-detail-main-image {
+  display: block;
+  width: 100%;
   height: 360px;
+  padding: 0;
+  overflow: hidden;
   border-radius: var(--radius-lg);
-  background-size: cover;
-  background-position: center;
   background-color: var(--color-paper-dim);
   border: 1px solid var(--color-steel);
   cursor: pointer;
+}
+
+.machine-detail-main-image img,
+.machine-detail-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.machine-detail-main-image:focus-visible,
+.machine-detail-thumb:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .machine-detail-thumbs {
@@ -1630,9 +1648,9 @@ button {
 .machine-detail-thumb {
   width: 84px;
   height: 64px;
+  padding: 0;
+  overflow: hidden;
   border-radius: var(--radius-sm);
-  background-size: cover;
-  background-position: center;
   border: 1px solid var(--color-steel);
   cursor: pointer;
   opacity: 0.7;
@@ -1828,32 +1846,158 @@ button {
   margin-bottom: var(--space-300);
 }
 
+/* ---------- Prerendered content ---------- */
+
+/* Written into #root by the SEO edge function so crawlers/link previews get
+   real content; React replaces it on mount. App.css is render-blocking, so
+   in the brief moment before that it still looks tidy. */
+.prerender {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: calc(var(--space-900) + var(--space-300)) var(--space-300) var(--space-700);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+.prerender h1 {
+  font-size: var(--text-3xl);
+  line-height: 1.2;
+}
+
+.prerender a {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.prerender img {
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
+
+.prerender ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-75);
+}
+
 /* ---------- 404 ---------- */
 
 .not-found {
-  min-height: 60vh;
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-100);
+  gap: var(--space-200);
   text-align: center;
-  padding-block: var(--space-900);
+  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-700);
 }
 
+/* Oversized numeral as the visual anchor; the middle 0 carries the accent
+   so the page still reads as the brand without an illustration. */
 .not-found-code {
-  font-size: var(--text-6xl);
-  font-weight: 700;
+  font-size: clamp(6rem, 22vw, 11rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  user-select: none;
+  animation: not-found-in 500ms var(--ease-out) both;
+}
+
+.not-found-code span {
   color: var(--color-accent);
 }
 
 .not-found h1 {
   font-size: var(--text-3xl);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  animation: not-found-in 500ms var(--ease-out) 60ms both;
 }
 
-.not-found p {
+.not-found-body {
   color: var(--color-ink-muted);
   max-width: 46ch;
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-lh);
+  animation: not-found-in 500ms var(--ease-out) 120ms both;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-100);
+  margin-top: var(--space-200);
+  animation: not-found-in 500ms var(--ease-out) 180ms both;
+}
+
+.not-found-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  padding: var(--space-100) var(--space-300);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-steel);
+  font-weight: 600;
+  color: var(--color-ink);
+  transition: border-color 160ms ease, background-color 160ms ease, transform 120ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .not-found-secondary:hover {
+    border-color: var(--color-ink);
+    background: var(--color-white);
+  }
+}
+
+.not-found-secondary:active {
+  transform: scale(0.97);
+}
+
+.not-found-actions a:focus-visible,
+.not-found-help a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.not-found-help {
+  margin-top: var(--space-300);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.not-found-help a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+
+@keyframes not-found-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found-code,
+  .not-found h1,
+  .not-found-body,
+  .not-found-actions {
+    animation: none;
+  }
 }
 
 /* ---------- Responsive ---------- */

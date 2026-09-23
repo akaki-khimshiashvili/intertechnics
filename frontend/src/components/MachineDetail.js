@@ -1,27 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../LangContext";
-import { assetUrl, cssUrl, getMachine } from "../lib/api";
+import { assetUrl, getMachine } from "../lib/api";
 import { buildSpecLines, formatPrice } from "../lib/machineDisplay";
 import useDocumentMeta from "../hooks/useDocumentMeta";
 import Footer from "./Footer";
 import Lightbox from "./Lightbox";
+import NotFound from "./NotFound";
 import Reveal from "./Reveal";
-
-// JSON.stringify doesn't escape `<`, so a value containing `</script>` would
-// break out of the JSON-LD block if this page is ever prerendered/SSR'd.
-function safeJsonLd(data) {
-  return JSON.stringify(data)
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/&/g, "\\u0026")
-    .replace(/\u2028/g, "\\u2028")
-    .replace(/\u2029/g, "\\u2029");
-}
 
 export default function MachineDetail() {
   const { slug } = useParams();
-  const { t, lang } = useContext(LangContext);
+  const { t, lang, localize } = useContext(LangContext);
   const mt = t.machines;
 
   const [machine, setMachine] = useState(null);
@@ -45,21 +35,20 @@ export default function MachineDetail() {
     : "";
 
   useDocumentMeta({
-    title: machine ? `${machine.meta_title || name} — Intertechnics LTD` : t.machines.machines_title,
-    description: machine ? machine.meta_description || description || undefined : undefined,
-    lang,
-    path: `/machines/${slug}`,
-    image: machine?.main_image,
+    title: machine
+      ? `${(lang === "ka" && machine.meta_title) || name} — Intertechnics LTD`
+      : `${notFound ? t.notFound.title : t.machines.machines_title} — Intertechnics LTD`,
+    // meta_title/meta_description are written in Georgian in the admin panel.
+    description: machine ? (lang === "ka" && machine.meta_description) || description || undefined : undefined,
+    image: machine ? assetUrl(machine.main_image) : undefined,
+    noindex: notFound,
   });
 
   if (notFound) {
     return (
       <div className="page-shell">
-        <div className="container machines-page page-content">
-          <p className="machines-empty">{mt.no_results}</p>
-          <Link to="/machines" className="back-home-button">
-            {mt.back_to_list}
-          </Link>
+        <div className="page-content">
+          <NotFound />
         </div>
         <Footer />
       </div>
@@ -84,56 +73,36 @@ export default function MachineDetail() {
   const galleryUrls = gallery.map((img) => assetUrl(img));
   const mainImageIndex = Math.max(gallery.indexOf(mainImage), 0);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name,
-    description: description || undefined,
-    brand: machine.brand ? { "@type": "Brand", name: machine.brand } : undefined,
-    image: gallery.map((img) => assetUrl(img)),
-    offers:
-      machine.price !== null
-        ? {
-            "@type": "Offer",
-            priceCurrency: machine.currency,
-            price: machine.price,
-            availability:
-              machine.status === "available"
-                ? "https://schema.org/InStock"
-                : "https://schema.org/OutOfStock",
-          }
-        : undefined,
-  };
-
   return (
     <div className="page-shell">
       <div className="container machines-page machine-detail-page page-content">
-        <Link to="/machines" className="back-home-button" style={{ marginBottom: "20px", display: "inline-block" }}>
+        <Link to={localize("/machines")} className="back-home-button" style={{ marginBottom: "20px", display: "inline-block" }}>
           ← {mt.back_to_list}
         </Link>
 
         <Reveal as="div" className="machine-detail">
           <div className="machine-detail-gallery">
-            <div
+            <button
+              type="button"
               className="machine-detail-main-image"
-              role="button"
-              tabIndex={0}
               onClick={() => mainImage && setLightboxIndex(mainImageIndex)}
-              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && mainImage && setLightboxIndex(mainImageIndex)}
-              style={{ backgroundImage: cssUrl(assetUrl(mainImage)) }}
-            />
+              aria-label={name}
+            >
+              {mainImage && <img src={assetUrl(mainImage)} alt={name} decoding="async" />}
+            </button>
             {gallery.length > 1 && (
               <div className="machine-detail-thumbs">
                 {gallery.map((img, i) => (
-                  <div
+                  <button
                     key={i}
-                    role="button"
-                    tabIndex={0}
+                    type="button"
                     onClick={() => setActiveImage(img)}
-                    onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveImage(img)}
+                    aria-label={`${name} — ${i + 1} / ${gallery.length}`}
+                    aria-pressed={img === mainImage}
                     className={`machine-detail-thumb${img === mainImage ? " machine-detail-thumb-active" : ""}`}
-                    style={{ backgroundImage: cssUrl(assetUrl(img)) }}
-                  />
+                  >
+                    <img src={assetUrl(img)} alt="" loading="lazy" decoding="async" />
+                  </button>
                 ))}
               </div>
             )}
@@ -175,7 +144,6 @@ export default function MachineDetail() {
           }}
         />
       )}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
     </div>
   );
 }

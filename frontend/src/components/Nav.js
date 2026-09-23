@@ -7,13 +7,13 @@ import Socials from "./Socials";
 import logo from "../logo.png";
 
 export default function Nav() {
-  const { t } = useContext(LangContext);
+  const { t, localize, basePath } = useContext(LangContext);
   const navItems = t.headerElements.navItems;
   const machinesLabel = t.company.machines.name;
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [solid, setSolid] = useState(location.pathname !== "/");
+  const [solid, setSolid] = useState(basePath !== "/");
 
   // Close the overlay on route change and lock body scroll while it's open.
   useEffect(() => setOpen(false), [location.pathname]);
@@ -28,7 +28,7 @@ export default function Nav() {
   // solidifies once the hero has scrolled past — other pages have no hero
   // to blend over, so they stay solid from the first paint.
   useEffect(() => {
-    if (location.pathname !== "/") {
+    if (basePath !== "/") {
       setSolid(true);
       return;
     }
@@ -41,19 +41,19 @@ export default function Nav() {
     const observer = new IntersectionObserver(([entry]) => setSolid(!entry.isIntersecting));
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [location.pathname]);
+  }, [location.pathname, basePath]);
 
   const handleClick = (element) => {
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);
-      if (location.pathname !== "/") {
-        navigate("/", { state: { scrollToId } });
+      if (basePath !== "/") {
+        navigate(localize("/"), { state: { scrollToId } });
       } else {
         document.getElementById(scrollToId)?.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      navigate(element.link);
+      navigate(localize(element.link));
     }
     // Same-page hash links don't change location.pathname, so the
     // route-change effect above never fires — close explicitly here too.
@@ -66,10 +66,10 @@ export default function Nav() {
         <div className="site-header-inner container">
           <a
             className="site-header-logo"
-            href="/"
+            href={localize("/")}
             onClick={(e) => {
               e.preventDefault();
-              navigate("/");
+              navigate(localize("/"));
             }}
           >
             <img src={logo} alt="Intertechnics" />
@@ -80,7 +80,7 @@ export default function Nav() {
               {navItems.map((item) => (
                 <li key={item.id}>
                   <a
-                    href={item.link}
+                    href={item.link.startsWith("#") ? item.link : localize(item.link)}
                     onClick={(e) => {
                       e.preventDefault();
                       handleClick(item);
@@ -101,11 +101,11 @@ export default function Nav() {
             <LanguageSwitcher />
             <a
               className="site-header-cta"
-              href="/machines"
-              aria-current={location.pathname === "/machines" ? "page" : undefined}
+              href={localize("/machines")}
+              aria-current={basePath === "/machines" ? "page" : undefined}
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/machines");
+                navigate(localize("/machines"));
               }}
             >
               {machinesLabel}
@@ -128,7 +128,7 @@ export default function Nav() {
           {navItems.map((item, i) => (
             <li key={item.id} style={{ transitionDelay: `${i * 60 + 80}ms` }}>
               <a
-                href={item.link}
+                href={item.link.startsWith("#") ? item.link : localize(item.link)}
                 onClick={(e) => {
                   e.preventDefault();
                   handleClick(item);
@@ -140,10 +140,10 @@ export default function Nav() {
           ))}
           <li style={{ transitionDelay: `${navItems.length * 60 + 80}ms` }}>
             <a
-              href="/machines"
+              href={localize("/machines")}
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/machines");
+                navigate(localize("/machines"));
                 setOpen(false);
               }}
             >

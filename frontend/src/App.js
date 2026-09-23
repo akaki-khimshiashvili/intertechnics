@@ -4,7 +4,7 @@ import "./App.css";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LangContext } from "./LangContext";
+import { LangContext, LangProvider } from "./LangContext";
 import useDocumentMeta from "./hooks/useDocumentMeta";
 
 import Nav from "./components/Nav";
@@ -19,18 +19,24 @@ import MachinesComponent from "./components/MachinesComponent";
 import MachineDetail from "./components/MachineDetail";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
-import Reveal from "./components/Reveal";
 
 function App() {
   return (
     <Router>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/machines" element={<Machines />} />
-        <Route path="/machines/:slug" element={<MachineDetail />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <LangProvider>
+        <Nav />
+        <Routes>
+          {/* Georgian at the root, English under /en — see LangContext. */}
+          {["", "/en"].map((prefix) => (
+            <React.Fragment key={prefix || "ka"}>
+              <Route path={prefix || "/"} element={<Home />} />
+              <Route path={`${prefix}/machines`} element={<Machines />} />
+              <Route path={`${prefix}/machines/:slug`} element={<MachineDetail />} />
+            </React.Fragment>
+          ))}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </LangProvider>
     </Router>
   );
 }
@@ -51,7 +57,7 @@ function Home() {
   }, [location, navigate]);
 
   useDocumentMeta({
-    title: "Intertechnics LTD — Construction Equipment, Georgia",
+    title: `Intertechnics LTD — ${t.hero.heading}`,
     description: t.hero.subheading,
     lang,
   });
@@ -66,9 +72,9 @@ function Home() {
       <TrustStrip />
 
       <div className="container">
-        <h1 className="partner-company-h1" id="partner-company-id">
+        <h2 className="partner-company-h1" id="partner-company-id">
           {t.partnerCompanies.partnerCompaniesH1}
-        </h1>
+        </h2>
         <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
       </div>
 
@@ -76,9 +82,9 @@ function Home() {
       <MachineTeaser />
 
       <div className="container">
-        <h1 className="contactus-h2" id="contactus-id">
+        <h2 className="contactus-h2" id="contactus-id">
           {t.company.title}
-        </h1>
+        </h2>
         <ContactUsInfo
           contacts={t.company.contacts}
           address={t.company.address}
@@ -97,13 +103,14 @@ function Machines() {
 
   useDocumentMeta({
     title: `${t.machines.machines_title} — Intertechnics LTD`,
-    description: t.machineTeaser.body,
+    description: t.machines.meta_description,
     lang,
   });
 
   return (
     <div className="page-shell">
       <div className="container machines-page page-content">
+        <h1 className="machines-title">{t.machines.machines_title}</h1>
         <MachinesComponent machines={t.machines.machines_description} />
       </div>
       <Footer />
@@ -116,14 +123,16 @@ function NotFoundPage() {
 
   useDocumentMeta({
     title: `${t.notFound.title} — Intertechnics LTD`,
+    description: t.notFound.body,
     lang,
+    noindex: true,
   });
 
   return (
     <div className="page-shell">
-      <Reveal as="div" className="page-content">
+      <div className="page-content">
         <NotFound />
-      </Reveal>
+      </div>
       <Footer />
     </div>
   );

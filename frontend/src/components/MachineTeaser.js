@@ -1,13 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { LangContext } from "../LangContext";
-import { assetUrl, cssUrl, listMachines } from "../lib/api";
+import { assetUrl, listMachines } from "../lib/api";
 import Reveal from "./Reveal";
 
 const AUTOPLAY_MS = 6000;
 
 export default function MachineTeaser() {
-  const { t, lang } = useContext(LangContext);
+  const { t, lang, localize } = useContext(LangContext);
   const heading = t.machineTeaser.heading;
   const fallbackBody = t.machineTeaser.body;
   const cta = t.machineTeaser.cta;
@@ -38,7 +39,7 @@ export default function MachineTeaser() {
           name: lang === "en" && m.name_en ? m.name_en : m.name,
           body: (lang === "en" && m.description_en ? m.description_en : m.description) || fallbackBody,
           image: assetUrl(m.main_image),
-          href: `/machines/${m.slug}`,
+          href: localize(`/machines/${m.slug}`),
         }))
       : staticMachine?.name
         ? [
@@ -47,7 +48,7 @@ export default function MachineTeaser() {
               name: staticMachine.name,
               body: fallbackBody,
               image: staticMachine.machine_image,
-              href: "/machines",
+              href: localize("/machines"),
             },
           ]
         : [];
@@ -85,11 +86,14 @@ export default function MachineTeaser() {
       >
         <div className="machine-teaser-media">
           {slides.map((s, i) => (
-            <div
+            <img
               key={s.key}
               className={`machine-teaser-image${i === index ? " is-active" : ""}`}
-              style={{ backgroundImage: cssUrl(s.image) }}
+              src={s.image || undefined}
+              alt={i === index ? s.name : ""}
               aria-hidden={i !== index}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
             />
           ))}
           {count > 1 && (
@@ -100,7 +104,7 @@ export default function MachineTeaser() {
                 aria-label={lang === "en" ? "Previous machine" : "წინა ტექნიკა"}
                 onClick={() => go(index - 1)}
               >
-                ‹
+                <ChevronLeft width={22} height={22} strokeWidth={2.25} aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -108,7 +112,7 @@ export default function MachineTeaser() {
                 aria-label={lang === "en" ? "Next machine" : "შემდეგი ტექნიკა"}
                 onClick={() => go(index + 1)}
               >
-                ›
+                <ChevronRight width={22} height={22} strokeWidth={2.25} aria-hidden="true" />
               </button>
             </>
           )}

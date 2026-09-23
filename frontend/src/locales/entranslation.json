@@ -166,6 +166,7 @@
     "cta": "See full specs"
   },
   "machines": {
+    "meta_description": "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",
     "machines_title": "Machines",
     "machines_description": [
       {
@@ -222,6 +223,8 @@
   "notFound": {
     "title": "Page not found",
     "body": "The page you're looking for doesn't exist or has moved.",
-    "cta": "Back to homepage"
+    "cta": "Back to homepage",
+    "cta_machines": "Browse the machine catalog",
+    "help": "Can't find the machine you need? Call us:"
   }
 }

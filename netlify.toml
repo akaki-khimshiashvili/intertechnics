@@ -1,6 +1,10 @@
 [build]
   base = "frontend"
   publish = "build"
+  # SEO edge function (per-page meta/hreflang/JSON-LD, prerendered content,
+  # real 404s, live /sitemap.xml). Reads API_URL from the site's environment
+  # variables, defaulting to https://api.intertechnics.ge.
+  edge_functions = "netlify/edge-functions"
 
 [build.environment]
   # Emit CRA's webpack runtime as a file instead of an inline <script>, so the

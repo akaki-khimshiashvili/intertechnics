@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LangContext } from "../LangContext";
 import logo from "../logo.png";
 import Socials from "./Socials";
 
@@ -12,6 +13,7 @@ const heroImages = [
 
 export default function Hero({ heading, subheading, ctaLabel }) {
   const navigate = useNavigate();
+  const { localize } = useContext(LangContext);
 
   return (
     <section className="hero">
@@ -35,10 +37,10 @@ export default function Hero({ heading, subheading, ctaLabel }) {
       <div className="hero-content container">
         <a
           className="hero-logo-link"
-          href="/"
+          href={localize("/")}
           onClick={(e) => {
             e.preventDefault();
-            navigate("/");
+            navigate(localize("/"));
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
@@ -50,7 +52,7 @@ export default function Hero({ heading, subheading, ctaLabel }) {
           <div className="hero-actions">
             <button
               className="body-elements-machines-button"
-              onClick={() => navigate("/machines")}
+              onClick={() => navigate(localize("/machines"))}
             >
               <span>{ctaLabel}</span>
             </button>
