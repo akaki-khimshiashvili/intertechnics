@@ -18,6 +18,13 @@ class AuthController
     private const WINDOW_SECONDS = 900;
     private const LOCK_SECONDS = 300;
 
+    // Second, IP-independent bucket per username, so rotating source IPs
+    // can't turn the per-IP limit into unlimited guesses against one account.
+    private const USER_BUCKET = 'login_user';
+    private const USER_MAX_ATTEMPTS = 20;
+    private const USER_WINDOW_SECONDS = 3600;
+    private const USER_LOCK_SECONDS = 900;
+
     public static function login(array $params): void
     {
         $body = Request::jsonBody();
@@ -29,7 +36,9 @@ class AuthController
         }
 
         $identifier = self::rateLimitIdentifier($username);
+        $userIdentifier = strtolower(trim($username));
         RateLimiter::guard(self::RATE_LIMIT_BUCKET, $identifier);
+        RateLimiter::guard(self::USER_BUCKET, $userIdentifier);
 
         $user = UserRepository::findByUsername($username);
         if ($user === null || !UserRepository::verifyPassword($user, $password)) {
@@ -40,10 +49,18 @@ class AuthController
                 self::WINDOW_SECONDS,
                 self::LOCK_SECONDS
             );
+            RateLimiter::recordAttempt(
+                self::USER_BUCKET,
+                $userIdentifier,
+                self::USER_MAX_ATTEMPTS,
+                self::USER_WINDOW_SECONDS,
+                self::USER_LOCK_SECONDS
+            );
             throw new ValidationException('Invalid username or password');
         }
 
         RateLimiter::reset(self::RATE_LIMIT_BUCKET, $identifier);
+        RateLimiter::reset(self::USER_BUCKET, $userIdentifier);
 
         $secret = Env::get('JWT_SECRET');
         if ($secret === null || $secret === '') {

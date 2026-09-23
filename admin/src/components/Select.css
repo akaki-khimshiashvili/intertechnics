@@ -1,0 +1,139 @@
+/* Custom select (replaces native <select>). The list is positioned against
+   .ui-select, so it always opens flush under (or, near the viewport bottom,
+   flush above) its own trigger — unlike the OS picker, which Android centres
+   over the field. The trigger's box styling comes from the surrounding
+   form/toolbar rules, same as the native select it replaces. */
+.ui-select {
+  position: relative;
+  min-width: 0;
+}
+
+.ui-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ui-select-trigger:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.ui-select-value {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-select-chevron {
+  flex: none;
+  color: var(--color-ink-muted);
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ui-select.is-open .ui-select-chevron {
+  transform: rotate(180deg);
+}
+
+.ui-select-list {
+  position: absolute;
+  z-index: 50;
+  /* Size to the longest option so names don't get squeezed into a narrow
+     column when the trigger is small (two-per-row on phones). Never narrower
+     than the trigger; max-width is set inline. */
+  width: max-content;
+  min-width: max(100%, 220px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  background: var(--color-white);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(23, 22, 15, 0.06), 0 16px 40px rgba(23, 22, 15, 0.14);
+  animation: ui-select-in 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ui-select-list--bottom {
+  top: calc(100% + 6px);
+  transform-origin: top center;
+}
+
+.ui-select-list--top {
+  bottom: calc(100% + 6px);
+  transform-origin: bottom center;
+}
+
+.ui-select-list--start {
+  left: 0;
+}
+
+.ui-select-list--end {
+  right: 0;
+}
+
+@keyframes ui-select-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.ui-select-option {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  line-height: 1.35;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-ink);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ui-select-option-label {
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.ui-select-option.is-active {
+  background: var(--color-paper-dim);
+}
+
+.ui-select-option[aria-selected='true'] {
+  font-weight: 600;
+}
+
+.ui-select-option svg {
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-select-list {
+    animation-name: ui-select-fade;
+  }
+
+  .ui-select-chevron {
+    transition: none;
+  }
+}
+
+@keyframes ui-select-fade {
+  from {
+    opacity: 0;
+  }
+}

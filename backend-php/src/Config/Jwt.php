@@ -52,7 +52,7 @@ class Jwt
             throw new ValidationException('Invalid token payload');
         }
 
-        if (isset($payload['exp']) && $payload['exp'] < time()) {
+        if (!isset($payload['exp']) || !is_int($payload['exp']) || $payload['exp'] < time()) {
             throw new ValidationException('Token expired');
         }
 

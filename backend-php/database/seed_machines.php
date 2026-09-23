@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(404);
+    exit;
+}
+
 /**
  * One-off dev seeder: inserts 30 varied test machines (mixed statuses,
  * featured flags, currencies, negotiable prices, and a few intentionally

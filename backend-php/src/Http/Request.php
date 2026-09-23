@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../Config/Env.php';
 require_once __DIR__ . '/../Exceptions/ValidationException.php';
 
 class Request
@@ -30,16 +31,29 @@ class Request
         return $value;
     }
 
+    /**
+     * Client IP. X-Forwarded-For is client-controlled, so it's only honoured
+     * when the direct peer is one of the proxies listed in TRUSTED_PROXIES;
+     * otherwise anyone could pick a fresh "IP" per request and dodge the
+     * login rate limit. With trusted proxies, the right-most hop that isn't
+     * itself a trusted proxy is the real client.
+     */
     public static function ip(): string
     {
-        $forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? null;
-        if (is_string($forwarded) && trim($forwarded) !== '') {
-            $first = trim(explode(',', $forwarded)[0]);
-            if ($first !== '') {
-                return $first;
+        $remote = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        $trusted = array_filter(array_map('trim', explode(',', Env::get('TRUSTED_PROXIES', '') ?? '')));
+        if ($trusted === [] || !in_array($remote, $trusted, true)) {
+            return $remote;
+        }
+
+        $forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
+        $hops = is_string($forwarded) ? array_filter(array_map('trim', explode(',', $forwarded))) : [];
+        foreach (array_reverse($hops) as $hop) {
+            if (!in_array($hop, $trusted, true) && filter_var($hop, FILTER_VALIDATE_IP) !== false) {
+                return $hop;
             }
         }
-        return $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        return $remote;
     }
 
     public static function jsonBody(): array

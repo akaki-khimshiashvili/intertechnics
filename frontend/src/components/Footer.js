@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LangContext } from "../LangContext";
 import kkIcon from "../kk-icon.png";
+import Socials from "./Socials";
 
 export default function Footer() {
   const { t } = useContext(LangContext);
@@ -54,6 +55,7 @@ export default function Footer() {
           </li>
         </ul>
       </nav>
+      <Socials />
       <p className="footer-copyright">
         <span className="copyright">&copy;</span> 2005 – {new Date().getFullYear()} — Intertechnics LTD
       </p>

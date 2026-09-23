@@ -36,10 +36,10 @@ class MachineController
             $filters['price_max'] = (float) $priceMax;
         }
 
-        $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT);
+        $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 100]]);
         if ($limit) {
             $filters['limit'] = $limit;
-            $offset = filter_input(INPUT_GET, 'offset', FILTER_VALIDATE_INT);
+            $offset = filter_input(INPUT_GET, 'offset', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
             $filters['offset'] = $offset ?: 0;
         }
 

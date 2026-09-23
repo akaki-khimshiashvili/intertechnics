@@ -1,4 +1,5 @@
-import { useState, type ChangeEvent, type KeyboardEvent } from 'react'
+import { useState, type KeyboardEvent } from 'react'
+import { Select } from './Select'
 
 const ADD_NEW = '__add_new__'
 
@@ -32,8 +33,7 @@ export function ComboSelect({
   const [isCustom, setIsCustom] = useState(() => value !== '' && !options.includes(value))
   const [confirmed, setConfirmed] = useState(() => isCustom && value !== '')
 
-  function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    const next = e.target.value
+  function handleSelectChange(next: string) {
     if (next === ADD_NEW) {
       setIsCustom(true)
       setConfirmed(false)
@@ -98,14 +98,14 @@ export function ComboSelect({
   }
 
   return (
-    <select value={value} onChange={handleSelectChange}>
-      <option value="">{emptyLabel}</option>
-      <option value={ADD_NEW}>{addNewLabel}</option>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <Select
+      value={value}
+      onChange={handleSelectChange}
+      options={[
+        { value: '', label: emptyLabel },
+        { value: ADD_NEW, label: addNewLabel },
+        ...options.map((option) => ({ value: option, label: option })),
+      ]}
+    />
   )
 }

@@ -21,7 +21,7 @@
       {
         "id": 2,
         "name": "Vakho Khimshiashvili",
-        "position": "Sales Manager",
+        "position": "Sales & Procurement Manager",
         "phone": "597 78 78 15",
         "icon": "sales_manager_icon.png"
       },
@@ -195,6 +195,9 @@
     "sort_price_desc": "Price: high to low",
     "price_negotiable": "Price negotiable",
     "price_on_request": "Price on request",
+    "load_more": "Load more",
+    "showing_count": "Showing {shown} of {total}",
+    "reset_filters": "Reset filters",
     "no_results": "No machines found matching your filters.",
     "loading": "Loading...",
     "load_error": "Could not load machines right now.",

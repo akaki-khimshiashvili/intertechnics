@@ -18,10 +18,11 @@ class AuthMiddleware
         if (str_starts_with($header, 'Bearer ')) {
             $token = substr($header, 7);
         } else {
-            // Last-resort fallback: accept the token as a plain `token` field in the
-            // POST body or query string — some shared hosts strip the Authorization
-            // header before PHP ever sees it, even with the .htaccess workarounds.
-            $fallback = $_POST['token'] ?? $_GET['token'] ?? null;
+            // Fallback for shared hosts that strip the Authorization header before
+            // PHP ever sees it, even with the .htaccess workarounds: a custom
+            // X-Auth-Token header (not stripped), or a `token` POST field. Never the
+            // query string — URLs end up in access/proxy logs, leaking the token.
+            $fallback = $_SERVER['HTTP_X_AUTH_TOKEN'] ?? $_POST['token'] ?? null;
             if (!is_string($fallback) || $fallback === '') {
                 throw new ValidationException('Missing or invalid Authorization header');
             }

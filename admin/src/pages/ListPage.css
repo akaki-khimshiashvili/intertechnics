@@ -186,7 +186,8 @@
 }
 
 .list-toolbar input,
-.list-toolbar select {
+.list-toolbar select,
+.list-toolbar .ui-select-trigger {
   padding: 9px 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-steel);

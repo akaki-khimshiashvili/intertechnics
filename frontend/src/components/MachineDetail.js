@@ -1,12 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "../LangContext";
-import { assetUrl, getMachine } from "../lib/api";
+import { assetUrl, cssUrl, getMachine } from "../lib/api";
 import { buildSpecLines, formatPrice } from "../lib/machineDisplay";
 import useDocumentMeta from "../hooks/useDocumentMeta";
 import Footer from "./Footer";
 import Lightbox from "./Lightbox";
 import Reveal from "./Reveal";
+
+// JSON.stringify doesn't escape `<`, so a value containing `</script>` would
+// break out of the JSON-LD block if this page is ever prerendered/SSR'd.
+function safeJsonLd(data) {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
 
 export default function MachineDetail() {
   const { slug } = useParams();
@@ -68,7 +79,7 @@ export default function MachineDetail() {
 
   const specLines = buildSpecLines(machine, mt.field_labels || {});
   const priceLabel = formatPrice(machine, mt);
-  const gallery = [machine.main_image, ...(machine.images || [])].filter(Boolean);
+  const gallery = [machine.main_image, ...(machine.images || [])].filter((img) => assetUrl(img));
   const mainImage = activeImage && gallery.includes(activeImage) ? activeImage : gallery[0];
   const galleryUrls = gallery.map((img) => assetUrl(img));
   const mainImageIndex = Math.max(gallery.indexOf(mainImage), 0);
@@ -109,7 +120,7 @@ export default function MachineDetail() {
               tabIndex={0}
               onClick={() => mainImage && setLightboxIndex(mainImageIndex)}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && mainImage && setLightboxIndex(mainImageIndex)}
-              style={{ backgroundImage: mainImage ? `url(${assetUrl(mainImage)})` : undefined }}
+              style={{ backgroundImage: cssUrl(assetUrl(mainImage)) }}
             />
             {gallery.length > 1 && (
               <div className="machine-detail-thumbs">
@@ -121,7 +132,7 @@ export default function MachineDetail() {
                     onClick={() => setActiveImage(img)}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setActiveImage(img)}
                     className={`machine-detail-thumb${img === mainImage ? " machine-detail-thumb-active" : ""}`}
-                    style={{ backgroundImage: `url(${assetUrl(img)})` }}
+                    style={{ backgroundImage: cssUrl(assetUrl(img)) }}
                   />
                 ))}
               </div>
@@ -164,7 +175,7 @@ export default function MachineDetail() {
           }}
         />
       )}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
     </div>
   );
 }

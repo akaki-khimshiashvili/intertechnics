@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { API_URL, ApiError, deleteMachine, listMachines, type Machine } from '../../lib/api'
 import { ConfirmDialog } from '../../components/ConfirmDialog'
+import { Select } from '../../components/Select'
 import '../ListPage.css'
 
 const STATUS_LABELS: Record<Machine['status'], string> = {
@@ -79,12 +80,17 @@ export function MachinesList() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="all">ყველა სტატუსი</option>
-            <option value="available">ხელმისაწვდომი</option>
-            <option value="reserved">დაჯავშნილი</option>
-            <option value="sold">გაყიდული</option>
-          </select>
+          <Select
+            value={statusFilter}
+            onChange={setStatusFilter}
+            ariaLabel="სტატუსი"
+            options={[
+              { value: 'all', label: 'ყველა სტატუსი' },
+              { value: 'available', label: 'ხელმისაწვდომი' },
+              { value: 'reserved', label: 'დაჯავშნილი' },
+              { value: 'sold', label: 'გაყიდული' },
+            ]}
+          />
         </div>
       )}
 

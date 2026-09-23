@@ -9,12 +9,12 @@ export class ApiError extends Error {
   }
 }
 
-// Some shared hosts strip the Authorization header before PHP ever sees it;
-// the backend accepts the token as a plain `token` query parameter as a
-// fallback (see AuthMiddleware::authenticate()). The header is still sent too.
-function withToken(path: string, token: string): string {
-  const separator = path.includes('?') ? '&' : '?'
-  return `${API_URL}${path}${separator}token=${encodeURIComponent(token)}`
+// Some shared hosts strip the Authorization header before PHP ever sees it, so
+// the token also goes in a custom X-Auth-Token header, which they leave alone
+// (see AuthMiddleware::authenticate()). Never put it in the URL: query strings
+// end up in server and proxy access logs.
+function authHeaders(token: string | null): Record<string, string> {
+  return token ? { Authorization: `Bearer ${token}`, 'X-Auth-Token': token } : {}
 }
 
 async function parseApiError(res: Response, fallback: string): Promise<ApiError> {
@@ -28,12 +28,11 @@ async function parseApiError(res: Response, fallback: string): Promise<ApiError>
 
 export async function authFetch(path: string, init: RequestInit = {}): Promise<Response> {
   const token = localStorage.getItem(TOKEN_KEY)
-  const url = token ? withToken(path, token) : `${API_URL}${path}`
-  const res = await fetch(url, {
+  const res = await fetch(`${API_URL}${path}`, {
     ...init,
     headers: {
       ...init.headers,
-      Authorization: token ? `Bearer ${token}` : '',
+      ...authHeaders(token),
     },
   })
 
@@ -63,17 +62,17 @@ export async function login(username: string, password: string): Promise<string>
 }
 
 export async function fetchCurrentUser(token: string): Promise<{ id: number; username: string }> {
-  const res = await fetch(withToken('/auth/me', token), {
-    headers: { Authorization: `Bearer ${token}` },
+  const res = await fetch(`${API_URL}/auth/me`, {
+    headers: authHeaders(token),
   })
   if (!res.ok) throw await parseApiError(res, 'სესია ვადაგასულია')
   return res.json()
 }
 
 export async function logout(token: string): Promise<void> {
-  await fetch(withToken('/auth/logout', token), {
+  await fetch(`${API_URL}/auth/logout`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
+    headers: authHeaders(token),
   }).catch(() => {
     // Client-side state is already cleared by the caller regardless.
   })

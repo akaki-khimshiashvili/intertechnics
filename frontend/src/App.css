@@ -705,11 +705,106 @@ button {
   }
 }
 
-.machine-teaser-image {
+.machine-teaser-media {
+  position: relative;
   min-height: 280px;
+  background-color: var(--color-paper-dim);
+}
+
+.machine-teaser-image {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  background-color: var(--color-paper-dim);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+.machine-teaser-image.is-active {
+  opacity: 1;
+}
+
+.machine-teaser-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--color-white);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--dur-base) ease;
+}
+
+.machine-teaser-arrow:hover,
+.machine-teaser-arrow:focus-visible {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.machine-teaser-arrow--prev {
+  left: var(--space-200);
+}
+
+.machine-teaser-arrow--next {
+  right: var(--space-200);
+}
+
+.machine-teaser-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-100);
+  animation: machine-teaser-in var(--dur-slow) var(--ease-out);
+}
+
+@keyframes machine-teaser-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.machine-teaser-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-200);
+}
+
+.machine-teaser-dot {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.machine-teaser-dot::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.35);
+  transition: background-color var(--dur-base) ease, transform var(--dur-base) ease;
+}
+
+.machine-teaser-dot.is-active::after {
+  background: var(--color-accent);
+  transform: scale(1.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .machine-teaser-image {
+    transition: none;
+  }
+  .machine-teaser-text {
+    animation: none;
+  }
 }
 
 .machine-teaser-copy {
@@ -880,24 +975,50 @@ button {
 
 .socials-ul {
   display: flex;
-  gap: var(--space-75);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-100);
 }
 
 .socials-ul li a {
-  width: 38px;
-  height: 38px;
+  height: 44px;
+  padding-inline: 16px 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: var(--color-white);
-  transition: background-color var(--dur-base) ease, transform var(--dur-fast) var(--ease-out);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background-color var(--dur-base) ease, border-color var(--dur-base) ease,
+    color var(--dur-base) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.socials-ul .icon {
+  display: inline-flex;
+  color: var(--color-accent);
+  transition: color var(--dur-base) ease;
+}
+
+.socials-ul li a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .socials-ul li a:hover {
     background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .socials-ul li a:hover .icon {
     color: var(--color-accent-ink);
   }
 }
@@ -925,7 +1046,7 @@ button {
 /* ---------- Machines catalog page ---------- */
 
 .machines-page {
-  padding-top: calc(var(--space-900) + var(--space-300));
+  padding-top: var(--space-900);
 }
 
 .machines-title {
@@ -937,29 +1058,239 @@ button {
 .machines-toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-100);
   padding-block: var(--space-200);
 }
 
-.machines-search {
-  flex: 1 1 240px;
-  padding: var(--space-100) var(--space-200);
+.machines-search,
+.machines-toolbar .ui-select-trigger {
+  height: 44px;
+  padding: 0 var(--space-200);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-steel);
   font: inherit;
   font-size: var(--text-sm);
   background: var(--color-white);
   color: var(--color-ink);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-.machines-toolbar select {
-  padding: var(--space-100) var(--space-200);
-  border-radius: var(--radius-md);
+.machines-search {
+  flex: 1 1 240px;
+}
+
+.machines-search:focus-visible,
+.machines-toolbar .ui-select-trigger:focus-visible,
+.machines-toolbar .ui-select.is-open .ui-select-trigger {
+  outline: none;
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.35);
+}
+
+@media (max-width: 600px) {
+  .machines-toolbar .ui-select {
+    flex: 1 1 calc(50% - var(--space-100));
+  }
+}
+
+/* ---------- Custom select (replaces native <select>) ---------- */
+
+/* The list is positioned against .ui-select, so it always opens flush under
+   (or, near the viewport bottom, flush above) its own trigger — unlike the
+   OS picker, which Android centres over the field. */
+.ui-select {
+  position: relative;
+  min-width: 0;
+}
+
+.ui-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-75);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ui-select-trigger:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.ui-select-value {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-select-chevron {
+  flex: none;
+  color: var(--color-ink-muted);
+  transition: transform 200ms var(--ease-out);
+}
+
+.ui-select.is-open .ui-select-chevron {
+  transform: rotate(180deg);
+}
+
+.ui-select-list {
+  position: absolute;
+  z-index: 50;
+  /* Size to the longest option so names don't get squeezed into a narrow
+     column when the trigger is small (two-per-row on phones). Never narrower
+     than the trigger; max-width is set inline. */
+  width: max-content;
+  min-width: max(100%, 220px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  background: var(--color-white);
   border: 1px solid var(--color-steel);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(23, 22, 15, 0.06), 0 16px 40px rgba(23, 22, 15, 0.14);
+  animation: ui-select-in 150ms var(--ease-out);
+}
+
+.ui-select-list--bottom {
+  top: calc(100% + 6px);
+  transform-origin: top center;
+}
+
+.ui-select-list--top {
+  bottom: calc(100% + 6px);
+  transform-origin: bottom center;
+}
+
+.ui-select-list--start {
+  left: 0;
+}
+
+.ui-select-list--end {
+  right: 0;
+}
+
+@keyframes ui-select-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.ui-select-option {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-200);
+  padding: 10px 14px;
+  line-height: 1.35;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ui-select-option-label {
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.ui-select-option.is-active {
+  background: var(--color-paper-dim);
+}
+
+.ui-select-option[aria-selected="true"] {
+  font-weight: 600;
+}
+
+.ui-select-option svg {
+  flex: none;
+  color: var(--color-accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-select-list {
+    animation-name: ui-select-fade;
+  }
+
+  .ui-select-chevron {
+    transition: none;
+  }
+}
+
+@keyframes ui-select-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Reset: always visible; disabled (muted) until a filter is active. */
+.machines-reset {
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  padding: 0 var(--space-200);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-ink);
+  color: var(--color-white);
   font: inherit;
   font-size: var(--text-sm);
-  background: var(--color-white);
-  color: var(--color-ink);
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease,
+    transform 120ms var(--ease-out);
+}
+
+.machines-reset:disabled {
+  background: transparent;
+  border-color: var(--color-steel);
+  color: var(--color-ink-muted);
+  cursor: default;
+}
+
+.machines-reset svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .machines-reset:not(:disabled):hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .machines-reset:hover svg {
+    transform: rotate(-120deg);
+  }
+}
+
+.machines-reset:active {
+  transform: scale(0.97);
+}
+
+.machines-reset:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@keyframes machines-reset-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 }
 
 .machines-empty,
@@ -969,41 +1300,118 @@ button {
   color: var(--color-ink-muted);
 }
 
-.machines-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--space-400) var(--space-300);
-  padding-block: var(--space-300);
+.machines-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-200);
 }
 
-/* Minimal, image-forward card: picture, category, name, price — nothing
-   else. Full specs live one tap away on the detail page. Feedback is
-   immediate on press (no wait for release) and the image alone carries the
-   hover motion, so the text never jitters. */
+.machines-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-200);
+  padding-block: var(--space-300) var(--space-600);
+}
+
+.machines-count {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.machines-load-more {
+  min-width: 200px;
+  height: 48px;
+  padding: 0 var(--space-400);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-ink);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 160ms ease, color 160ms ease, transform 120ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .machines-load-more:not(:disabled):hover {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+}
+
+.machines-load-more:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.machines-load-more:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.machines-load-more:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.machines-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-300);
+  padding-block: var(--space-100) var(--space-300);
+}
+
+/* Card: a quiet surface that lifts on hover. Press feedback lands on
+   pointer-down (scale), the image alone carries the hover zoom, and every
+   transition names its properties so nothing else animates by accident. */
 .machine-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-100);
+  min-width: 0;
+  border-radius: var(--radius-xl);
+  background: var(--color-white);
+  border: 1px solid var(--color-paper-dim);
+  box-shadow: 0 1px 2px rgba(23, 22, 15, 0.04), 0 4px 16px rgba(23, 22, 15, 0.04);
+  overflow: hidden;
   color: inherit;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 160ms var(--ease-out);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), border-color 200ms ease;
 }
 
 .machine-card-link {
   cursor: pointer;
 }
 
+.machine-card-enter {
+  animation: machine-card-in 300ms var(--ease-out) both;
+}
+
+@keyframes machine-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.machine-card-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 .machine-card-link:active {
-  transform: scale(0.985);
+  transform: scale(0.98);
   transition-duration: 100ms;
 }
 
 .machine-card-media {
-  border-radius: var(--radius-lg);
+  position: relative;
   overflow: hidden;
   background: var(--color-paper-dim);
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
 }
 
 .machine-card-image {
@@ -1011,47 +1419,156 @@ button {
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: transform var(--dur-slow) var(--ease-out);
+  transition: transform 500ms var(--ease-out);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .machine-card-link:hover .machine-card-image {
-    transform: scale(1.045);
-  }
+/* Translucent chip over the photo: heavier weight + slight tracking keeps
+   it legible whatever the image behind it looks like. */
+.machine-card-badge {
+  position: absolute;
+  top: var(--space-100);
+  left: var(--space-100);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--color-ink);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: 0 1px 2px rgba(23, 22, 15, 0.12);
+}
 
-  .machine-card-link:hover .machine-card-name {
-    color: var(--color-ink-soft);
-  }
+.machine-card-badge--new {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
 }
 
 .machine-card-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding-inline: var(--space-25);
+  flex: 1;
+  gap: var(--space-75);
+  padding: var(--space-200) var(--space-300) var(--space-300);
+  min-width: 0;
 }
 
 .machine-card-tag {
   font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--color-ink-muted);
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Long names stop after two lines with an ellipsis; the full name is in
+   the title attribute. min-height keeps prices aligned across a row. */
 .machine-card-name {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
   color: var(--color-ink);
-  transition: color 160ms var(--ease-out);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  min-height: calc(2 * 1.3em);
+}
+
+.machine-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-100);
+  margin-top: auto;
+  padding-top: var(--space-100);
+  border-top: 1px solid var(--color-paper-dim);
 }
 
 .machine-card-price {
   font-size: var(--text-lg);
   font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--color-ink);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.machine-card-arrow {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-paper-dim);
+  color: var(--color-ink);
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .machine-card-link:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-steel);
+    box-shadow: 0 2px 4px rgba(23, 22, 15, 0.04), 0 16px 40px rgba(23, 22, 15, 0.1);
+  }
+
+  .machine-card-link:hover:active {
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  .machine-card-link:hover .machine-card-image {
+    transform: scale(1.05);
+  }
+
+  .machine-card-link:hover .machine-card-arrow {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .machine-card,
+  .machine-card-image,
+  .machine-card-arrow,
+  .machines-reset,
+  .machines-reset svg {
+    transition-property: background-color, color, border-color, box-shadow;
+    animation: none;
+  }
+
+  .machine-card-link:hover,
+  .machine-card-link:hover:active,
+  .machine-card-link:active,
+  .machine-card-link:hover .machine-card-image,
+  .machine-card-link:hover .machine-card-arrow,
+  .machines-reset:hover svg {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .machine-card-badge {
+    background: var(--color-white);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .machine-card-badge--new {
+    background: var(--color-accent);
+  }
 }
 
 .machines-specs {

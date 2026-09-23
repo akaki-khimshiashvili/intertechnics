@@ -1,10 +1,24 @@
 export const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
-/** Resolves an `/uploads/...` or `/images/...` path returned by the API into an absolute URL. */
+/**
+ * Resolves an `/uploads/...` or `/images/...` path returned by the API into an
+ * absolute URL. Anything else (other schemes, protocol-relative `//host`,
+ * relative paths) is rejected, so API data can't point images elsewhere.
+ */
 export function assetUrl(path) {
-  if (!path) return null;
-  if (/^https?:\/\//.test(path)) return path;
+  if (typeof path !== "string" || !path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+  if (!/^\/(uploads|images)\/[^\s"'()\\]+$/.test(path)) return null;
   return `${API_URL}${path}`;
+}
+
+/**
+ * Wraps a URL for a CSS `url()` value. Quoted and escaped so a value can never
+ * close the `url(` and add extra layers/declarations.
+ */
+export function cssUrl(url) {
+  if (!url) return undefined;
+  return `url("${String(url).replace(/["\\\n\r]/g, (c) => encodeURIComponent(c))}")`;
 }
 
 async function parseError(res, fallback) {

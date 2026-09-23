@@ -2,7 +2,42 @@
   base = "frontend"
   publish = "build"
 
+[build.environment]
+  # Emit CRA's webpack runtime as a file instead of an inline <script>, so the
+  # CSP below can use script-src 'self' without 'unsafe-inline'.
+  INLINE_RUNTIME_CHUNK = "false"
+
+# HTTP -> HTTPS and apex -> www, one 301 hop, before the SPA fallback.
+[[redirects]]
+  from = "http://intertechnics.ge/*"
+  to = "https://www.intertechnics.ge/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://intertechnics.ge/*"
+  to = "https://www.intertechnics.ge/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.intertechnics.ge/*"
+  to = "https://www.intertechnics.ge/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://api.intertechnics.ge https://*.tile.openstreetmap.org https://cdn-icons-png.flaticon.com; connect-src 'self' https://api.intertechnics.ge; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Cross-Origin-Opener-Policy = "same-origin"

@@ -1,7 +1,11 @@
+Options -Indexes
 RewriteEngine On
 
-# Redirect to HTTPS first (same host) — before anything else.
+# Redirect to HTTPS first (same host) — before anything else. The
+# X-Forwarded-Proto check stops a redirect loop behind a TLS-terminating
+# proxy/CDN, where %{HTTPS} is always off.
 RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Pass the Authorization header through to PHP. Apache/LiteSpeed (LSAPI)
@@ -25,19 +29,19 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
 
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "DENY"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-    Header set Cross-Origin-Opener-Policy "same-origin"
-    Header set Content-Security-Policy "default-src 'none'"
-    Header always set Strict-Transport-Security "max-age=86400; includeSubDomains"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 <FilesMatch "\.(webp|jpe?g|png|gif)$">
     <IfModule mod_headers.c>
         Header set Cache-Control "public, max-age=31536000, immutable"
-        Header unset Content-Security-Policy
-        Header unset X-Frame-Options
+        Header always unset Content-Security-Policy
+        Header always unset X-Frame-Options
     </IfModule>
 </FilesMatch>
 

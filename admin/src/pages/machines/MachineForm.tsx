@@ -12,12 +12,13 @@ import {
   type Spec,
 } from '../../lib/api'
 import { ComboSelect } from '../../components/ComboSelect'
+import { Select } from '../../components/Select'
 import { showToast } from '../../components/Toast'
 import './MachineForm.css'
 
 const CURRENT_YEAR = new Date().getFullYear()
 // Descending list from next year (for incoming stock) down to 1980.
-const YEAR_OPTIONS = Array.from({ length: CURRENT_YEAR - 1978 }, (_, i) => CURRENT_YEAR + 1 - i)
+const YEAR_OPTIONS = Array.from({ length: CURRENT_YEAR - 1978 }, (_, i) => String(CURRENT_YEAR + 1 - i))
 
 // Already uploaded (editing an existing machine) vs. picked in this session
 // but not yet sent anywhere — nothing hits /uploads/image until submit.
@@ -162,18 +163,28 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
       })
   }, [])
 
+  function setField<K extends keyof FormState>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }) as FormState)
+    setFieldErrors((prev) => {
+      if (!prev[key]) return prev
+      const next = { ...prev }
+      delete next[key]
+      return next
+    })
+  }
+
   function field<K extends keyof FormState>(key: K) {
     return {
       value: form[key] as string,
-      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setForm((prev) => ({ ...prev, [key]: e.target.value }) as FormState)
-        setFieldErrors((prev) => {
-          if (!prev[key]) return prev
-          const next = { ...prev }
-          delete next[key]
-          return next
-        })
-      },
+      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setField(key, e.target.value),
+    }
+  }
+
+  // Same as field(), for the custom <Select> (its onChange gets the value, not an event).
+  function selectField<K extends keyof FormState>(key: K) {
+    return {
+      value: form[key] as string,
+      onChange: (value: string) => setField(key, value),
     }
   }
 
@@ -337,29 +348,31 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
           </label>
           <label className="machine-field">
             <span>წელი</span>
-            <select {...field('year')}>
-              <option value="">არჩეული არაა</option>
-              {YEAR_OPTIONS.map((y) => (
-                <option key={y} value={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
+            <Select
+              {...selectField('year')}
+              options={[{ value: '', label: 'არჩეული არაა' }, ...YEAR_OPTIONS.map((y) => ({ value: y, label: y }))]}
+            />
           </label>
           <label className="machine-field">
             <span>მდგომარეობა</span>
-            <select {...field('condition_status')}>
-              <option value="new">ახალი</option>
-              <option value="used">მეორადი</option>
-            </select>
+            <Select
+              {...selectField('condition_status')}
+              options={[
+                { value: 'new', label: 'ახალი' },
+                { value: 'used', label: 'მეორადი' },
+              ]}
+            />
           </label>
           <label className="machine-field">
             <span>სტატუსი</span>
-            <select {...field('status')}>
-              <option value="available">ხელმისაწვდომი</option>
-              <option value="reserved">დაჯავშნილი</option>
-              <option value="sold">გაყიდული</option>
-            </select>
+            <Select
+              {...selectField('status')}
+              options={[
+                { value: 'available', label: 'ხელმისაწვდომი' },
+                { value: 'reserved', label: 'დაჯავშნილი' },
+                { value: 'sold', label: 'გაყიდული' },
+              ]}
+            />
           </label>
         </div>
         <label className="machine-checkbox">
@@ -381,11 +394,14 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
           </label>
           <label className="machine-field">
             <span>ვალუტა</span>
-            <select {...field('currency')}>
-              <option value="USD">USD</option>
-              <option value="GEL">GEL</option>
-              <option value="EUR">EUR</option>
-            </select>
+            <Select
+              {...selectField('currency')}
+              options={[
+                { value: 'USD', label: 'USD' },
+                { value: 'GEL', label: 'GEL' },
+                { value: 'EUR', label: 'EUR' },
+              ]}
+            />
           </label>
         </div>
         <label className="machine-checkbox">
