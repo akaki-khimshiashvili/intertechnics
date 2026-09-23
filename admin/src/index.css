@@ -64,3 +64,32 @@ a {
 #root {
   min-height: 100svh;
 }
+
+/* Scrollbars in the site's palette: amber thumb on the warm paper track. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-paper-dim);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper-dim);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 999px;
+  border: 2px solid var(--color-paper-dim);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-paper-dim);
+}

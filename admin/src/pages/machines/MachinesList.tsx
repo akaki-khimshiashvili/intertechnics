@@ -17,6 +17,12 @@ function formatPrice(machine: Machine): string {
   return machine.price_negotiable ? `${price} (შეთანხმებადი)` : price
 }
 
+function formatDate(value: string): string {
+  const [date] = value.split(' ')
+  const [y, m, d] = date.split('-')
+  return d && m && y ? `${d}.${m}.${y}` : value
+}
+
 export function MachinesList() {
   const [machines, setMachines] = useState<Machine[] | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -97,49 +103,91 @@ export function MachinesList() {
       {!machines && !error && <p>იტვირთება...</p>}
 
       {filtered && (
-        <div className="list-table-wrap">
+        <div className={`list-table-wrap${filtered.length > 0 ? ' is-scrollable' : ''}`}>
           {filtered.length === 0 ? (
             <p className="list-empty">ტექნიკა ვერ მოიძებნა.</p>
           ) : (
             <table className="list-table">
               <thead>
                 <tr>
-                  <th></th>
-                  <th>დასახელება</th>
+                  <th className="list-col-machine">ტექნიკა</th>
                   <th>ბრენდი</th>
                   <th>კატეგორია</th>
+                  <th>მოდელი</th>
+                  <th>წელი</th>
+                  <th>მდგომარეობა</th>
                   <th>ფასი</th>
                   <th>სტატუსი</th>
-                  <th></th>
+                  <th>გამორჩეული</th>
+                  <th>სიმძლავრე</th>
+                  <th>წონა</th>
+                  <th>ნამუშევარი საათები</th>
+                  <th>განახლდა</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((machine) => (
                   <tr key={machine.id}>
-                    <td>
-                      {machine.main_image ? (
-                        <img className="list-cover-thumb" src={`${API_URL}${machine.main_image}`} alt="" />
-                      ) : (
-                        <span className="list-cover-placeholder" />
-                      )}
+                    {/* First column: photo, name, and the row's actions right beside the name. */}
+                    <td className="list-col-machine">
+                      <div className="list-machine">
+                        {machine.main_image ? (
+                          <img className="list-cover-thumb" src={`${API_URL}${machine.main_image}`} alt="" loading="lazy" />
+                        ) : (
+                          <span className="list-cover-placeholder" />
+                        )}
+                        <div className="list-machine-text">
+                          <div className="list-machine-title">
+                            <Link className="list-machine-name" to={`/machines/${machine.id}/edit`} title={machine.name}>
+                              {machine.name}
+                            </Link>
+                            <div className="list-actions">
+                              <Link
+                                className="list-action list-action-edit"
+                                to={`/machines/${machine.id}/edit`}
+                                aria-label={`„${machine.name}" რედაქტირება`}
+                                title="რედაქტირება"
+                              >
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d="M12 20h9" />
+                                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                                </svg>
+                                <span>რედაქტირება</span>
+                              </Link>
+                              <button
+                                type="button"
+                                className="list-action list-action-delete"
+                                onClick={() => setPendingDelete(machine)}
+                                aria-label={`„${machine.name}" წაშლა`}
+                                title="წაშლა"
+                              >
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <path d="M3 6h18" />
+                                  <path d="M8 6V4h8v2" />
+                                  <path d="M19 6l-1 14H6L5 6" />
+                                </svg>
+                                <span>წაშლა</span>
+                              </button>
+                            </div>
+                          </div>
+                          {machine.name_en && <span className="list-machine-sub">{machine.name_en}</span>}
+                        </div>
+                      </div>
                     </td>
-                    <td>{machine.name}</td>
                     <td>{machine.brand ?? '—'}</td>
                     <td>{machine.category ?? '—'}</td>
+                    <td>{machine.model ?? '—'}</td>
+                    <td>{machine.year ?? '—'}</td>
+                    <td>{machine.condition_status === 'new' ? 'ახალი' : 'მეორადი'}</td>
                     <td>{formatPrice(machine)}</td>
                     <td>
                       <span className={`list-badge list-badge-${machine.status}`}>{STATUS_LABELS[machine.status]}</span>
                     </td>
-                    <td>
-                      <div className="list-actions">
-                        <Link className="list-edit-link" to={`/machines/${machine.id}/edit`}>
-                          რედაქტირება
-                        </Link>
-                        <button type="button" className="list-delete-btn" onClick={() => setPendingDelete(machine)}>
-                          წაშლა
-                        </button>
-                      </div>
-                    </td>
+                    <td>{machine.featured ? '★ კი' : '—'}</td>
+                    <td>{machine.power_hp !== null ? `${machine.power_hp} hp` : '—'}</td>
+                    <td>{machine.operating_weight_kg !== null ? `${machine.operating_weight_kg.toLocaleString('en-US')} kg` : '—'}</td>
+                    <td>{machine.working_hours !== null ? `${machine.working_hours.toLocaleString('en-US')} სთ` : '—'}</td>
+                    <td>{formatDate(machine.updated_at)}</td>
                   </tr>
                 ))}
               </tbody>

@@ -49,13 +49,23 @@
   background: var(--color-white);
   border: 1px solid var(--color-steel);
   border-radius: var(--radius-lg);
-  overflow: hidden;
-  overflow-x: auto;
+  overflow: auto;
+}
+
+/* Fixed-height window (70% of the screen) that scrolls both ways; the header
+   row sticks to the top, everything else (including the machine column)
+   scrolls freely. */
+.list-table-wrap.is-scrollable {
+  height: 70vh;
+  min-height: 320px;
+  overscroll-behavior: contain;
 }
 
 .list-table {
-  width: 100%;
-  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
 }
 
@@ -65,33 +75,121 @@
   padding: 12px 14px;
   border-bottom: 1px solid var(--color-paper-dim);
   white-space: nowrap;
+  background: var(--color-white);
 }
 
 .list-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   font-weight: 600;
   color: var(--color-ink-muted);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   background: var(--color-paper-dim);
+  border-bottom-color: var(--color-steel);
+}
+
+.list-table .list-col-machine {
+  width: 440px;
+  min-width: 440px;
+  max-width: 440px;
+  white-space: normal;
 }
 
 .list-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.list-table tbody tr:hover {
-  background: var(--color-paper-dim);
+.list-table tbody tr:hover td {
+  background: #f7f6f1;
 }
 
-.list-table a {
+.list-machine {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.list-machine-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.list-machine-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.list-machine-name {
+  flex: 1;
+  min-width: 0;
+  /* Long names wrap to two lines, then ellipsis; full name in the tooltip. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.35;
   color: var(--color-ink);
   text-decoration: none;
   font-weight: 600;
 }
 
-.list-table a:hover {
+.list-machine-name:hover {
   text-decoration: underline;
+}
+
+.list-machine-sub {
+  font-size: 12px;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Phones: a narrower pinned column and icon-only actions (labels stay as
+   aria-label/title), so the other columns are still reachable. */
+@media (max-width: 720px) {
+  .list-table .list-col-machine {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    padding: 10px;
+  }
+
+  .list-machine {
+    gap: 8px;
+  }
+
+  .list-machine .list-cover-thumb,
+  .list-machine .list-cover-placeholder {
+    width: 38px;
+    height: 38px;
+  }
+
+  .list-machine-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .list-action {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .list-action span {
+    display: none;
+  }
 }
 
 .list-cover-thumb {
@@ -137,33 +235,54 @@
 
 .list-actions {
   display: flex;
-  gap: 14px;
+  flex: none;
+  gap: 6px;
   align-items: center;
 }
 
-.list-edit-link {
-  color: var(--color-ink);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.list-edit-link:hover {
-  text-decoration: underline;
-}
-
-.list-delete-btn {
+.list-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-steel);
+  background: var(--color-white);
   font: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 100ms ease-out;
 }
 
-.list-delete-btn:hover {
-  text-decoration: underline;
+.list-action:active {
+  transform: scale(0.96);
+}
+
+.list-action:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.list-action-edit {
+  color: var(--color-ink);
+}
+
+.list-action-edit:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.list-action-delete {
+  color: var(--color-danger);
+}
+
+.list-action-delete:hover {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: var(--color-white);
 }
 
 .list-empty {

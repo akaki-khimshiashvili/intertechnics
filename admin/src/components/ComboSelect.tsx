@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react'
+import { useState, type KeyboardEvent, type MouseEvent } from 'react'
 import { Select } from './Select'
 
 const ADD_NEW = '__add_new__'
@@ -50,6 +50,16 @@ export function ComboSelect({
     }
   }
 
+  // This component sits inside a <label>. Each button below swaps what's
+  // rendered, so by the time the browser runs the label's default click
+  // behaviour the clicked button is gone, and the label forwards the click to
+  // whatever control is now first — e.g. "save" re-clicked the new "change"
+  // button and instantly undid itself. preventDefault cancels that.
+  const handle = (action: () => void) => (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    action()
+  }
+
   function backToSelect() {
     setIsCustom(false)
     setConfirmed(false)
@@ -60,7 +70,7 @@ export function ComboSelect({
     return (
       <div className="combo-select-confirmed">
         <span className="combo-select-confirmed-value">✓ {value}</span>
-        <button type="button" className="combo-select-back" onClick={() => setConfirmed(false)}>
+        <button type="button" className="combo-select-back" onClick={handle(() => setConfirmed(false))}>
           შეცვლა
         </button>
       </div>
@@ -83,13 +93,13 @@ export function ComboSelect({
             type="button"
             className="combo-select-save"
             disabled={value.trim() === ''}
-            onClick={() => setConfirmed(true)}
+            onClick={handle(() => setConfirmed(true))}
           >
             შენახვა
           </button>
         </div>
         {options.length > 0 && (
-          <button type="button" className="combo-select-back" onClick={backToSelect}>
+          <button type="button" className="combo-select-back" onClick={handle(backToSelect)}>
             სიიდან არჩევა
           </button>
         )}
