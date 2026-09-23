@@ -30,6 +30,9 @@ const STRINGS = {
     heroHeading: "საქართველოს სამშენებლო ტექნიკის პარტნიორი 2005 წლიდან",
     heroSub:
       "Bobcat-ის, Kubota-ს, AMMANN-ის, Putzmeister-ის, Kaeser-ის და სხვა წამყვანი ბრენდების ოფიციალური დილერი, სათადარიგო ნაწილებისა და პროფესიონალური სერვისის სრული მხარდაჭერით.",
+    partnersTitle: "პარტნიორი კომპანიები",
+    partnersDesc:
+      "ქვემოთ ჩამოთვლილი მწარმოებლების ოფიციალური დილერი და სერვის-პარტნიორი ვართ — სათადარიგო ნაწილებითა და საგარანტიო მომსახურებით საქართველოში.",
     machinesTitle: "ტექნიკა",
     machinesDesc:
       "Intertechnics-ის ტექნიკის კატალოგი: ახალი და მეორადი სამშენებლო და საგზაო ტექნიკა — Bobcat, Kubota, AMMANN, Putzmeister და სხვა. ფასები, მახასიათებლები და ფოტოები.",
@@ -59,6 +62,9 @@ const STRINGS = {
     heroHeading: "Georgia's construction equipment partner since 2005",
     heroSub:
       "Official dealer for Bobcat, Kubota, AMMANN, Putzmeister, Kaeser and more, backed by spare parts and service.",
+    partnersTitle: "Partner Companies",
+    partnersDesc:
+      "Official dealer and service partner for the manufacturers below, with spare parts and warranty support in Georgia.",
     machinesTitle: "Machines",
     machinesDesc:
       "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",
@@ -208,6 +214,29 @@ async function homePage(lang, s) {
       <p>${esc(s.heroSub)}</p>
       <p><a href="${pathFor("/machines", lang)}">${esc(s.machinesTitle)}</a></p>
       ${machineLinks(featured, lang, s)}`,
+  };
+}
+
+const PARTNERS = [
+  { name: "Bobcat", url: "https://www.bobcat.com/" },
+  { name: "Kubota", url: "https://www.kubota.com/" },
+  { name: "AMMANN", url: "https://www.ammann.com/en/plants/asphalt-plants" },
+  { name: "Hbm-Nobas", url: "http://www.gp.ag/hbm-nobas/Start/" },
+  { name: "Putzmeister", url: "https://www.putzmeister.com" },
+  { name: "Kaeser Gmbh", url: "https://www.kaeser.com/int-en/" },
+  { name: "Ins-Makina", url: "https://www.insmakina.com/ru/" },
+  { name: "Kmayco", url: "https://www.kmayco.de/en" },
+];
+
+function partnersPage(lang, s) {
+  const items = PARTNERS.map((p) => `<li><a href="${esc(p.url)}">${esc(p.name)}</a></li>`).join("");
+  return {
+    title: `${s.partnersTitle} — ${BRAND}`,
+    description: truncate(s.partnersDesc),
+    body: `
+      <h1>${esc(s.partnersTitle)}</h1>
+      <p>${esc(s.partnersDesc)}</p>
+      <ul>${items}</ul>`,
   };
 }
 
@@ -415,6 +444,7 @@ async function sitemap() {
   const entries = [
     { path: "/", priority: "1.0", changefreq: "weekly" },
     { path: "/machines", priority: "0.9", changefreq: "daily" },
+    { path: "/partners", priority: "0.7", changefreq: "monthly" },
     ...machines.map((m) => ({
       path: `/machines/${encodeURIComponent(m.slug)}`,
       priority: "0.8",
@@ -468,6 +498,7 @@ export default async (request, context) => {
   try {
     if (basePath === "/") page = await homePage(lang, s);
     else if (basePath === "/machines") page = await listingPage(lang, s);
+    else if (basePath === "/partners") page = partnersPage(lang, s);
     else {
       const match = basePath.match(/^\/machines\/([a-z0-9-]+)$/);
       if (match) {
