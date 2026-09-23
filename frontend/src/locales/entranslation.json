@@ -69,6 +69,11 @@
       }
     ]
   },
+  "testimonials": {
+    "title": "What our clients say",
+    "source": "Google review",
+    "starsLabel": "Rated 5 out of 5"
+  },
   "partnerCompanies": {
     "partnerCompaniesH1": "Partner Companies",
     "intro": "Official dealer and service partner for the manufacturers below, with spare parts and warranty support in Georgia.",

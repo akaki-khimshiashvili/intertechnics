@@ -13,6 +13,7 @@ import Hero from "./components/Hero";
 import PartnerCompanies from "./components/PartnerCompanies";
 import PartnerCard from "./components/PartnerCard";
 import AboutUs from "./components/AboutUs";
+import Testimonials from "./components/Testimonials";
 import MachineTeaser from "./components/MachineTeaser";
 import ContactUsInfo from "./components/ContactUsInfo";
 import LocationMap from "./components/LocationMap";
@@ -100,6 +101,7 @@ function Home() {
 
       <MachineTeaser />
       <AboutUs />
+      <Testimonials />
 
       <div className="container">
         <h2 className="contactus-h2" id="contactus-id">
