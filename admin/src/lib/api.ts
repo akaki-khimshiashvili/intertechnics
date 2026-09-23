@@ -227,3 +227,31 @@ export async function deleteMachine(id: number): Promise<void> {
   const res = await authFetch(`/machines/${id}`, { method: 'DELETE' })
   if (!res.ok && res.status !== 204) throw await parseApiError(res, 'ტექნიკის წაშლა ვერ მოხერხდა')
 }
+
+// ---------------------------------------------------------------------------
+// Analytics
+// ---------------------------------------------------------------------------
+
+export type AnalyticsMetric =
+  | 'page_views'
+  | 'unique_visitors'
+  | 'machines_page_views'
+  | 'machine_detail_views'
+  | 'contact_clicks'
+  | 'phone_clicks'
+
+export type AnalyticsTotals = Record<AnalyticsMetric, number>
+
+export type AnalyticsSummary = {
+  days: number
+  totals: AnalyticsTotals
+  previous_totals: AnalyticsTotals
+  daily: (AnalyticsTotals & { day: string })[]
+  top_machines: { machine_id: number; name: string | null; slug: string | null; views: number; visitors: number }[]
+}
+
+export async function getAnalyticsSummary(days: number): Promise<AnalyticsSummary> {
+  const res = await authFetch(`/analytics/summary?days=${days}`)
+  if (!res.ok) throw await parseApiError(res, 'სტატისტიკის ჩატვირთვა ვერ მოხერხდა')
+  return res.json()
+}

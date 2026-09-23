@@ -71,3 +71,25 @@ CREATE TABLE IF NOT EXISTS revoked_tokens (
     revoked_at  DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     INDEX idx_revoked_tokens_expires_at (expires_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Anonymous analytics for the admin dashboard. No cookies, no IP address, no
+-- user agent is stored. visitor_hash is SHA-256(daily secret + IP + UA): it
+-- can't be reversed, and because the secret changes every day the same
+-- person can't be followed across days — it only lets us count unique
+-- visitors per day. event_type: page_view | contact_click | phone_click.
+-- path is the language-neutral route ("/", "/machines", "/machines/<slug>").
+-- machine_id is set for machine detail views; no FK, so deleting a machine
+-- keeps its history.
+CREATE TABLE IF NOT EXISTS analytics_events (
+    id            BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    event_type    VARCHAR(32) NOT NULL,
+    path          VARCHAR(255) NULL,
+    machine_id    INT UNSIGNED NULL,
+    source        VARCHAR(20) NULL,
+    lang          CHAR(2) NULL,
+    visitor_hash  CHAR(64) NULL,
+    created_at    DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    INDEX idx_analytics_type_created (event_type, created_at),
+    INDEX idx_analytics_machine_created (machine_id, created_at),
+    INDEX idx_analytics_created_visitor (created_at, visitor_hash)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

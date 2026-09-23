@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { LangContext } from "../LangContext";
 import kkIcon from "../kk-icon.png";
 import Socials from "./Socials";
+import { track } from "../lib/analytics";
 
 export default function Footer() {
-  const { t, localize, basePath } = useContext(LangContext);
+  const { t, lang, localize, basePath } = useContext(LangContext);
   const navItems = t.headerElements.navItems;
   const machinesLabel = t.company.machines.name;
   const navigate = useNavigate();
 
   const handleClick = (element) => {
+    if (element.link === "#contactus-id") track("contact_click", { source: "footer", lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);

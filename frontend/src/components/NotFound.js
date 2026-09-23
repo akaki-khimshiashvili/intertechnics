@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Phone } from "lucide-react";
 import { LangContext } from "../LangContext";
+import { track } from "../lib/analytics";
 
 export default function NotFound() {
-  const { t, localize } = useContext(LangContext);
+  const { t, lang, localize } = useContext(LangContext);
   const notFound = t.notFound;
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ export default function NotFound() {
 
       <p className="not-found-help">
         {notFound.help}{" "}
-        <a href="tel:+995599502517">
+        <a href="tel:+995599502517" onClick={() => track("phone_click", { source: "not_found", lang })}>
           <Phone width={14} height={14} aria-hidden="true" />
           599 50 25 17
         </a>

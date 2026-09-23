@@ -7,6 +7,7 @@ import useDocumentMeta from "../hooks/useDocumentMeta";
 import Footer from "./Footer";
 import Lightbox from "./Lightbox";
 import NotFound from "./NotFound";
+import { track } from "../lib/analytics";
 import Reveal from "./Reveal";
 
 export default function MachineDetail() {
@@ -126,7 +127,7 @@ export default function MachineDetail() {
               ))}
             </ul>
 
-            <a className="btn-primary" href="tel:+995599502517">
+            <a className="btn-primary" href="tel:+995599502517" onClick={() => track("phone_click", { source: "machine_page", lang })}>
               {t.company.contacts[0]?.phone ?? ""}
             </a>
           </div>

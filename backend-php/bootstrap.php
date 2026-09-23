@@ -21,6 +21,7 @@ require_once __DIR__ . '/src/Repositories/MachineRepository.php';
 require_once __DIR__ . '/src/Repositories/UserRepository.php';
 require_once __DIR__ . '/src/Repositories/RateLimitRepository.php';
 require_once __DIR__ . '/src/Repositories/RevokedTokenRepository.php';
+require_once __DIR__ . '/src/Repositories/AnalyticsRepository.php';
 
 require_once __DIR__ . '/src/Http/Request.php';
 require_once __DIR__ . '/src/Http/Response.php';
@@ -34,5 +35,6 @@ require_once __DIR__ . '/src/Validation/MachineValidator.php';
 require_once __DIR__ . '/src/Controllers/AuthController.php';
 require_once __DIR__ . '/src/Controllers/UploadController.php';
 require_once __DIR__ . '/src/Controllers/MachineController.php';
+require_once __DIR__ . '/src/Controllers/AnalyticsController.php';
 
 Env::load(__DIR__ . '/.env');

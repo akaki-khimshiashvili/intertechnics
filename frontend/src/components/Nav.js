@@ -3,11 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { LangContext } from "../LangContext";
 import { Phone } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { track } from "../lib/analytics";
 import Socials from "./Socials";
 import logo from "../logo.png";
 
 export default function Nav() {
-  const { t, localize, basePath } = useContext(LangContext);
+  const { t, lang, localize, basePath } = useContext(LangContext);
   const navItems = t.headerElements.navItems;
   const machinesLabel = t.company.machines.name;
   const navigate = useNavigate();
@@ -43,7 +44,8 @@ export default function Nav() {
     return () => observer.disconnect();
   }, [location.pathname, basePath]);
 
-  const handleClick = (element) => {
+  const handleClick = (element, source = "nav") => {
+    if (element.link === "#contactus-id") track("contact_click", { source, lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);
@@ -94,7 +96,7 @@ export default function Nav() {
           </nav>
 
           <div className="site-header-actions">
-            <a className="nav-phone" href="tel:+995599502517">
+            <a className="nav-phone" href="tel:+995599502517" onClick={() => track("phone_click", { source: "nav", lang })}>
               <Phone width={16} />
               <span>599 50 25 17</span>
             </a>
@@ -131,7 +133,7 @@ export default function Nav() {
                 href={item.link.startsWith("#") ? item.link : localize(item.link)}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleClick(item);
+                  handleClick(item, "mobile_menu");
                 }}
               >
                 {item.name}
@@ -156,7 +158,7 @@ export default function Nav() {
           className="nav-overlay-footer"
           style={{ transitionDelay: `${navItems.length * 60 + 140}ms` }}
         >
-          <a className="nav-overlay-call" href="tel:+995599502517">
+          <a className="nav-overlay-call" href="tel:+995599502517" onClick={() => track("phone_click", { source: "mobile_menu", lang })}>
             <Phone width={18} />
             <span>599 50 25 17</span>
           </a>

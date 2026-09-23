@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LangContext, LangProvider } from "./LangContext";
 import useDocumentMeta from "./hooks/useDocumentMeta";
+import { track } from "./lib/analytics";
 
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <LangProvider>
+        <PageViewTracker />
         <Nav />
         <Routes>
           {/* Georgian at the root, English under /en — see LangContext. */}
@@ -39,6 +41,20 @@ function App() {
       </LangProvider>
     </Router>
   );
+}
+
+/** Counts a page view per route; see lib/analytics.js. */
+function PageViewTracker() {
+  const { lang, basePath } = useContext(LangContext);
+
+  useEffect(() => {
+    // Short settle so an immediate redirect (e.g. a returning English
+    // visitor sent from / to /en) is counted once, not twice.
+    const handle = setTimeout(() => track("page_view", { path: basePath, lang }), 400);
+    return () => clearTimeout(handle);
+  }, [basePath, lang]);
+
+  return null;
 }
 
 function Home() {

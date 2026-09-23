@@ -35,4 +35,11 @@ $router->delete('/machines/{id}', static function (array $params): void {
     MachineController::destroy($params);
 });
 
+// Analytics: anonymous event collection (public) and the dashboard summary (admin only)
+$router->post('/analytics/events', [AnalyticsController::class, 'track']);
+$router->get('/analytics/summary', static function (array $params): void {
+    AuthMiddleware::authenticate();
+    AnalyticsController::summary($params);
+});
+
 return $router;
