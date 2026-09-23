@@ -28,15 +28,12 @@ const socialLinks = [
 ];
 
 export default function Socials({ className = "" }) {
-  const { lang } = useContext(LangContext);
-
   return (
     <ul className={`socials-ul ${className}`.trim()}>
       {socialLinks.map((item) => (
         <li key={item.id}>
           <a href={item.link} target="_blank" rel="noopener noreferrer">
             <span className="icon">{item.icon}</span>
-            {/* <span className="socials-label">{item.label[lang] || item.label.en}</span> */}
           </a>
         </li>
       ))}
