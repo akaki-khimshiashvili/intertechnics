@@ -10,7 +10,6 @@ import { track } from "./lib/analytics";
 
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import TrustStrip from "./components/TrustStrip";
 import PartnerCompanies from "./components/PartnerCompanies";
 import AboutUs from "./components/AboutUs";
 import MachineTeaser from "./components/MachineTeaser";
@@ -94,14 +93,13 @@ function Home() {
         ctaPrimary={t.hero.ctaPrimary}
         ctaSecondary={t.hero.ctaSecondary}
       />
-      <TrustStrip />
 
       <div className="container">
         <h2 className="partner-company-h1" id="partner-company-id">
           {t.partnerCompanies.partnerCompaniesH1}
         </h2>
-        <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
       </div>
+      <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
 
       <AboutUs />
       <MachineTeaser />

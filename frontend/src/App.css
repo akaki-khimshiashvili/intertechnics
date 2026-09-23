@@ -459,6 +459,10 @@ button {
   display: flex;
   align-items: center;
   overflow: hidden;
+  /* The header is fixed, so reserve its height up top (same offset the
+     other pages use) — otherwise tall hero copy on short screens slides
+     up underneath it. */
+  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-600);
 }
 
 .hero-slides {
@@ -476,30 +480,38 @@ button {
 }
 
 .hero-copy .hero-title {
-  font-size: 24px;
+  font-size: clamp(1rem, 0.8rem + 1vw, 1.5rem);
 }
 
+/* Two equal 1fr columns in a shrink-wrapped grid: both buttons take the
+   width of the wider one, so they always match. */
 .hero-actions {
-  margin-block-start: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  margin-block-start: clamp(1.25rem, 1rem + 1vw, 2rem);
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.75rem, 0.5rem + 1vw, 2rem);
 }
 
 .cta-primary,
 .cta-secondary {
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+  font-weight: 500;
   padding: 0.5rem 1rem;
+  border: 1px solid var(--color-white);
 }
 
 .cta-primary {
-  font-weight: 500;
   background-color: var(--color-accent);
+  border-color: var(--color-accent);
   color: var(--color-white);
 }
 
 .cta-secondary {
-  border: 1px solid var(--color-white);
   color: var(--color-white);
 }
 
@@ -574,8 +586,8 @@ button {
 
 .hero-copy h1 {
   max-width: 680px;
-  font-size: 36px;
-  line-height: 1.4;
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2.25rem);
+  line-height: 1.3;
   font-weight: 700;
   letter-spacing: -0.5px;
   background: linear-gradient(90deg, #ffffff, #cfcfc4);
@@ -597,102 +609,96 @@ button {
 
 /* ---------- Trust strip ---------- */
 
-.trust-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-300);
-  padding-block: var(--space-700);
-  border-bottom: 1px solid var(--color-steel);
-}
-
-.trust-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-25);
-  text-align: center;
-}
-
-.trust-stat-value {
-  font-size: var(--text-4xl);
-  line-height: var(--text-4xl-lh);
-  font-weight: 700;
-  color: var(--color-ink);
-}
-
-.trust-stat-label {
-  font-size: var(--text-sm);
-  color: var(--color-ink-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
 /* ---------- Partner companies ---------- */
 
 .partner-company-h1 {
-  font-size: var(--text-4xl);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
   margin-top: var(--space-500);
-  margin-bottom: var(--space-500);
+  margin-bottom: var(--space-300);
   text-align: center;
 }
 
-.partner-companies-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-200);
-  padding-bottom: var(--space-500);
-}
-
-.card {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 220px;
-  border: 1px solid var(--color-steel);
-  background-color: var(--color-white);
-  border-radius: var(--radius-lg);
+/* Logo marquee: the track holds the logo set twice and slides left by
+   exactly one copy (-50%), so the loop restarts seamlessly. Spacing is a
+   per-logo padding rather than flex gap, so both halves are the same width
+   and the seam doesn't jump. */
+.partner-marquee {
   overflow: hidden;
-  transition:
-    transform var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
+  padding-bottom: var(--space-500);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
 }
 
-.card img {
-  display: block;
-  margin: auto;
-  width: 65%;
-}
-
-.onhover-text {
-  position: absolute;
-  inset: auto 0 0 0;
+.partner-marquee-track {
   display: flex;
-  justify-content: center;
-  padding-block: var(--space-100);
-  background: var(--color-accent);
-  transform: translateY(100%);
-  transition: transform var(--dur-base) var(--ease-out);
-}
-
-.onhover-text-span {
-  display: inline-flex;
   align-items: center;
-  gap: var(--space-50);
-  font-size: var(--text-base);
-  font-weight: 600;
-  color: var(--color-accent-ink);
+  width: max-content;
+  animation: partner-marquee-scroll 30s linear infinite;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(23, 22, 15, 0.12);
+.partner-marquee:hover .partner-marquee-track,
+.partner-marquee:focus-within .partner-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes partner-marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-inline-end: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition:
+    filter var(--dur-base) ease,
+    opacity var(--dur-base) ease;
+}
+
+.partner-logo img {
+  height: clamp(40px, 30px + 3vw, 64px);
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  /* Some logos are JPGs on a white box; multiply drops the white. */
+  mix-blend-mode: multiply;
+}
+
+.partner-logo:hover,
+.partner-logo:focus-visible {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.partner-logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
-  .card:hover .onhover-text {
-    transform: translateY(0);
+  .partner-marquee-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: var(--space-300);
+  }
+
+  .partner-logo[aria-hidden="true"] {
+    display: none;
   }
 }
 
@@ -2069,13 +2075,11 @@ button {
   }
 }
 
-@media (max-width: 900px) {
-  .partner-companies-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .hero-copy h1 {
-    font-size: var(--text-4xl);
+/* Too narrow for two buttons side by side: stack them full width. */
+@media (max-width: 420px) {
+  .hero-actions {
+    align-self: stretch;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2085,31 +2089,7 @@ button {
     align-items: flex-start;
   }
 
-  .trust-strip {
-    padding-block: var(--space-500);
-  }
-
   .about-us-text {
     width: 100%;
-  }
-}
-
-@media (max-width: 600px) {
-  .partner-companies-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-100);
-  }
-
-  .card {
-    height: 150px;
-  }
-
-  .trust-strip {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-100);
-  }
-
-  .trust-stat-value {
-    font-size: var(--text-2xl);
   }
 }

@@ -48,13 +48,6 @@
     "ctaPrimary": "Get in touch",
     "ctaSecondary": "View machines"
   },
-  "trustStrip": {
-    "stats": [
-      { "id": 1, "value": "2005", "label": "Founded" },
-      { "id": 2, "value": "8", "label": "Partner brands" },
-      { "id": 3, "value": "4", "label": "Specialists on call" }
-    ]
-  },
   "aboutUs": {
     "title": "About Us",
     "text": [
