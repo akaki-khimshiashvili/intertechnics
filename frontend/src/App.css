@@ -920,7 +920,7 @@ button {
   flex-direction: column;
   gap: var(--space-200);
   margin-bottom: var(--space-500);
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   font-weight: 300;
 }
 
