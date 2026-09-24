@@ -56,16 +56,17 @@ class ContactController
             throw new ValidationException('Unknown request type');
         }
 
-        $name = self::text($body['name'] ?? null, 100, 'name', required: true);
-        $phone = self::text($body['phone'] ?? null, 30, 'phone', required: true);
-        if (!preg_match('/^[+\d][\d\s()-]{4,29}$/', $phone)) {
-            throw new ValidationException('Invalid phone number');
+        // Letters in any script plus the joiners names use; at least two letters.
+        $name = self::text($body['name'] ?? null, 50, 'name', required: true);
+        if (!preg_match("/^\p{L}[\p{L}\p{M}\s'’.-]*$/u", $name) || preg_match_all('/\p{L}/u', $name) < 2) {
+            throw new ValidationException('Invalid name');
         }
+        $phone = self::georgianMobile(self::text($body['phone'] ?? null, 20, 'phone', required: true));
         $email = self::text($body['email'] ?? null, 254, 'email');
         if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             throw new ValidationException('Invalid email address');
         }
-        $machine = self::text($body['machine'] ?? null, 120, 'machine');
+        $machine = self::text($body['machine'] ?? null, 100, 'machine');
         $message = self::text($body['message'] ?? null, 2000, 'message', required: true, multiline: true);
         // The work-order number shown on the form, so a reply can quote it.
         $ref = is_string($body['ref'] ?? null) && preg_match('/^IT-\d{6}-\d{4}$/', $body['ref']) ? $body['ref'] : null;
@@ -111,6 +112,20 @@ class ContactController
         RateLimiter::recordAttempt(self::COOLDOWN_BUCKET, $ip, 1, self::COOLDOWN_SECONDS, self::COOLDOWN_SECONDS);
 
         Response::json(['cooldown' => self::COOLDOWN_SECONDS]);
+    }
+
+    /**
+     * Georgian mobile (5XX XX XX XX, optionally +995 / 995 in front; spaces,
+     * dashes and brackets ignored), returned as "+995 5XX XX XX XX".
+     */
+    private static function georgianMobile(string $phone): string
+    {
+        $digits = preg_replace('/[\s()-]/', '', $phone) ?? '';
+        if (!preg_match('/^(?:\+?995)?(5\d{8})$/', $digits, $m)) {
+            throw new ValidationException('Invalid phone number');
+        }
+        $n = $m[1];
+        return '+995 ' . substr($n, 0, 3) . ' ' . substr($n, 3, 2) . ' ' . substr($n, 5, 2) . ' ' . substr($n, 7, 2);
     }
 
     private static function text(mixed $value, int $max, string $field, bool $required = false, bool $multiline = false): string
