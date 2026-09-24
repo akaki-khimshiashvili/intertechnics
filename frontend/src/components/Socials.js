@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
 import { Mail } from "lucide-react";
-import { LangContext } from "../LangContext";
 
 const socialLinks = [
   {

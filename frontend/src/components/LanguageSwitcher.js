@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { LangContext } from "../LangContext";
-import geflag from "../ge1.svg";
-import enflag from "../gb.svg";
 
 export default function LanguageSwitcher() {
   const { switchLanguage, lang } = useContext(LangContext);
