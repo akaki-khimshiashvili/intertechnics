@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { LangContext } from "../LangContext";
+import { LangContext } from "LangContext";
 import Socials from "./Socials";
 
 const heroImages = [

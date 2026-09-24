@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { LangContext } from "../LangContext";
-import { assetUrl, getMachine } from "../lib/api";
-import { buildSpecLines, formatPrice } from "../lib/machineDisplay";
-import useDocumentMeta from "../hooks/useDocumentMeta";
-import Footer from "../components/Footer";
-import Lightbox from "../components/Lightbox";
-import NotFound from "../components/NotFound";
-import { track } from "../lib/analytics";
-import Reveal from "../components/Reveal";
+import { LangContext } from "LangContext";
+import { assetUrl, getMachine } from "lib/api";
+import { buildSpecLines, formatPrice } from "lib/machineDisplay";
+import useDocumentMeta from "hooks/useDocumentMeta";
+import Footer from "components/Footer";
+import Lightbox from "components/Lightbox";
+import NotFound from "components/NotFound";
+import { track } from "lib/analytics";
+import Reveal from "components/Reveal";
 
 export default function MachineDetail() {
   const { slug } = useParams();

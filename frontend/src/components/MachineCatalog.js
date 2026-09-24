@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, RotateCcw } from "lucide-react";
-import { LangContext } from "../LangContext";
-import { assetUrl, getMachineFilters, listMachines } from "../lib/api";
-import { formatPrice } from "../lib/machineDisplay";
+import { LangContext } from "LangContext";
+import { assetUrl, getMachineFilters, listMachines } from "lib/api";
+import { formatPrice } from "lib/machineDisplay";
 import Select from "./Select";
 
 // First load (and each "load more") fetches this many — 12 fills 2, 3 and
@@ -94,7 +94,7 @@ function MachineCard({ machine, index, onOpen, conditionLabels }) {
   );
 }
 
-function MachinesComponent({ machines: staticMachines }) {
+function MachineCatalog({ machines: staticMachines }) {
   const navigate = useNavigate();
   const { t, lang, localize } = useContext(LangContext);
   const mt = t.machines;
@@ -304,4 +304,4 @@ function MachinesComponent({ machines: staticMachines }) {
   );
 }
 
-export default MachinesComponent;
+export default MachineCatalog;

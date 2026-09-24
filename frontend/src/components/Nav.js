@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LangContext } from "../LangContext";
+import { LangContext } from "LangContext";
 import { Phone } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { track } from "../lib/analytics";
+import { track } from "lib/analytics";
 import Socials from "./Socials";
-import logo from "../assets/images/logo.png";
+import logo from "assets/images/logo.png";
 
 export default function Nav() {
   const { t, lang, localize, basePath } = useContext(LangContext);

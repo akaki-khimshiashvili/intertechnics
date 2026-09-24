@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Phone } from "lucide-react";
-import { LangContext } from "../LangContext";
-import { track } from "../lib/analytics";
+import { LangContext } from "LangContext";
+import { track } from "lib/analytics";
 
 export default function NotFound() {
   const { t, lang, localize } = useContext(LangContext);

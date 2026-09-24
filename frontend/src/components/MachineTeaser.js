@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { LangContext } from "../LangContext";
-import { assetUrl, listMachines } from "../lib/api";
+import { LangContext } from "LangContext";
+import { assetUrl, listMachines } from "lib/api";
 import Reveal from "./Reveal";
 
 const AUTOPLAY_MS = 6000;

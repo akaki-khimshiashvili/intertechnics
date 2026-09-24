@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { LangContext } from "../LangContext";
+import { LangContext } from "LangContext";
 import Reveal from "./Reveal";
 
 /**

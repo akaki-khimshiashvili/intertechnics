@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Phone } from "lucide-react";
 import Reveal from "./Reveal";
-import { LangContext } from "../LangContext";
-import { track } from "../lib/analytics";
+import { LangContext } from "LangContext";
+import { track } from "lib/analytics";
 
 export default function ContactUsInfoContacts({ contact, index = 0 }) {
   const { lang } = useContext(LangContext);

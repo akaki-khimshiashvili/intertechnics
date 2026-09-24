@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LangContext } from "../LangContext";
-import useDocumentMeta from "../hooks/useDocumentMeta";
-import Hero from "../components/Hero";
-import PartnerCompanies from "../components/PartnerCompanies";
-import MachineTeaser from "../components/MachineTeaser";
-import Testimonials from "../components/Testimonials";
-import ContactUsInfo from "../components/ContactUsInfo";
-import LocationMap from "../components/LocationMap";
-import Footer from "../components/Footer";
+import { LangContext } from "LangContext";
+import useDocumentMeta from "hooks/useDocumentMeta";
+import Hero from "components/Hero";
+import PartnerCompanies from "components/PartnerCompanies";
+import MachineTeaser from "components/MachineTeaser";
+import Testimonials from "components/Testimonials";
+import ContactUsInfo from "components/ContactUsInfo";
+import LocationMap from "components/LocationMap";
+import Footer from "components/Footer";
 
 export default function Home() {
   const { t, lang } = useContext(LangContext);

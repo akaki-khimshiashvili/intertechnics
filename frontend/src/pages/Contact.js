@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { LangContext } from "../LangContext";
-import useDocumentMeta from "../hooks/useDocumentMeta";
-import ContactUsInfo from "../components/ContactUsInfo";
-import LocationMap from "../components/LocationMap";
-import WorkOrderForm from "../components/WorkOrderForm";
-import Footer from "../components/Footer";
+import { LangContext } from "LangContext";
+import useDocumentMeta from "hooks/useDocumentMeta";
+import ContactUsInfo from "components/ContactUsInfo";
+import LocationMap from "components/LocationMap";
+import WorkOrderForm from "components/WorkOrderForm";
+import Footer from "components/Footer";
 
 export default function Contact() {
   const { t, lang } = useContext(LangContext);

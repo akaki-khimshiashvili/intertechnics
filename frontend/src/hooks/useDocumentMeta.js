@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { LangContext, pathFor } from "../LangContext";
+import { LangContext, pathFor } from "LangContext";
 
 export const SITE_URL = "https://www.intertechnics.ge";
 

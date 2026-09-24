@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { LangContext } from "../LangContext";
-import useDocumentMeta from "../hooks/useDocumentMeta";
-import PartnerCard from "../components/PartnerCard";
-import Footer from "../components/Footer";
+import { LangContext } from "LangContext";
+import useDocumentMeta from "hooks/useDocumentMeta";
+import PartnerCard from "components/PartnerCard";
+import Footer from "components/Footer";
 
 export default function Partners() {
   const { t, lang } = useContext(LangContext);

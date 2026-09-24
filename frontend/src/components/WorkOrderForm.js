@@ -8,9 +8,17 @@ import {
   Tractor,
   Wrench,
 } from "lucide-react";
-import { LangContext } from "../LangContext";
-import { sendContact } from "../lib/api";
-import useCooldown from "../hooks/useCooldown";
+import { LangContext } from "LangContext";
+import { sendContact } from "lib/api";
+import useCooldown from "hooks/useCooldown";
+import {
+  CHECKED_FIELDS,
+  MACHINE_MAX,
+  NAME_MAX,
+  PHONE_MAX,
+  checkField,
+  validate,
+} from "lib/contactValidation";
 
 const TOPICS = [
   { key: "purchase", Icon: Tractor },
@@ -19,19 +27,8 @@ const TOPICS = [
   { key: "other", Icon: MessageCircleMore },
 ];
 
-// Same rules the API enforces (ContactController).
-// Georgian mobile: 5XX XXX XXX, optionally with 995 in front. The field
-// only ever holds digits — everything else is stripped as it's typed.
-const MOBILE_PATTERN = /^(?:995)?5\d{8}$/;
-const PHONE_MAX = 12; // 995 + 9 digits
-// Letters in any script (Georgian, Latin, Cyrillic…) plus the joiners
-// names use; must start with a letter and hold at least two.
-const NAME_PATTERN = /^\p{L}[\p{L}\p{M}\s'’.-]*$/u;
-const NAME_MAX = 50;
-const MACHINE_MAX = 100;
 // How long a field waits after the last keypress before judging it.
 const CHECK_DELAY_MS = 2000;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const EMPTY = {
   topic: "purchase",
@@ -50,44 +47,6 @@ function newRef() {
     .map((n) => String(n).padStart(2, "0"))
     .join("");
   return `IT-${ymd}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`;
-}
-
-/** The check for one field; "" when it's fine. */
-function checkField(id, raw, errors) {
-  const value = raw.trim();
-  switch (id) {
-    case "name":
-      if (!value) return errors.required;
-      if (
-        !NAME_PATTERN.test(value) ||
-        (value.match(/\p{L}/gu) || []).length < 2 ||
-        value.length > NAME_MAX
-      )
-        return errors.name;
-      return "";
-    case "phone":
-      if (!value) return errors.required;
-      return MOBILE_PATTERN.test(value) ? "" : errors.phone;
-    case "email":
-      return value && !EMAIL_PATTERN.test(value) ? errors.email : "";
-    case "machine":
-      return value.length > MACHINE_MAX ? errors.tooLong : "";
-    case "message":
-      return value ? "" : errors.required;
-    default:
-      return "";
-  }
-}
-
-const CHECKED_FIELDS = ["name", "phone", "email", "machine", "message"];
-
-function validate(values, errors) {
-  const out = {};
-  for (const id of CHECKED_FIELDS) {
-    const error = checkField(id, values[id], errors);
-    if (error) out[id] = error;
-  }
-  return out;
 }
 
 function formatTime(seconds) {
@@ -276,6 +235,16 @@ export default function WorkOrderForm() {
     setStatus("idle");
   };
 
+  const cooldownTimer = coolingDown && (
+    <CooldownTimer
+      key={cooldown.until}
+      remaining={cooldown.remaining}
+      total={cooldown.total}
+      until={cooldown.until}
+      template={c.cooldown}
+    />
+  );
+
   const fieldProps = (id, extra = {}) => ({
     id,
     label: c.fields[id],
@@ -412,15 +381,7 @@ export default function WorkOrderForm() {
                 <RotateCcw width={16} height={16} aria-hidden="true" />
                 <span>{c.again}</span>
               </button>
-              {coolingDown && (
-                <CooldownTimer
-                  key={cooldown.until}
-                  remaining={cooldown.remaining}
-                  total={cooldown.total}
-                  until={cooldown.until}
-                  template={c.cooldown}
-                />
-              )}
+              {cooldownTimer}
             </div>
           </div>
         ) : (
@@ -428,15 +389,7 @@ export default function WorkOrderForm() {
             <p className="wo-error" role="alert">
               {sendError}
             </p>
-            {coolingDown && (
-              <CooldownTimer
-                  key={cooldown.until}
-                  remaining={cooldown.remaining}
-                  total={cooldown.total}
-                  until={cooldown.until}
-                  template={c.cooldown}
-                />
-            )}
+            {cooldownTimer}
             <button
               type="submit"
               className="wo-submit"

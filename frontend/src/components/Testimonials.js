@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { LangContext } from "../LangContext";
-import testimonials from "../data/testimonials";
+import { LangContext } from "LangContext";
+import testimonials from "data/testimonials";
 import Reveal from "./Reveal";
 
 const STAR_PATH =

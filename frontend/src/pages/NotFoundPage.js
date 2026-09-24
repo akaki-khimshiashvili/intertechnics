@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { LangContext } from "../LangContext";
-import useDocumentMeta from "../hooks/useDocumentMeta";
-import NotFound from "../components/NotFound";
-import Footer from "../components/Footer";
+import { LangContext } from "LangContext";
+import useDocumentMeta from "hooks/useDocumentMeta";
+import NotFound from "components/NotFound";
+import Footer from "components/Footer";
 
 export default function NotFoundPage() {
   const { t, lang } = useContext(LangContext);

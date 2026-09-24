@@ -1,4 +1,4 @@
-import useReveal from "../hooks/useReveal";
+import useReveal from "hooks/useReveal";
 
 /**
  * Generic scroll-reveal wrapper. Renders `as` (default div), applies the
