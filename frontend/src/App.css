@@ -964,24 +964,153 @@ button {
   }
 }
 
-/* ---------- About us ---------- */
+/* ---------- About page ---------- */
 
-.about-us-h2 {
-  font-size: var(--text-4xl);
-  margin-block-start: var(--space-600);
-  margin-block-end: var(--space-300);
-  display: inline-block;
+.about-page {
+  padding-top: var(--space-900);
+  padding-bottom: var(--space-600);
 }
 
-.about-us-text {
+/* One-time entrance on page load: the title settles in, then the photo
+   wipes open from the bottom while the image inside eases back from a
+   slight zoom. Rare, first-view motion — so it's allowed to be slower
+   than UI motion. */
+.about-title {
+  padding-block: var(--space-300) clamp(1.5rem, 1rem + 2vw, 3rem);
+  font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.5rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  animation: about-rise 800ms var(--ease-out) both;
+}
+
+.about-layout {
+  display: grid;
+  gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+}
+
+.about-media {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--color-paper-dim);
+  aspect-ratio: 4 / 3;
+  animation: about-wipe 1100ms var(--ease-in-out) 120ms both;
+}
+
+@media (min-width: 900px) {
+  .about-media {
+    aspect-ratio: 1;
+  }
+}
+
+.about-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The people stand right of centre — keep them in frame when cropped. */
+  object-position: 70% 50%;
+  animation: about-settle 1600ms var(--ease-out) 120ms both;
+}
+
+.about-body {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  gap: var(--space-200);
-  margin-bottom: var(--space-500);
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+}
+
+.about-lead {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.about-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-list li {
+  padding-block: var(--space-300);
+  border-top: 1px solid var(--color-steel);
   font-size: var(--text-base);
-  font-weight: 300;
-  line-height: var(--text-base-lh);
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.about-list li:last-child {
+  padding-bottom: 0;
+}
+
+@keyframes about-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(6px);
+  }
+}
+
+@keyframes about-wipe {
+  from {
+    clip-path: inset(100% 0 0 0 round var(--radius-xl));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round var(--radius-xl));
+  }
+}
+
+@keyframes about-settle {
+  from {
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-title,
+  .about-media {
+    animation: about-fade 300ms ease both;
+  }
+
+  .about-media img {
+    animation: none;
+  }
+
+  @keyframes about-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+/* The About page gives testimonials a visible heading; on the home page
+   the cards stand on their own. */
+.testimonials.is-standalone {
+  padding-top: var(--space-600);
+  padding-bottom: var(--space-800);
+}
+
+.testimonials-title {
+  margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 /* ---------- Machine teaser ---------- */
@@ -2346,9 +2475,5 @@ button {
   .contacts-p {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .about-us-text {
-    width: 100%;
   }
 }

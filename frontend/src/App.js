@@ -35,6 +35,7 @@ function App() {
               <Route path={prefix || "/"} element={<Home />} />
               <Route path={`${prefix}/machines`} element={<Machines />} />
               <Route path={`${prefix}/partners`} element={<Partners />} />
+              <Route path={`${prefix}/about`} element={<About />} />
               <Route
                 path={`${prefix}/machines/:slug`}
                 element={<MachineDetail />}
@@ -100,7 +101,6 @@ function Home() {
       <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
 
       <MachineTeaser />
-      <AboutUs />
       <Testimonials />
 
       <div className="container">
@@ -166,6 +166,26 @@ function Partners() {
             </li>
           ))}
         </ul>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+function About() {
+  const { t, lang } = useContext(LangContext);
+
+  useDocumentMeta({
+    title: `${t.aboutUs.title} — Intertechnics LTD`,
+    description: t.aboutUs.text[0].content,
+    lang,
+  });
+
+  return (
+    <div className="page-shell">
+      <div className="page-content">
+        <AboutUs />
+        <Testimonials standalone />
       </div>
       <Footer />
     </div>
