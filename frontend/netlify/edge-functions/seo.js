@@ -33,6 +33,13 @@ const STRINGS = {
     partnersTitle: "პარტნიორი კომპანიები",
     partnersDesc:
       "ქვემოთ ჩამოთვლილი მწარმოებლების ოფიციალური დილერი და სერვის-პარტნიორი ვართ — სათადარიგო ნაწილებითა და საგარანტიო მომსახურებით საქართველოში.",
+    aboutTitle: "ჩვენ შესახებ",
+    aboutText: [
+      "Intertechnics LTD-ის მთავარი მიზანია საბაზრო წილისა და კომპეტენტუნარიანობის შენარჩუნება ცვალებად ქართულ ბაზარზე.",
+      "კომპანია პარტნიორობს მოწინავე საგზაო-სამშენებლო ტექნიკის მწარმოებელ ბრენდებთან 2005 წლიდან. ეს ურთიერთობები უზრუნველყოფს ინოვაციებისა და უმაღლესი ხარისხის ტექნიკის შემოდინებას ქართულ სამშენებლო სივრცეში.",
+      "პარტნიორობის პირველ ეტაპს არსებულ და პოტენციურ კლიენტებთან წარმოადგენს ინფორმაციის წვდომადობა და სანდოობა მოთხოვნად პროდუქციაზე.",
+      "ჩვენი ჯგუფი დაკომპლექტებულია პროფესიონალებით, რომლებიც ყოველწლიურად გადიან გადამზადებას და იღრმავებენ გამოცდილებას, უშუალოდ პარტნიორი ფირმების ეგიდით გამართულ ტრენინგებზე.",
+    ],
     machinesTitle: "ტექნიკა",
     machinesDesc:
       "Intertechnics-ის ტექნიკის კატალოგი: ახალი და მეორადი სამშენებლო და საგზაო ტექნიკა — Bobcat, Kubota, AMMANN, Putzmeister და სხვა. ფასები, მახასიათებლები და ფოტოები.",
@@ -65,6 +72,13 @@ const STRINGS = {
     partnersTitle: "Partner Companies",
     partnersDesc:
       "Official dealer and service partner for the manufacturers below, with spare parts and warranty support in Georgia.",
+    aboutTitle: "About Us",
+    aboutText: [
+      "The main goal of Intertechnics LTD is to maintain market share and competence in the changing Georgian market.",
+      "Since 2005, the company has been partnering with leading manufacturers of road construction machinery. These relationships ensure the introduction of innovations and high quality machinery into the Georgian construction market.",
+      "The first stage of the partnership involves the availability and reliability of information about the demanded products for existing and potential clients.",
+      "Our team consists of professionals who undergo annual training and deepen their experience through training organized under the guidance of partner companies.",
+    ],
     machinesTitle: "Machines",
     machinesDesc:
       "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",
@@ -237,6 +251,16 @@ function partnersPage(lang, s) {
       <h1>${esc(s.partnersTitle)}</h1>
       <p>${esc(s.partnersDesc)}</p>
       <ul>${items}</ul>`,
+  };
+}
+
+function aboutPage(lang, s) {
+  return {
+    title: `${s.aboutTitle} — ${BRAND}`,
+    description: truncate(s.aboutText[0]),
+    body: `
+      <h1>${esc(s.aboutTitle)}</h1>
+      ${s.aboutText.map((p) => `<p>${esc(p)}</p>`).join("")}`,
   };
 }
 
@@ -445,6 +469,7 @@ async function sitemap() {
     { path: "/", priority: "1.0", changefreq: "weekly" },
     { path: "/machines", priority: "0.9", changefreq: "daily" },
     { path: "/partners", priority: "0.7", changefreq: "monthly" },
+    { path: "/about", priority: "0.6", changefreq: "monthly" },
     ...machines.map((m) => ({
       path: `/machines/${encodeURIComponent(m.slug)}`,
       priority: "0.8",
@@ -499,6 +524,7 @@ export default async (request, context) => {
     if (basePath === "/") page = await homePage(lang, s);
     else if (basePath === "/machines") page = await listingPage(lang, s);
     else if (basePath === "/partners") page = partnersPage(lang, s);
+    else if (basePath === "/about") page = aboutPage(lang, s);
     else {
       const match = basePath.match(/^\/machines\/([a-z0-9-]+)$/);
       if (match) {
