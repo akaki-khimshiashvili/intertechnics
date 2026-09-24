@@ -501,9 +501,9 @@ button {
 }
 
 .cta-primary {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-ink);
 }
 
 .cta-secondary {
@@ -978,7 +978,6 @@ button {
 .about-title {
   padding-block: var(--space-300) clamp(1.5rem, 1rem + 2vw, 3rem);
   font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.5rem);
-  line-height: 1;
   font-weight: 700;
   letter-spacing: -0.03em;
   text-wrap: balance;
@@ -1001,11 +1000,25 @@ button {
 
 .about-media {
   margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  background: var(--color-paper-dim);
+  border-radius: 2px;
   aspect-ratio: 4 / 3;
-  animation: about-wipe 1100ms var(--ease-in-out) 120ms both;
+  animation: about-polaroid-tilt 1100ms var(--ease-out) 120ms both;
+
+  background: #fefefe;
+  padding: 16px 16px 64px 16px;
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
+}
+
+.about-media:hover {
+  transform: rotate(0deg) scale(1.015);
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.16);
 }
 
 @media (min-width: 900px) {
@@ -1021,7 +1034,19 @@ button {
   object-fit: cover;
   /* The people stand right of centre — keep them in frame when cropped. */
   object-position: 70% 50%;
-  animation: about-settle 1600ms var(--ease-out) 120ms both;
+  filter: saturate(0.92) contrast(1.02);
+  animation:
+    about-wipe 1100ms var(--ease-in-out) 120ms both,
+    about-settle 1600ms var(--ease-out) 120ms both;
+}
+
+@keyframes about-polaroid-tilt {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-2deg);
+  }
 }
 
 .about-body {
@@ -1032,8 +1057,8 @@ button {
 
 .about-lead {
   margin: 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
-  line-height: 1.15;
+  font-size: var(--text-3xl);
+  line-height: 1.4;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--color-ink);
@@ -1072,10 +1097,10 @@ button {
 
 @keyframes about-wipe {
   from {
-    clip-path: inset(100% 0 0 0 round var(--radius-xl));
+    clip-path: inset(100% 0 0 0 round 2px);
   }
   to {
-    clip-path: inset(0 0 0 0 round var(--radius-xl));
+    clip-path: inset(0 0 0 0 round 2px);
   }
 }
 
@@ -1414,7 +1439,9 @@ button {
 }
 
 .contact-email .contact-icon {
-  transition: background-color var(--dur-base) ease, color var(--dur-base) ease;
+  transition:
+    background-color var(--dur-base) ease,
+    color var(--dur-base) ease;
 }
 
 @media (hover: hover) and (pointer: fine) {

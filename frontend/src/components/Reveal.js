@@ -1,4 +1,3 @@
-import React from "react";
 import useReveal from "../hooks/useReveal";
 
 /**

@@ -13,22 +13,20 @@ export default function AboutUs() {
 
   return (
     <div className="container about-page">
-      <h1 className="about-title">{aboutUs.title}</h1>
+      <h2 className="about-title">{aboutUs.title}</h2>
 
       <div className="about-layout">
         <figure className="about-media">
           <img
-            src="/images/aboutusimage.webp"
+            src="/images/paata.jpg"
             alt=""
-            width={1020}
-            height={1020}
             decoding="async"
             fetchPriority="high"
           />
         </figure>
 
         <div className="about-body">
-          <Reveal as="h2" className="about-lead" index={2}>
+          <Reveal as="h1" className="about-lead" index={2}>
             {aboutUs.heading}
           </Reveal>
           <ul className="about-list">
