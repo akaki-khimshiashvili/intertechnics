@@ -26,9 +26,17 @@ class ContactController
     private const WINDOW_SECONDS = 3600;
     private const LOCK_SECONDS = 3600;
 
+    // And one message per minute: after each successful send the client is
+    // locked out for COOLDOWN_SECONDS. The form shows the same countdown.
+    private const COOLDOWN_BUCKET = 'contact_cooldown';
+    public const COOLDOWN_SECONDS = 60;
+
     private const DEFAULT_RECIPIENT = 'intertechnicsltd@gmail.com';
 
-    /** POST /contact — public. 204 on success. */
+    /**
+     * POST /contact — public. 200 with {"cooldown": seconds} on success;
+     * 429 with {"retry_after": seconds} while the client must wait.
+     */
     public static function send(array $params): void
     {
         $body = Request::jsonBody();
@@ -36,10 +44,11 @@ class ContactController
         // Honeypot: a field real visitors never see. Bots that fill it get a
         // fake success so they don't learn to skip it.
         if (trim((string) ($body['website'] ?? '')) !== '') {
-            Response::json(null, 204);
+            Response::json(['cooldown' => self::COOLDOWN_SECONDS]);
         }
 
         $ip = Request::ip();
+        RateLimiter::guard(self::COOLDOWN_BUCKET, $ip);
         RateLimiter::guard(self::RATE_LIMIT_BUCKET, $ip);
 
         $topic = $body['topic'] ?? null;
@@ -97,7 +106,11 @@ class ContactController
             throw new ApiException('Message could not be sent', 503);
         }
 
-        Response::json(null, 204);
+        // Only a message that actually went out starts the cooldown, so a
+        // failed send can be retried straight away.
+        RateLimiter::recordAttempt(self::COOLDOWN_BUCKET, $ip, 1, self::COOLDOWN_SECONDS, self::COOLDOWN_SECONDS);
+
+        Response::json(['cooldown' => self::COOLDOWN_SECONDS]);
     }
 
     private static function text(mixed $value, int $max, string $field, bool $required = false, bool $multiline = false): string

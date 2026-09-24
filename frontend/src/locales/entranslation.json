@@ -50,6 +50,7 @@
   },
   "aboutUs": {
     "title": "About Us",
+    "heading": "Bringing World-Class Equipment to Georgia",
     "text": [
       {
         "id": 1,
@@ -103,6 +104,7 @@
       "send": "The request couldn't be sent. Please try again or call us.",
       "rateLimited": "Too many requests. Please try again later or call us."
     },
+    "cooldown": "You can send the next request in {time}",
     "submit": "Send request",
     "sending": "Sending…",
     "stamp": "Received",

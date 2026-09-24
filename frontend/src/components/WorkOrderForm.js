@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { LangContext } from "../LangContext";
 import { sendContact } from "../lib/api";
+import useCooldown from "../hooks/useCooldown";
 
 const TOPICS = [
   { key: "purchase", Icon: Tractor },
@@ -50,6 +51,43 @@ function validate(values, errors) {
     out.email = errors.email;
   if (!values.message.trim()) out.message = errors.required;
   return out;
+}
+
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const ss = String(seconds % 60).padStart(2, "0");
+  return h ? `${h}:${String(m).padStart(2, "0")}:${ss}` : `${m}:${ss}`;
+}
+
+/**
+ * "Next request in 0:42" with a ring that empties as the wait runs out.
+ * The ring is a single CSS animation (linear — it's a clock), started
+ * part-way through via a negative delay so a reload resumes it in place.
+ */
+function CooldownTimer({ remaining, total, until, template }) {
+  const [delay] = useState(() => (until - Date.now()) / 1000 - total);
+  const [before, after = ""] = template.split("{time}");
+
+  return (
+    <p className="wo-cooldown" role="timer">
+      <svg className="wo-cooldown-ring" viewBox="0 0 20 20" width={18} height={18} aria-hidden="true">
+        <circle cx="10" cy="10" r="8" />
+        <circle
+          cx="10"
+          cy="10"
+          r="8"
+          pathLength="100"
+          style={{ animationDuration: `${total}s`, animationDelay: `${delay}s` }}
+        />
+      </svg>
+      <span>
+        {before}
+        <strong>{formatTime(remaining)}</strong>
+        {after}
+      </span>
+    </p>
+  );
 }
 
 function Field({ id, label, error, wide, as: Tag = "input", ...inputProps }) {
@@ -97,6 +135,8 @@ export default function WorkOrderForm() {
   const [sendError, setSendError] = useState("");
   const formRef = useRef(null);
   const successRef = useRef(null);
+  const cooldown = useCooldown("intertechnics:contact-cooldown");
+  const coolingDown = cooldown.remaining > 0;
 
   const locked = status !== "idle";
   const date = new Date().toLocaleDateString(lang === "en" ? "en-GB" : "ka-GE", {
@@ -118,7 +158,7 @@ export default function WorkOrderForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (locked) return;
+    if (locked || coolingDown) return;
 
     const found = validate(values, c.errors);
     setFieldErrors(found);
@@ -131,10 +171,16 @@ export default function WorkOrderForm() {
 
     setStatus("sending");
     try {
-      await sendContact({ ...values, ref });
+      const { cooldown: wait } = await sendContact({ ...values, ref });
+      cooldown.start(wait || 60);
       setStatus("sent");
     } catch (err) {
-      setSendError(err.status === 429 ? c.errors.rateLimited : c.errors.send);
+      if (err.status === 429 && err.retryAfter > 0) {
+        // The server still has us on a timer (e.g. this browser forgot it).
+        cooldown.start(err.retryAfter);
+      } else {
+        setSendError(err.status === 429 ? c.errors.rateLimited : c.errors.send);
+      }
       setStatus("idle");
     }
   };
@@ -160,6 +206,7 @@ export default function WorkOrderForm() {
       ref={formRef}
       className="work-order"
       data-state={status}
+      data-cooling={coolingDown ? "true" : undefined}
       noValidate
       onSubmit={onSubmit}
     >
@@ -273,20 +320,40 @@ export default function WorkOrderForm() {
           <div className="wo-success" ref={successRef} tabIndex={-1} role="status">
             <p className="wo-success-title">{c.successTitle}</p>
             <p className="wo-success-body">{c.successBody}</p>
-            <button type="button" className="wo-again" onClick={reset}>
-              <RotateCcw width={16} height={16} aria-hidden="true" />
-              <span>{c.again}</span>
-            </button>
+            <div className="wo-success-actions">
+              <button type="button" className="wo-again" onClick={reset}>
+                <RotateCcw width={16} height={16} aria-hidden="true" />
+                <span>{c.again}</span>
+              </button>
+              {coolingDown && (
+                <CooldownTimer
+                  key={cooldown.until}
+                  remaining={cooldown.remaining}
+                  total={cooldown.total}
+                  until={cooldown.until}
+                  template={c.cooldown}
+                />
+              )}
+            </div>
           </div>
         ) : (
           <>
             <p className="wo-error" role="alert">
               {sendError}
             </p>
+            {coolingDown && (
+              <CooldownTimer
+                  key={cooldown.until}
+                  remaining={cooldown.remaining}
+                  total={cooldown.total}
+                  until={cooldown.until}
+                  template={c.cooldown}
+                />
+            )}
             <button
               type="submit"
               className="wo-submit"
-              aria-disabled={status === "sending" ? "true" : undefined}
+              aria-disabled={status === "sending" || coolingDown ? "true" : undefined}
             >
               <span className="wo-submit-stripes" aria-hidden="true" />
               <span className="wo-submit-label" key={status}>

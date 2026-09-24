@@ -4,13 +4,12 @@ import Reveal from "./Reveal";
 
 /**
  * About page body. The photo unveils itself once on load (clip-path wipe +
- * settling scale, see .about-media in App.css); the first paragraph reads as
- * the lead, the rest follow as a quiet staggered list.
+ * settling scale, see .about-media in App.css); the heading reads as the
+ * lead, the paragraphs follow as a quiet staggered list.
  */
 export default function AboutUs() {
   const { t } = useContext(LangContext);
   const aboutUs = t.aboutUs;
-  const [lead, ...rest] = aboutUs.text;
 
   return (
     <div className="container about-page">
@@ -29,11 +28,11 @@ export default function AboutUs() {
         </figure>
 
         <div className="about-body">
-          <Reveal as="p" className="about-lead" index={2}>
-            {lead.content}
+          <Reveal as="h2" className="about-lead" index={2}>
+            {aboutUs.heading}
           </Reveal>
           <ul className="about-list">
-            {rest.map((paragraph, i) => (
+            {aboutUs.text.map((paragraph, i) => (
               <Reveal as="li" index={i + 3} key={paragraph.id}>
                 {paragraph.content}
               </Reveal>

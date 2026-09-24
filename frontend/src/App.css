@@ -985,10 +985,12 @@ button {
   animation: about-rise 800ms var(--ease-out) both;
 }
 
+/* Top-aligned, never centred: when the photo is shorter than the text,
+   centring would push the text up past the photo's top edge. */
 .about-layout {
   display: grid;
   gap: clamp(2rem, 1rem + 3vw, 4.5rem);
-  align-items: center;
+  align-items: start;
 }
 
 @media (min-width: 900px) {
@@ -1030,12 +1032,15 @@ button {
 
 .about-lead {
   margin: 0;
-  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
-  line-height: 1.35;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--color-ink);
-  text-wrap: pretty;
+  text-wrap: balance;
+  /* Trim the line's top half-leading so the cap height sits exactly on the
+     photo's top edge (ignored where unsupported). */
+  text-box: trim-start cap alphabetic;
 }
 
 .about-list {
@@ -3080,6 +3085,79 @@ textarea.wo-input {
 
 .work-order[data-state="sent"] {
   animation: wo-thud 280ms var(--ease-out) 260ms;
+}
+
+/* Cooldown after a send: the button rests, a small clock counts down. */
+.work-order[data-cooling] .wo-submit {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.work-order[data-cooling] .wo-submit:active {
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-order[data-cooling] .wo-submit:hover {
+    background: var(--color-ink);
+  }
+
+  .work-order[data-cooling] .wo-submit:hover .wo-submit-arrow {
+    transform: none;
+  }
+}
+
+.wo-cooldown {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  color: var(--color-ink-muted);
+  animation: wo-rise 250ms var(--ease-out) both;
+}
+
+.wo-cooldown strong {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.wo-cooldown-ring {
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.wo-cooldown-ring circle {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.wo-cooldown-ring circle:first-child {
+  stroke: var(--color-steel);
+}
+
+/* Empties over the whole wait; a clock, so linear. */
+.wo-cooldown-ring circle:last-child {
+  stroke: var(--color-accent);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  animation: wo-ring linear forwards;
+}
+
+@keyframes wo-ring {
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+.wo-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-100) var(--space-300);
 }
 
 .wo-stamp {

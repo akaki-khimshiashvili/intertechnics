@@ -58,8 +58,9 @@ export async function getMachineFilters() {
 }
 
 /**
- * Sends the contact form. Resolves on success; rejects with an Error whose
- * `status` is the HTTP status (429 = rate limited), or 0 when offline.
+ * Sends the contact form. Resolves with `{ cooldown }` — seconds until the
+ * next request is accepted. Rejects with an Error whose `status` is the HTTP
+ * status (0 when offline); on 429 it also carries `retryAfter` in seconds.
  */
 export async function sendContact(payload) {
   let res;
@@ -72,9 +73,18 @@ export async function sendContact(payload) {
   } catch {
     throw Object.assign(new Error("Network error"), { status: 0 });
   }
+
+  let body = null;
+  try {
+    body = await res.json();
+  } catch {}
+
   if (!res.ok) {
-    const error = await parseError(res, "Message could not be sent");
-    error.status = res.status;
-    throw error;
+    throw Object.assign(new Error(body?.detail || "Message could not be sent"), {
+      status: res.status,
+      retryAfter:
+        Number(body?.retry_after) || Number(res.headers.get("Retry-After")) || 0,
+    });
   }
+  return { cooldown: Number(body?.cooldown) || 0 };
 }
