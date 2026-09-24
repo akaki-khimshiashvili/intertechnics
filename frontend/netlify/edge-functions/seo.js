@@ -22,7 +22,7 @@
  */
 
 const SITE_URL = "https://www.intertechnics.ge";
-const DEFAULT_IMAGE = `${SITE_URL}/images/hero-image.jpg`;
+const DEFAULT_IMAGE = `${SITE_URL}/images/hero-image.webp`;
 const BRAND = "Intertechnics LTD";
 
 const STRINGS = {

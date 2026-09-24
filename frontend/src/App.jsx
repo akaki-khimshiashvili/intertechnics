@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
 import "./styles/tokens.css";
 import "./App.css";
-import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useLocation, useNavigationType } from "react-router-dom";
 import { LangContext, LangProvider } from "./LangContext";

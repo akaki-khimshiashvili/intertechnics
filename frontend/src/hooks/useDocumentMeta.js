@@ -71,7 +71,7 @@ export default function useDocumentMeta({ title, description, image, noindex = f
       }
     });
 
-    const shareImage = absolute(image || "/images/hero-image.jpg");
+    const shareImage = absolute(image || "/images/hero-image.webp");
     setMetaTag('meta[property="og:image"]', { property: "og:image", content: shareImage });
     setMetaTag('meta[name="twitter:image"]', { name: "twitter:image", content: shareImage });
 

@@ -259,12 +259,22 @@
   -webkit-backdrop-filter: blur(24px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-slow) var(--ease-drawer);
+  /* visibility (not just opacity) so the closed overlay drops out of
+     rendering — otherwise its full-screen backdrop blur keeps being
+     recomputed over the animating hero. Delayed until the fade-out ends. */
+  visibility: hidden;
+  transition:
+    opacity var(--dur-slow) var(--ease-drawer),
+    visibility 0s linear var(--dur-slow);
 }
 
 .nav-overlay.is-open {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
+  transition:
+    opacity var(--dur-slow) var(--ease-drawer),
+    visibility 0s;
 }
 
 .nav-overlay-list {
