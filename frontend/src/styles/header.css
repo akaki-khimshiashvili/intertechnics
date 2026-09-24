@@ -290,7 +290,7 @@
 
 .nav-overlay-list a {
   color: var(--color-white);
-  font-size: var(--text-3xl);
+  font-size: var(--text-xl);
   font-weight: 600;
   transform: translateY(48px);
   opacity: 0;

@@ -19,7 +19,6 @@
 
 .contact-page-title {
   font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.5rem);
-  line-height: 1;
   font-weight: 700;
   letter-spacing: -0.03em;
   text-wrap: balance;
@@ -114,7 +113,9 @@
 }
 
 .wo-kicker {
-  font-family: "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace, monospace;
+  font-family:
+    "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace,
+    monospace;
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -125,7 +126,9 @@
   display: flex;
   gap: var(--space-400);
   margin: 0;
-  font-family: "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace, monospace;
+  font-family:
+    "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace,
+    monospace;
   font-size: var(--text-xs);
   line-height: var(--text-xs-lh);
 }
@@ -321,10 +324,11 @@
 }
 
 .wo-label {
-  font-family: "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace, monospace;
+  font-family:
+    "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace,
+    monospace;
   font-size: var(--text-xs);
   line-height: var(--text-xs-lh);
-  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-ink-muted);
   transition: color var(--dur-base) ease;
@@ -599,7 +603,9 @@ textarea.wo-input {
     inset 0 0 0 4px var(--color-accent);
   background: rgba(255, 255, 255, 0.7);
   color: var(--color-accent);
-  font-family: "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace, monospace;
+  font-family:
+    "Geist Mono Variable", "Noto Sans Georgian Variable", ui-monospace,
+    monospace;
   font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
   font-weight: 700;
   line-height: 1.1;
