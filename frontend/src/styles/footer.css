@@ -39,7 +39,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-75);
-  font-family: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+  font-family: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
   font-size: var(--text-xs);
   color: rgba(255, 255, 255, 0.55);
   transition: color var(--dur-base) ease;

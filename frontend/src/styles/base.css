@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  font-family: "Noto Sans", "Noto Sans Georgian", sans-serif;
+  font-family: "Noto Sans Variable", "Noto Sans Georgian Variable", sans-serif;
   color: var(--color-ink);
   background-color: var(--color-paper);
 }

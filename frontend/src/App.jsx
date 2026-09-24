@@ -1,4 +1,9 @@
 import React, { useContext, useEffect, useLayoutEffect } from "react";
+// Self-hosted fonts (variable: one file per script covers every weight) —
+// bundled with the app instead of a render-blocking Google Fonts chain.
+import "@fontsource-variable/noto-sans";
+import "@fontsource-variable/noto-sans-georgian";
+import "@fontsource-variable/geist-mono";
 import "./styles/tokens.css";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
