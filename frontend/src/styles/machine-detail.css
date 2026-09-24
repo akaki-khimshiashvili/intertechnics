@@ -1,0 +1,249 @@
+/* ---------- Machine detail page ---------- */
+
+.machine-detail {
+  display: grid;
+  gap: var(--space-400);
+  padding-block: var(--space-300) var(--space-700);
+}
+
+@media (min-width: 800px) {
+  .machine-detail {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+}
+
+.machine-detail-main-image {
+  display: block;
+  width: 100%;
+  height: 360px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-paper-dim);
+  border: 1px solid var(--color-steel);
+  cursor: pointer;
+}
+
+.machine-detail-main-image img,
+.machine-detail-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.machine-detail-main-image:focus-visible,
+.machine-detail-thumb:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.machine-detail-thumbs {
+  display: flex;
+  gap: var(--space-100);
+  margin-top: var(--space-100);
+  flex-wrap: wrap;
+}
+
+.machine-detail-thumb {
+  width: 84px;
+  height: 64px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-steel);
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    opacity 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.machine-detail-thumb:hover {
+  opacity: 1;
+}
+
+.machine-detail-thumb-active {
+  opacity: 1;
+  border-color: var(--color-accent);
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 8, 0.92);
+  padding: var(--space-300);
+  box-sizing: border-box;
+  animation: lightbox-fade-in 0.15s ease;
+}
+
+@keyframes lightbox-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - var(--space-600));
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-200);
+  right: var(--space-200);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lightbox-close svg {
+  display: block;
+}
+
+.lightbox-close:hover {
+  background: #222;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lightbox-nav svg {
+  display: block;
+}
+
+.lightbox-nav:hover {
+  background: #222;
+}
+
+.lightbox-prev {
+  left: var(--space-200);
+}
+
+.lightbox-next {
+  right: var(--space-200);
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: var(--space-200);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  background: rgba(255, 255, 255, 0.12);
+  padding: var(--space-50) var(--space-150);
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 600px) {
+  .lightbox-overlay {
+    padding: var(--space-150);
+  }
+
+  .lightbox-close {
+    width: 36px;
+    height: 36px;
+    top: var(--space-100);
+    right: var(--space-100);
+  }
+
+  .lightbox-close svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .lightbox-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lightbox-nav svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .lightbox-prev {
+    left: var(--space-100);
+  }
+
+  .lightbox-next {
+    right: var(--space-100);
+  }
+
+  .lightbox-image {
+    max-height: calc(100vh - var(--space-400));
+  }
+}
+
+.machine-detail-tag {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+  font-weight: 500;
+}
+
+.machine-detail-info h1 {
+  font-size: var(--text-3xl);
+  margin-block: var(--space-100);
+}
+
+.machine-detail-price {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-200);
+}
+
+.machine-detail-description {
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin-bottom: var(--space-300);
+}
+
+.machine-detail-specs {
+  margin-bottom: var(--space-300);
+}

@@ -1,0 +1,178 @@
+/* ---------- About page ---------- */
+
+.about-page {
+  padding-top: var(--space-900);
+  padding-bottom: var(--space-600);
+}
+
+/* One-time entrance on page load: the title settles in, then the photo
+   wipes open from the bottom while the image inside eases back from a
+   slight zoom. Rare, first-view motion — so it's allowed to be slower
+   than UI motion. */
+.about-title {
+  padding-block: var(--space-300) clamp(1.5rem, 1rem + 2vw, 3rem);
+  font-size: clamp(2.25rem, 1.5rem + 3.5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  animation: about-rise 800ms var(--ease-out) both;
+}
+
+/* Top-aligned, never centred: when the photo is shorter than the text,
+   centring would push the text up past the photo's top edge. */
+.about-layout {
+  display: grid;
+  gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+}
+
+.about-media {
+  margin: 0;
+  border-radius: 2px;
+  aspect-ratio: 4 / 3;
+  animation: about-polaroid-tilt 1100ms var(--ease-out) 120ms both;
+
+  background: #fefefe;
+  padding: 16px 16px 64px 16px;
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
+}
+
+.about-media:hover {
+  transform: rotate(0deg) scale(1.015);
+  box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.16);
+}
+
+@media (min-width: 900px) {
+  .about-media {
+    aspect-ratio: 1;
+  }
+}
+
+.about-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The people stand right of centre — keep them in frame when cropped. */
+  object-position: 70% 50%;
+  filter: saturate(0.92) contrast(1.02);
+  animation:
+    about-wipe 1100ms var(--ease-in-out) 120ms both,
+    about-settle 1600ms var(--ease-out) 120ms both;
+}
+
+@keyframes about-polaroid-tilt {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-2deg);
+  }
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+}
+
+.about-lead {
+  margin: 0;
+  font-size: var(--text-3xl);
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  text-wrap: balance;
+  /* Trim the line's top half-leading so the cap height sits exactly on the
+     photo's top edge (ignored where unsupported). */
+  text-box: trim-start cap alphabetic;
+}
+
+.about-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-list li {
+  padding-block: var(--space-300);
+  border-top: 1px solid var(--color-steel);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.about-list li:last-child {
+  padding-bottom: 0;
+}
+
+@keyframes about-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(6px);
+  }
+}
+
+@keyframes about-wipe {
+  from {
+    clip-path: inset(100% 0 0 0 round 2px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 2px);
+  }
+}
+
+@keyframes about-settle {
+  from {
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-title,
+  .about-media {
+    animation: about-fade 300ms ease both;
+  }
+
+  .about-media img {
+    animation: none;
+  }
+
+  @keyframes about-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+/* The About page gives testimonials a visible heading; on the home page
+   the cards stand on their own. */
+.testimonials.is-standalone {
+  padding-top: var(--space-600);
+  padding-bottom: var(--space-800);
+}
+
+.testimonials-title {
+  margin-bottom: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}

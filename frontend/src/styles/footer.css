@@ -1,0 +1,57 @@
+/* ---------- Footer ---------- */
+
+.footer {
+  background-color: var(--color-ink);
+  padding-block: var(--space-500);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-300);
+}
+
+.footer-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-300);
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-sm);
+  transition: color var(--dur-base) ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-accent);
+}
+
+.footer-copyright {
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  font-family: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.55);
+  transition: color var(--dur-base) ease;
+}
+
+.footer-credit:hover {
+  color: var(--color-accent);
+}
+
+.footer-credit img {
+  /* Source mark is 1080x1435 (0.753 ratio) — height-constrained to sit on
+     the text baseline, width follows to keep it undistorted. */
+  height: 26px;
+  width: auto;
+}

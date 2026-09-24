@@ -1,0 +1,74 @@
+/* ---------- Socials ---------- */
+
+.socials-ul {
+  margin-block-start: 1rem;
+  display: flex;
+  gap: var(--space-100);
+}
+
+.socials-ul li a {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--color-white);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background-color var(--dur-base) ease,
+    border-color var(--dur-base) ease,
+    color var(--dur-base) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.socials-ul .icon {
+  display: inline-flex;
+  color: var(--color-white);
+  transition: color var(--dur-base) ease;
+}
+
+.socials-ul li a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .socials-ul li a:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .socials-ul li a:hover .icon {
+    color: var(--color-accent-ink);
+  }
+}
+
+.socials-ul li a:active {
+  transform: scale(0.94);
+}
+
+.google-reviews {
+  margin-block-start: 0.85rem;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+/* Sticky-footer shell: whatever height the actual page content ends up
+   being (a one-line "loading" state, a full grid, a detail page with a
+   short or long spec list), the footer never sits any higher than the
+   bottom of the viewport, and only moves further down once content
+   genuinely exceeds the viewport — never a guess at a fixed height that a
+   particular machine's content can over- or undershoot. */
+.page-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1 0 auto;
+}

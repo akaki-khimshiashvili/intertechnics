@@ -1,0 +1,98 @@
+/* ---------- Trust strip ---------- */
+
+/* ---------- Partner companies ---------- */
+
+/* Logo marquee: the track holds the logo set twice and slides left by
+   exactly one copy (-50%), so the loop restarts seamlessly. Spacing is a
+   per-logo padding rather than flex gap, so both halves are the same width
+   and the seam doesn't jump. */
+.partner-marquee {
+  overflow: hidden;
+  /* The featured-machine section below brings its own --space-700 top
+     padding, so match it above and add nothing below — equal gaps on both
+     sides keep the strip centered between the hero and that section. */
+  padding-block: var(--space-700) 0;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+}
+
+.partner-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: partner-marquee-scroll 30s linear infinite;
+}
+
+.partner-marquee:hover .partner-marquee-track,
+.partner-marquee:focus-within .partner-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes partner-marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-inline-end: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition:
+    filter var(--dur-base) ease,
+    opacity var(--dur-base) ease;
+}
+
+.partner-logo img {
+  height: clamp(40px, 30px + 3vw, 64px);
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  /* Some logos are JPGs on a white box; multiply drops the white. */
+  mix-blend-mode: multiply;
+}
+
+.partner-logo:hover,
+.partner-logo:focus-visible {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.partner-logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .partner-marquee-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: var(--space-300);
+  }
+
+  .partner-logo[aria-hidden="true"] {
+    display: none;
+  }
+}

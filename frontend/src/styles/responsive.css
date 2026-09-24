@@ -1,0 +1,34 @@
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1368px) {
+  .container {
+    padding-inline: 5%;
+  }
+}
+
+/* Too narrow for two buttons side by side: stack them full width. */
+@media (max-width: 420px) {
+  .hero-actions {
+    align-self: stretch;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Map drops under the card; phone pills wrap under the name. */
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .locationmap-div {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contacts-p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-100);
+  }
+}

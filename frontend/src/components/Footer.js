@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LangContext } from "../LangContext";
-import kkIcon from "../kk-icon.png";
+import kkIcon from "../assets/images/kk-icon.png";
 import Socials from "./Socials";
 import { track } from "../lib/analytics";
 

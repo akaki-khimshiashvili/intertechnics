@@ -1,0 +1,94 @@
+/* ---------- Testimonials ---------- */
+
+.testimonials {
+  padding-block: var(--space-700);
+}
+
+/* 4 across on wide screens, then 2, then 1 — auto-fit decides from the
+   space available, min(100%, …) keeps one column from overflowing. */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+/* Static cards: nothing here is pressable, so no hover or press motion —
+   the craft goes into type and spacing instead. */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  background: var(--color-white);
+  border: 1px solid var(--color-steel);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(23, 22, 15, 0.04);
+}
+
+.testimonial-stars {
+  display: inline-flex;
+  gap: 2px;
+  fill: #f2b705;
+}
+
+.testimonial-text {
+  flex: 1;
+  white-space: pre-line;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.testimonial-text p::before {
+  content: "“";
+}
+
+.testimonial-text p::after {
+  content: "”";
+}
+
+/* Hairline divider + pinned to the bottom so authors line up across a
+   row even when the quotes differ in length. */
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-100);
+  padding-top: var(--space-200);
+  border-top: 1px solid var(--color-steel);
+}
+
+.testimonial-avatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-paper-dim);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.testimonial-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.testimonial-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: var(--text-sm-lh);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.testimonial-source {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  color: var(--color-ink-muted);
+}

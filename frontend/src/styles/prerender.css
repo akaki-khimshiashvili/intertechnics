@@ -1,0 +1,39 @@
+/* ---------- Prerendered content ---------- */
+
+/* Written into #root by the SEO edge function so crawlers/link previews get
+   real content; React replaces it on mount. App.css is render-blocking, so
+   in the brief moment before that it still looks tidy. */
+.prerender {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: calc(var(--space-900) + var(--space-300)) var(--space-300)
+    var(--space-700);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+.prerender h1 {
+  font-size: var(--text-3xl);
+  line-height: 1.2;
+}
+
+.prerender a {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.prerender img {
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+}
+
+.prerender ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-75);
+}

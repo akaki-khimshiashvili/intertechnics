@@ -1,0 +1,323 @@
+/* ---------- Site header ---------- */
+
+/* Spans the header's own height at the top of the hero — while it's still
+   intersecting the viewport we're within that first screenful, so the
+   header stays transparent; once it scrolls out, the header solidifies. */
+#hero-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 90px;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding-block: var(--space-300);
+  background: transparent;
+  box-shadow: none;
+  transition:
+    background-color var(--dur-slow) var(--ease-out),
+    box-shadow var(--dur-slow) var(--ease-out),
+    padding-block var(--dur-slow) var(--ease-out);
+}
+
+.site-header.is-solid {
+  padding-block: var(--space-100);
+  background: rgba(23, 22, 15, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+.site-header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.site-header-logo {
+  justify-self: start;
+}
+
+.site-header-logo img {
+  width: 130px;
+}
+
+.site-header-links {
+  display: none;
+  justify-self: center;
+}
+
+@media (min-width: 900px) {
+  .site-header-links {
+    display: block;
+  }
+}
+
+.site-header-links ul {
+  display: flex;
+  align-items: center;
+  gap: var(--space-400);
+}
+
+.site-header-links a {
+  position: relative;
+  white-space: nowrap;
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  padding-block: var(--space-50);
+  transition: color var(--dur-base) ease;
+}
+
+.site-header-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: right var(--dur-base) var(--ease-out);
+}
+
+.site-header-links a:hover {
+  color: var(--color-accent);
+}
+
+.site-header-links a:hover::after {
+  right: 0;
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  justify-self: end;
+}
+
+.nav-phone {
+  display: none;
+  align-items: center;
+  gap: var(--space-50);
+  white-space: nowrap;
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: color var(--dur-base) ease;
+}
+
+.nav-phone:hover {
+  color: var(--color-accent);
+}
+
+@media (min-width: 1150px) {
+  .nav-phone {
+    display: inline-flex;
+  }
+}
+
+.site-header .lang-switcher {
+  height: auto;
+}
+
+.site-header .lang-switcher button {
+  border: 1px solid currentColor;
+  color: var(--color-white);
+  padding: 2px 4px;
+}
+
+.site-header-cta {
+  display: none;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-white);
+  background: var(--color-accent);
+  padding: var(--space-75) var(--space-200);
+  border-radius: var(--radius-full);
+  transition:
+    background-color var(--dur-base) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.site-header-cta:hover {
+  background: var(--color-accent-hover);
+}
+
+.site-header-cta:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 900px) {
+  .site-header-cta {
+    display: inline-flex;
+  }
+}
+
+.nav-burger {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+/* Below 900px there's no center nav / CTA to lay out — just the logo,
+   language switch, and burger — so the bar can sit tighter and the burger
+   gets a full 44px touch target instead of its 32px visual size. */
+@media (max-width: 899px) {
+  .site-header-inner {
+    /* The center column is only ever populated at 900px+ — collapsing the
+       grid to two tracks (instead of leaving the empty "auto" middle track
+       in place) keeps the logo and actions pinned to the true edges. */
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .site-header {
+    padding-block: var(--space-200);
+  }
+
+  .site-header.is-solid {
+    padding-block: var(--space-75);
+  }
+
+  .site-header-logo img {
+    width: 108px;
+  }
+
+  .site-header-actions {
+    gap: var(--space-75);
+  }
+
+  .nav-burger {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.nav-burger span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  transition:
+    transform var(--dur-base) var(--ease-drawer),
+    opacity var(--dur-base) var(--ease-drawer);
+}
+
+.nav-burger span:first-child {
+  transform: translate(-50%, -4px);
+}
+
+.nav-burger span:last-child {
+  transform: translate(-50%, 4px);
+}
+
+.nav-burger.is-open span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav-burger.is-open span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+@media (min-width: 900px) {
+  .nav-burger {
+    display: none;
+  }
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-600);
+  background: rgba(23, 22, 15, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-slow) var(--ease-drawer);
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-overlay-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-400);
+}
+
+.nav-overlay-list li {
+  overflow: hidden;
+}
+
+.nav-overlay-list a {
+  color: var(--color-white);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  transform: translateY(48px);
+  opacity: 0;
+  display: block;
+  transition:
+    transform var(--dur-slow) var(--ease-out),
+    opacity var(--dur-slow) var(--ease-out);
+}
+
+.nav-overlay.is-open .nav-overlay-list a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.nav-overlay-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-200);
+  transform: translateY(48px);
+  opacity: 0;
+  transition:
+    transform var(--dur-slow) var(--ease-out),
+    opacity var(--dur-slow) var(--ease-out);
+}
+
+.nav-overlay.is-open .nav-overlay-footer {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.nav-overlay-call {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .nav-overlay {
+    display: none;
+  }
+}

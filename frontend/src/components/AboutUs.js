@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { LangContext } from "../LangContext";
-import Reveal from "../components/Reveal";
+import Reveal from "./Reveal";
 
 /**
  * About page body. The photo unveils itself once on load (clip-path wipe +

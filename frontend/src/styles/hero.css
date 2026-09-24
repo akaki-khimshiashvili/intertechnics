@@ -1,0 +1,155 @@
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  /* The header is fixed, so reserve its height up top (same offset the
+     other pages use) — otherwise tall hero copy on short screens slides
+     up underneath it. */
+  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-600);
+}
+
+.hero-slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: hero-crossfade 24s infinite;
+}
+
+.hero-copy .hero-title {
+  font-size: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+}
+
+/* Two equal 1fr columns in a shrink-wrapped grid: both buttons take the
+   width of the wider one, so they always match. */
+.hero-actions {
+  margin-block-start: clamp(1.25rem, 1rem + 1vw, 2rem);
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.75rem, 0.5rem + 1vw, 2rem);
+}
+
+.cta-primary,
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-white);
+}
+
+.cta-primary {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-ink);
+}
+
+.cta-secondary {
+  color: var(--color-white);
+}
+
+@keyframes hero-crossfade {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  4% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  26% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    animation: none;
+    opacity: 0;
+  }
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+}
+
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 22, 15, 0.55);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-logo-link {
+  /* Sized here rather than on the <img> — a percentage inside min() on a
+     flex item's own content doesn't reliably feed back into that item's
+     auto width, which was leaving the link's box wider than the visible
+     logo and throwing off centering. The image just fills this box. */
+  display: inline-block;
+  width: min(360px, 70%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.hero-logo-link:active {
+  transform: scale(0.97);
+}
+
+.hero-content .logo {
+  width: 100%;
+  height: auto;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.hero-copy h1 {
+  max-width: 680px;
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2.25rem);
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #ffffff, #cfcfc4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-wrap: balance;
+  text-align: left;
+}
+
+.hero-copy p {
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-lh);
+  font-weight: 300;
+  text-wrap: pretty;
+}

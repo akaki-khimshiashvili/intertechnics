@@ -1,0 +1,117 @@
+/* ---------- 404 ---------- */
+
+.not-found {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-200);
+  text-align: center;
+  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-700);
+}
+
+/* Oversized numeral as the visual anchor; the middle 0 carries the accent
+   so the page still reads as the brand without an illustration. */
+.not-found-code {
+  font-size: clamp(6rem, 22vw, 11rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  user-select: none;
+  animation: not-found-in 500ms var(--ease-out) both;
+}
+
+.not-found-code span {
+  color: var(--color-accent);
+}
+
+.not-found h1 {
+  font-size: var(--text-3xl);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  animation: not-found-in 500ms var(--ease-out) 60ms both;
+}
+
+.not-found-body {
+  color: var(--color-ink-muted);
+  max-width: 46ch;
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-lh);
+  animation: not-found-in 500ms var(--ease-out) 120ms both;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-100);
+  margin-top: var(--space-200);
+  animation: not-found-in 500ms var(--ease-out) 180ms both;
+}
+
+.not-found-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  padding: var(--space-100) var(--space-300);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-steel);
+  font-weight: 600;
+  color: var(--color-ink);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 120ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .not-found-secondary:hover {
+    border-color: var(--color-ink);
+    background: var(--color-white);
+  }
+}
+
+.not-found-secondary:active {
+  transform: scale(0.97);
+}
+
+.not-found-actions a:focus-visible,
+.not-found-help a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.not-found-help {
+  margin-top: var(--space-300);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.not-found-help a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+
+@keyframes not-found-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found-code,
+  .not-found h1,
+  .not-found-body,
+  .not-found-actions {
+    animation: none;
+  }
+}
