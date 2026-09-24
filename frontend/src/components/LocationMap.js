@@ -21,7 +21,7 @@ export default function LocationMap() {
       <MapContainer
         center={[OFFICE.lat, OFFICE.lon]}
         zoom={15}
-        style={{ height: "400px", width: "100%" }}
+        className="locationmap-map"
         scrollWheelZoom={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

@@ -42,4 +42,7 @@ $router->get('/analytics/summary', static function (array $params): void {
     AnalyticsController::summary($params);
 });
 
+// Contact form: public, rate-limited, sends an email to the office
+$router->post('/contact', [ContactController::class, 'send']);
+
 return $router;

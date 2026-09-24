@@ -12,7 +12,7 @@ export default function Footer() {
   const navigate = useNavigate();
 
   const handleClick = (element) => {
-    if (element.link === "#contactus-id") track("contact_click", { source: "footer", lang });
+    if (element.link === "/contact") track("contact_click", { source: "footer", lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);

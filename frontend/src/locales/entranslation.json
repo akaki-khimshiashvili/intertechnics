@@ -69,6 +69,47 @@
       }
     ]
   },
+  "contactPage": {
+    "meta_description": "Contact Intertechnics LTD: machine sales, spare parts and service in Tbilisi, Georgia. Send a request and our team will call you back.",
+    "intro": "Tell us what you need — the right person on our team will call you back.",
+    "ticket": "Work order",
+    "date": "Date",
+    "steps": {
+      "topic": "Request type",
+      "details": "Your details",
+      "job": "The job"
+    },
+    "topics": {
+      "purchase": "Buy a machine",
+      "parts": "Spare parts",
+      "service": "Service & repair",
+      "other": "Something else"
+    },
+    "fields": {
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email (optional)",
+      "machine": "Machine or model (optional)",
+      "message": "Message"
+    },
+    "placeholders": {
+      "machine": "e.g. Bobcat S630",
+      "message": "What do you need, and by when?"
+    },
+    "errors": {
+      "required": "Required",
+      "phone": "Enter a valid phone number",
+      "email": "Enter a valid email address",
+      "send": "The request couldn't be sent. Please try again or call us.",
+      "rateLimited": "Too many requests. Please try again later or call us."
+    },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "stamp": "Received",
+    "successTitle": "Request received",
+    "successBody": "Thank you — we'll call you back shortly.",
+    "again": "Send another request"
+  },
   "testimonials": {
     "title": "What our clients say",
     "source": "Google review",
@@ -157,7 +198,7 @@
       {
         "id": 3,
         "name": "Contact",
-        "link": "#contactus-id"
+        "link": "/contact"
       }
     ]
   },

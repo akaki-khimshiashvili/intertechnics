@@ -33,6 +33,9 @@ const STRINGS = {
     partnersTitle: "პარტნიორი კომპანიები",
     partnersDesc:
       "ქვემოთ ჩამოთვლილი მწარმოებლების ოფიციალური დილერი და სერვის-პარტნიორი ვართ — სათადარიგო ნაწილებითა და საგარანტიო მომსახურებით საქართველოში.",
+    contactTitle: "კონტაქტი",
+    contactDesc:
+      "დაგვიკავშირდით — Intertechnics LTD: ტექნიკის გაყიდვა, სათადარიგო ნაწილები და სერვისი თბილისში. გამოგვიგზავნეთ მოთხოვნა და ჩვენი გუნდი დაგიკავშირდებათ.",
     aboutTitle: "ჩვენ შესახებ",
     aboutText: [
       "Intertechnics LTD-ის მთავარი მიზანია საბაზრო წილისა და კომპეტენტუნარიანობის შენარჩუნება ცვალებად ქართულ ბაზარზე.",
@@ -72,6 +75,9 @@ const STRINGS = {
     partnersTitle: "Partner Companies",
     partnersDesc:
       "Official dealer and service partner for the manufacturers below, with spare parts and warranty support in Georgia.",
+    contactTitle: "Contact Us",
+    contactDesc:
+      "Contact Intertechnics LTD: machine sales, spare parts and service in Tbilisi, Georgia. Send a request and our team will call you back.",
     aboutTitle: "About Us",
     aboutText: [
       "The main goal of Intertechnics LTD is to maintain market share and competence in the changing Georgian market.",
@@ -261,6 +267,17 @@ function aboutPage(lang, s) {
     body: `
       <h1>${esc(s.aboutTitle)}</h1>
       ${s.aboutText.map((p) => `<p>${esc(p)}</p>`).join("")}`,
+  };
+}
+
+function contactPage(lang, s) {
+  return {
+    title: `${s.contactTitle} — ${BRAND}`,
+    description: truncate(s.contactDesc),
+    body: `
+      <h1>${esc(s.contactTitle)}</h1>
+      <p>${esc(s.contactDesc)}</p>
+      <p><a href="mailto:intertechnicsltd@gmail.com">intertechnicsltd@gmail.com</a> · <a href="tel:+995599502517">599 50 25 17</a></p>`,
   };
 }
 
@@ -470,6 +487,7 @@ async function sitemap() {
     { path: "/machines", priority: "0.9", changefreq: "daily" },
     { path: "/partners", priority: "0.7", changefreq: "monthly" },
     { path: "/about", priority: "0.6", changefreq: "monthly" },
+    { path: "/contact", priority: "0.6", changefreq: "monthly" },
     ...machines.map((m) => ({
       path: `/machines/${encodeURIComponent(m.slug)}`,
       priority: "0.8",
@@ -525,6 +543,7 @@ export default async (request, context) => {
     else if (basePath === "/machines") page = await listingPage(lang, s);
     else if (basePath === "/partners") page = partnersPage(lang, s);
     else if (basePath === "/about") page = aboutPage(lang, s);
+    else if (basePath === "/contact") page = contactPage(lang, s);
     else {
       const match = basePath.match(/^\/machines\/([a-z0-9-]+)$/);
       if (match) {

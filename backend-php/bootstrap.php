@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/src/Support/MbstringPolyfill.php';
 require_once __DIR__ . '/src/Support/Slugify.php';
+require_once __DIR__ . '/src/Support/SmtpMailer.php';
 
 require_once __DIR__ . '/src/Config/Env.php';
 require_once __DIR__ . '/src/Config/Database.php';
@@ -36,5 +37,6 @@ require_once __DIR__ . '/src/Controllers/AuthController.php';
 require_once __DIR__ . '/src/Controllers/UploadController.php';
 require_once __DIR__ . '/src/Controllers/MachineController.php';
 require_once __DIR__ . '/src/Controllers/AnalyticsController.php';
+require_once __DIR__ . '/src/Controllers/ContactController.php';
 
 Env::load(__DIR__ . '/.env');

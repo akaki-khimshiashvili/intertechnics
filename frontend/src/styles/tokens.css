@@ -13,6 +13,7 @@
   --color-accent-hover: #e24747;
   --color-accent-ink: #17160f;
   --color-white: #ffffff;
+  --color-safety: #f2b705; /* hazard-stripe / rating yellow */
 
   /* Type scale (mirrors the Tailwind default step scale) */
   --text-xs: 0.75rem;

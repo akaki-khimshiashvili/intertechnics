@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect } from "react";
 import "./styles/tokens.css";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useNavigationType } from "react-router-dom";
 import { LangContext, LangProvider } from "./LangContext";
 import useDocumentMeta from "./hooks/useDocumentMeta";
 import { track } from "./lib/analytics";
@@ -17,6 +17,7 @@ import Testimonials from "./components/Testimonials";
 import MachineTeaser from "./components/MachineTeaser";
 import ContactUsInfo from "./components/ContactUsInfo";
 import LocationMap from "./components/LocationMap";
+import WorkOrderForm from "./components/WorkOrderForm";
 import MachinesComponent from "./components/MachinesComponent";
 import MachineDetail from "./components/MachineDetail";
 import Footer from "./components/Footer";
@@ -26,6 +27,7 @@ function App() {
   return (
     <Router>
       <LangProvider>
+        <ScrollToTop />
         <PageViewTracker />
         <Nav />
         <Routes>
@@ -36,6 +38,7 @@ function App() {
               <Route path={`${prefix}/machines`} element={<Machines />} />
               <Route path={`${prefix}/partners`} element={<Partners />} />
               <Route path={`${prefix}/about`} element={<About />} />
+              <Route path={`${prefix}/contact`} element={<Contact />} />
               <Route
                 path={`${prefix}/machines/:slug`}
                 element={<MachineDetail />}
@@ -47,6 +50,27 @@ function App() {
       </LangProvider>
     </Router>
   );
+}
+
+/**
+ * Starts each newly visited page at the top. Keyed on the language-free
+ * path, so switching language keeps your place; back/forward (POP) is left
+ * to the browser's own scroll restoration, and links that ask Home to
+ * scroll to a section (state.scrollToId) are handled there instead.
+ */
+function ScrollToTop() {
+  const { basePath } = useContext(LangContext);
+  const location = useLocation();
+  const navigationType = useNavigationType();
+
+  useLayoutEffect(() => {
+    if (navigationType === "POP" || location.state?.scrollToId) return;
+    // "instant" overrides the global `scroll-behavior: smooth` in App.css.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [basePath]);
+
+  return null;
 }
 
 /** Counts a page view per route; see lib/analytics.js. */
@@ -103,17 +127,19 @@ function Home() {
       <MachineTeaser />
       <Testimonials />
 
-      <div className="container">
+      <section className="container contact-section">
         <h2 className="contactus-h2" id="contactus-id">
           {t.company.title}
         </h2>
-        <ContactUsInfo
-          contacts={t.company.contacts}
-          address={t.company.address}
-          contactUs={{ email: t.company.email }}
-        />
-        <LocationMap />
-      </div>
+        <div className="contact-layout">
+          <ContactUsInfo
+            contacts={t.company.contacts}
+            address={t.company.address}
+            contactUs={{ email: t.company.email }}
+          />
+          <LocationMap />
+        </div>
+      </section>
 
       <Footer />
     </div>
@@ -166,6 +192,41 @@ function Partners() {
             </li>
           ))}
         </ul>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+function Contact() {
+  const { t, lang } = useContext(LangContext);
+
+  useDocumentMeta({
+    title: `${t.company.title} — Intertechnics LTD`,
+    description: t.contactPage.meta_description,
+    lang,
+  });
+
+  return (
+    <div className="page-shell">
+      <div className="container contact-page page-content">
+        <header className="contact-page-header">
+          <h1 className="contact-page-title">{t.company.title}</h1>
+          <p className="contact-page-intro">{t.contactPage.intro}</p>
+        </header>
+        <div className="contact-page-grid">
+          <WorkOrderForm />
+          <aside className="contact-page-aside">
+            <ContactUsInfo
+              contacts={t.company.contacts}
+              address={t.company.address}
+              contactUs={{ email: t.company.email }}
+            />
+          </aside>
+        </div>
+        <div className="contact-page-map">
+          <LocationMap />
+        </div>
       </div>
       <Footer />
     </div>

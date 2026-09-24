@@ -47,7 +47,7 @@ export default function Nav() {
   }, [location.pathname, basePath]);
 
   const handleClick = (element, source = "nav") => {
-    if (element.link === "#contactus-id")
+    if (element.link === "/contact")
       track("contact_click", { source, lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {

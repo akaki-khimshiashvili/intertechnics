@@ -4,15 +4,19 @@ import { MapPinned } from "lucide-react";
 
 export default function ContactUsInfoAddress({ address }) {
   return (
-    <>
+    <div className="address-group">
       <div className="address-p">
-        <MapPinned width={18} />
+        <span className="contact-icon" aria-hidden="true">
+          <MapPinned width={18} />
+        </span>
         <span>{address.head_office}</span>
       </div>
       <div className="address-p">
-        <Wrench width={18} />
+        <span className="contact-icon" aria-hidden="true">
+          <Wrench width={18} />
+        </span>
         <span>{address.service_center}</span>
       </div>
-    </>
+    </div>
   );
 }

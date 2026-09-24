@@ -56,3 +56,25 @@ export async function getMachineFilters() {
   if (!res.ok) throw await parseError(res, "Failed to load filters");
   return res.json();
 }
+
+/**
+ * Sends the contact form. Resolves on success; rejects with an Error whose
+ * `status` is the HTTP status (429 = rate limited), or 0 when offline.
+ */
+export async function sendContact(payload) {
+  let res;
+  try {
+    res = await fetch(`${API_URL}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    throw Object.assign(new Error("Network error"), { status: 0 });
+  }
+  if (!res.ok) {
+    const error = await parseError(res, "Message could not be sent");
+    error.status = res.status;
+    throw error;
+  }
+}
