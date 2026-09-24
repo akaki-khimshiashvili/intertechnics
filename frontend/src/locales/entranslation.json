@@ -99,7 +99,9 @@
     },
     "errors": {
       "required": "Required",
-      "phone": "Enter a valid phone number",
+      "phone": "Enter a valid mobile number, e.g. 599123456",
+      "name": "Use letters only, at least 2 (max 50)",
+      "tooLong": "Too long — 100 characters max",
       "email": "Enter a valid email address",
       "send": "The request couldn't be sent. Please try again or call us.",
       "rateLimited": "Too many requests. Please try again later or call us."

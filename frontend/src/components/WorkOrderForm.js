@@ -19,8 +19,18 @@ const TOPICS = [
   { key: "other", Icon: MessageCircleMore },
 ];
 
-// Same rule the API enforces (ContactController).
-const PHONE_PATTERN = /^[+\d][\d\s()-]{4,29}$/;
+// Same rules the API enforces (ContactController).
+// Georgian mobile: 5XX XXX XXX, optionally with 995 in front. The field
+// only ever holds digits — everything else is stripped as it's typed.
+const MOBILE_PATTERN = /^(?:995)?5\d{8}$/;
+const PHONE_MAX = 12; // 995 + 9 digits
+// Letters in any script (Georgian, Latin, Cyrillic…) plus the joiners
+// names use; must start with a letter and hold at least two.
+const NAME_PATTERN = /^\p{L}[\p{L}\p{M}\s'’.-]*$/u;
+const NAME_MAX = 50;
+const MACHINE_MAX = 100;
+// How long a field waits after the last keypress before judging it.
+const CHECK_DELAY_MS = 2000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const EMPTY = {
@@ -42,14 +52,41 @@ function newRef() {
   return `IT-${ymd}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`;
 }
 
+/** The check for one field; "" when it's fine. */
+function checkField(id, raw, errors) {
+  const value = raw.trim();
+  switch (id) {
+    case "name":
+      if (!value) return errors.required;
+      if (
+        !NAME_PATTERN.test(value) ||
+        (value.match(/\p{L}/gu) || []).length < 2 ||
+        value.length > NAME_MAX
+      )
+        return errors.name;
+      return "";
+    case "phone":
+      if (!value) return errors.required;
+      return MOBILE_PATTERN.test(value) ? "" : errors.phone;
+    case "email":
+      return value && !EMAIL_PATTERN.test(value) ? errors.email : "";
+    case "machine":
+      return value.length > MACHINE_MAX ? errors.tooLong : "";
+    case "message":
+      return value ? "" : errors.required;
+    default:
+      return "";
+  }
+}
+
+const CHECKED_FIELDS = ["name", "phone", "email", "machine", "message"];
+
 function validate(values, errors) {
   const out = {};
-  if (!values.name.trim()) out.name = errors.required;
-  if (!values.phone.trim()) out.phone = errors.required;
-  else if (!PHONE_PATTERN.test(values.phone.trim())) out.phone = errors.phone;
-  if (values.email.trim() && !EMAIL_PATTERN.test(values.email.trim()))
-    out.email = errors.email;
-  if (!values.message.trim()) out.message = errors.required;
+  for (const id of CHECKED_FIELDS) {
+    const error = checkField(id, values[id], errors);
+    if (error) out[id] = error;
+  }
   return out;
 }
 
@@ -131,6 +168,8 @@ export default function WorkOrderForm() {
   const [ref, setRef] = useState(newRef);
   const [values, setValues] = useState(EMPTY);
   const [fieldErrors, setFieldErrors] = useState({});
+  // One pending check per field, restarted on every keypress.
+  const checkTimers = useRef({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent
   const [sendError, setSendError] = useState("");
   const formRef = useRef(null);
@@ -149,17 +188,61 @@ export default function WorkOrderForm() {
     if (status === "sent") successRef.current?.focus();
   }, [status]);
 
+  const cancelCheck = (id) => clearTimeout(checkTimers.current[id]);
+  const cancelAllChecks = () => {
+    const timers = checkTimers.current;
+    Object.keys(timers).forEach((id) => {
+      clearTimeout(timers[id]);
+      delete timers[id];
+    });
+  };
+
+  useEffect(() => {
+    const timers = checkTimers.current;
+    return () => Object.values(timers).forEach(clearTimeout);
+  }, []);
+
+  const setError = (id, error) =>
+    setFieldErrors(({ [id]: _previous, ...rest }) =>
+      error ? { ...rest, [id]: error } : rest,
+    );
+
+  // While typing, a field is judged only once the typing stops: each
+  // keypress hides its error and restarts the wait, and an error shows
+  // CHECK_DELAY_MS after the last one. A valid value just stays clear.
   const update = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+    if (name === "phone") value = value.replace(/\D/g, "").slice(0, PHONE_MAX);
     setValues((v) => ({ ...v, [name]: value }));
-    if (fieldErrors[name])
-      setFieldErrors(({ [name]: _cleared, ...rest }) => rest);
+    if (!CHECKED_FIELDS.includes(name)) return;
+
+    cancelCheck(name);
+    setError(name, "");
+    const error = checkField(name, value, c.errors);
+    if (error) {
+      checkTimers.current[name] = setTimeout(
+        () => setError(name, error),
+        CHECK_DELAY_MS,
+      );
+    }
+  };
+
+  // Leaving a field judges it right away — unless it's empty and was never
+  // typed in, so tabbing past doesn't nag. Submit catches those.
+  const onBlur = (e) => {
+    const { name, value } = e.target;
+    if (!CHECKED_FIELDS.includes(name)) return;
+    if (!value.trim() && !(name in checkTimers.current)) return;
+    cancelCheck(name);
+    setError(name, checkField(name, value, c.errors));
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (locked || coolingDown) return;
 
+    cancelAllChecks();
     const found = validate(values, c.errors);
     setFieldErrors(found);
     setSendError("");
@@ -187,6 +270,7 @@ export default function WorkOrderForm() {
 
   const reset = () => {
     setValues(EMPTY);
+    cancelAllChecks();
     setFieldErrors({});
     setRef(newRef());
     setStatus("idle");
@@ -197,6 +281,7 @@ export default function WorkOrderForm() {
     label: c.fields[id],
     value: values[id],
     onChange: update,
+    onBlur,
     error: fieldErrors[id],
     ...extra,
   });
@@ -257,13 +342,15 @@ export default function WorkOrderForm() {
           {c.steps.details}
         </legend>
         <div className="wo-grid">
-          <Field {...fieldProps("name", { autoComplete: "name", maxLength: 100 })} />
+          <Field {...fieldProps("name", { autoComplete: "name", maxLength: NAME_MAX })} />
           <Field
             {...fieldProps("phone", {
               type: "tel",
-              inputMode: "tel",
-              autoComplete: "tel",
-              maxLength: 30,
+              inputMode: "numeric",
+              pattern: "[0-9]*",
+              autoComplete: "tel-national",
+              placeholder: "599123456",
+              maxLength: PHONE_MAX,
             })}
           />
           <Field
@@ -286,7 +373,7 @@ export default function WorkOrderForm() {
           <Field
             {...fieldProps("machine", {
               placeholder: c.placeholders.machine,
-              maxLength: 120,
+              maxLength: MACHINE_MAX,
               wide: true,
             })}
           />
