@@ -45,3 +45,21 @@ button {
 .container {
   padding-inline: 12.5%;
 }
+
+/* Keyboard focus ring for everything focusable. The `a { all: unset }`
+   reset above also wipes the browser's own ring, so links would otherwise
+   show nothing. Components can still restyle focus for their own elements. */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Red on charcoal reads poorly — dark surfaces get a white ring instead. */
+.site-header,
+.nav-overlay,
+.hero,
+.footer,
+.machine-teaser,
+.lightbox-overlay {
+  --color-focus: var(--color-white);
+}

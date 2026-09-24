@@ -284,6 +284,11 @@ export default function WorkOrderForm() {
         <legend className="wo-legend">
           <span className="wo-step-no">01</span>
           {c.steps.topic}
+          {/* Radios are a single tab stop; this nudges keyboard users toward
+              the arrow keys. Screen readers already announce the group. */}
+          <span className="wo-topics-hint" aria-hidden="true">
+            {c.topicsHint}
+          </span>
         </legend>
         <div className="wo-topics">
           {TOPICS.map(({ key, Icon }) => (

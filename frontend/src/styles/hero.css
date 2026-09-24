@@ -50,6 +50,35 @@
   font-weight: 500;
   padding: 0.5rem 1rem;
   border: 1px solid var(--color-white);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  transition:
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+/* The hover fill: a panel parked off the left edge that sweeps across on
+   hover/focus. It sits under the label (z-index -1 inside the isolated
+   button) so the text color can flip over it. */
+.cta-primary::before,
+.cta-secondary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.cta-primary > span,
+.cta-secondary > span {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
 }
 
 .cta-primary {
@@ -58,8 +87,98 @@
   color: var(--color-ink);
 }
 
+.cta-primary::before {
+  background: var(--color-accent);
+}
+
 .cta-secondary {
   color: var(--color-white);
+}
+
+.cta-secondary::before {
+  background: var(--color-white);
+}
+
+/* Hover only on devices that really hover, so taps don't leave the button
+   stuck in its filled state; keyboard focus gets the same treatment. */
+@media (hover: hover) and (pointer: fine) {
+  .cta-primary:hover,
+  .cta-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .cta-primary:hover::before,
+  .cta-secondary:hover::before {
+    transform: scaleX(1);
+  }
+
+  .cta-primary:hover > span,
+  .cta-secondary:hover > span {
+    transform: translateX(2px);
+  }
+
+  .cta-primary:hover {
+    color: var(--color-white);
+    border-color: var(--color-accent);
+  }
+
+  .cta-secondary:hover {
+    color: var(--color-ink);
+  }
+}
+
+.cta-primary:focus-visible,
+.cta-secondary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.cta-primary:focus-visible::before,
+.cta-secondary:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.cta-primary:focus-visible {
+  color: var(--color-white);
+  border-color: var(--color-accent);
+}
+
+.cta-secondary:focus-visible {
+  color: var(--color-ink);
+}
+
+/* Press: sink back down and squash slightly — declared after hover so it
+   wins over the lift while the pointer is held. */
+.cta-primary:active,
+.cta-secondary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  transition-duration: 80ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-primary,
+  .cta-secondary,
+  .cta-primary > span,
+  .cta-secondary > span {
+    transform: none !important;
+  }
+
+  /* Swap the sweep for a plain fade. */
+  .cta-primary::before,
+  .cta-secondary::before {
+    transform: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) linear;
+  }
+
+  .cta-primary:hover::before,
+  .cta-secondary:hover::before,
+  .cta-primary:focus-visible::before,
+  .cta-secondary:focus-visible::before {
+    opacity: 1;
+  }
 }
 
 @keyframes hero-crossfade {

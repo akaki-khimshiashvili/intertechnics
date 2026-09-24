@@ -86,6 +86,7 @@
       "service": "Service & repair",
       "other": "Something else"
     },
+    "topicsHint": "Use ← → to change",
     "fields": {
       "name": "Full name",
       "phone": "Phone",
