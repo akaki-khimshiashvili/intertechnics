@@ -30,6 +30,20 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Intertechnics LTD — Construction Equipment, Georgia</title>
 
+    <script>
+      // Suppress the benign "ResizeObserver loop completed with undelivered
+      // notifications" warning (triggered by Leaflet maps) before CRA's dev
+      // error overlay (registered later, inside bundle.js) can catch it.
+      window.addEventListener("error", function (event) {
+        if (
+          event.message ===
+          "ResizeObserver loop completed with undelivered notifications."
+        ) {
+          event.stopImmediatePropagation();
+        }
+      });
+    </script>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
