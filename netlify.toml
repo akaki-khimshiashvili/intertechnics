@@ -7,9 +7,8 @@
   edge_functions = "netlify/edge-functions"
 
 [build.environment]
-  # Emit CRA's webpack runtime as a file instead of an inline <script>, so the
-  # CSP below can use script-src 'self' without 'unsafe-inline'.
-  INLINE_RUNTIME_CHUNK = "false"
+  # Vite 8 needs Node ^20.19 or >=22.12.
+  NODE_VERSION = "22"
 
 # HTTP -> HTTPS and apex -> www, one 301 hop, before the SPA fallback.
 [[redirects]]

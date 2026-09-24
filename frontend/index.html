@@ -2,7 +2,7 @@
 <html lang="ka">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/images/tab-logo.png" />
+    <link rel="icon" href="/images/tab-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#17160F" />
     <meta name="robots" content="index, follow" />
@@ -26,23 +26,9 @@
     <meta name="twitter:description" content="Official Georgian dealer of Bobcat, Kubota, AMMANN, Putzmeister, Kaeser and more." />
     <meta name="twitter:image" content="https://www.intertechnics.ge/images/hero-image.jpg" />
 
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
     <title>Intertechnics LTD — Construction Equipment, Georgia</title>
-
-    <script>
-      // Suppress the benign "ResizeObserver loop completed with undelivered
-      // notifications" warning (triggered by Leaflet maps) before CRA's dev
-      // error overlay (registered later, inside bundle.js) can catch it.
-      window.addEventListener("error", function (event) {
-        if (
-          event.message ===
-          "ResizeObserver loop completed with undelivered notifications."
-        ) {
-          event.stopImmediatePropagation();
-        }
-      });
-    </script>
 
     <script type="application/ld+json">
       {
@@ -66,5 +52,6 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>
