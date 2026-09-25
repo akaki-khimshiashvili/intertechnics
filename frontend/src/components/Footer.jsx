@@ -8,18 +8,20 @@ import { track } from "lib/analytics";
 export default function Footer() {
   const { t, lang, localize, basePath } = useContext(LangContext);
   const navItems = t.headerElements.navItems;
-  const machinesLabel = t.company.machines.name;
   const navigate = useNavigate();
 
   const handleClick = (element) => {
-    if (element.link === "/contact") track("contact_click", { source: "footer", lang });
+    if (element.link === "/contact")
+      track("contact_click", { source: "footer", lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);
       if (basePath !== "/") {
         navigate(localize("/"), { state: { scrollToId } });
       } else {
-        document.getElementById(scrollToId)?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById(scrollToId)
+          ?.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       navigate(localize(element.link));
@@ -33,7 +35,9 @@ export default function Footer() {
           {navItems.map((item) => (
             <li key={item.id}>
               <a
-                href={item.link.startsWith("#") ? item.link : localize(item.link)}
+                href={
+                  item.link.startsWith("#") ? item.link : localize(item.link)
+                }
                 onClick={(e) => {
                   e.preventDefault();
                   handleClick(item);
@@ -43,22 +47,12 @@ export default function Footer() {
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={localize("/machines")}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(localize("/machines"));
-              }}
-            >
-              {machinesLabel}
-            </a>
-          </li>
         </ul>
       </nav>
       <Socials />
       <p className="footer-copyright">
-        <span className="copyright">&copy;</span> 2005 – {new Date().getFullYear()} — Intertechnics LTD
+        <span className="copyright">&copy;</span> 2005 –{" "}
+        {new Date().getFullYear()} — Intertechnics LTD
       </p>
       <a
         className="footer-credit"

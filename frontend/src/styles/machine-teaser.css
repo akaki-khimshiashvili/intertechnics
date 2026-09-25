@@ -136,12 +136,45 @@
   color: var(--color-white);
 }
 
-.eyebrow {
+/* Dark frosted chip over the photo; the red dot carries the brand accent
+   so the label stays white-on-dark and legible on any image. */
+.machine-teaser-badge {
+  position: absolute;
+  top: var(--space-200);
+  left: var(--space-200);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.75rem;
+  border-radius: var(--radius-full);
   font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-accent);
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(23, 22, 15, 0.72);
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  pointer-events: none;
+}
+
+.machine-teaser-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(247, 6, 6, 0.25);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .machine-teaser-badge {
+    background: var(--color-ink);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .machine-teaser-copy h2 {
@@ -152,10 +185,13 @@
 .machine-teaser-copy p {
   color: rgba(255, 255, 255, 0.75);
   font-size: var(--text-base);
+  text-wrap: balance;
   line-height: var(--text-base-lh);
   max-width: 46ch;
 }
 
 .machine-teaser-copy .btn-primary {
+  --btn-sweep: var(--color-white);
+  --btn-sweep-ink: var(--color-ink);
   margin-top: var(--space-100);
 }

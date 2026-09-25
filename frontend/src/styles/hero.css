@@ -14,7 +14,15 @@
 
 @media (max-width: 720px) {
   .hero {
-    min-height: 70svh;
+    min-height: 80svh;
+  }
+
+  .hero-title {
+    margin-bottom: 0.85rem;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
   }
 }
 
@@ -81,10 +89,9 @@
 }
 
 @media (max-width: 720px) {
-
   .cta-primary,
   .cta-secondary {
-    padding: .85rem 1rem;
+    padding: 0.85rem 1rem;
   }
 }
 
@@ -102,8 +109,8 @@
   transition: transform var(--dur-slow) var(--ease-out);
 }
 
-.cta-primary>span,
-.cta-secondary>span {
+.cta-primary > span,
+.cta-secondary > span {
   display: inline-block;
   transition: transform var(--dur-base) var(--ease-out);
 }
@@ -129,7 +136,6 @@
 /* Hover only on devices that really hover, so taps don't leave the button
    stuck in its filled state; keyboard focus gets the same treatment. */
 @media (hover: hover) and (pointer: fine) {
-
   .cta-primary:hover,
   .cta-secondary:hover {
     transform: translateY(-2px);
@@ -141,8 +147,8 @@
     transform: scaleX(1);
   }
 
-  .cta-primary:hover>span,
-  .cta-secondary:hover>span {
+  .cta-primary:hover > span,
+  .cta-secondary:hover > span {
     transform: translateX(2px);
   }
 
@@ -186,11 +192,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .cta-primary,
   .cta-secondary,
-  .cta-primary>span,
-  .cta-secondary>span {
+  .cta-primary > span,
+  .cta-secondary > span {
     transform: none !important;
   }
 

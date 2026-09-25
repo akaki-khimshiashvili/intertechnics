@@ -7,7 +7,7 @@
   gap: var(--space-75);
   font-size: var(--text-base);
   line-height: var(--text-base-lh);
-  font-weight: 600;
+  /* font-weight: 600; */
   padding: var(--space-100) var(--space-300);
   border-radius: var(--radius-full);
   cursor: pointer;
@@ -16,20 +16,83 @@
     background-color var(--dur-base) var(--ease-out);
 }
 
+/* Same sweep-fill hover as the hero CTAs. The fill defaults to ink for light
+   pages; dark surfaces override --btn-sweep/--btn-sweep-ink to white/ink. */
 .btn-primary {
+  --btn-sweep: var(--color-ink);
+  --btn-sweep-ink: var(--color-white);
   background-color: var(--color-accent);
-  color: var(--color-accent-ink);
+  color: var(--color-white);
+  border: 1px solid var(--color-accent);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-sweep);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover {
-    background-color: var(--color-accent-hover);
+    color: var(--btn-sweep-ink);
+    border-color: var(--btn-sweep);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .btn-primary:hover::before {
+    transform: scaleX(1);
   }
 }
 
-.btn-primary:active,
+.btn-primary:focus-visible {
+  color: var(--btn-sweep-ink);
+  border-color: var(--btn-sweep);
+}
+
+.btn-primary:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  transition-duration: 80ms;
+}
+
 .back-home-button:active {
   transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary {
+    transform: none !important;
+  }
+
+  .btn-primary::before {
+    transform: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) linear;
+  }
+
+  .btn-primary:hover::before,
+  .btn-primary:focus-visible::before {
+    opacity: 1;
+  }
 }
 
 .back-home-button {

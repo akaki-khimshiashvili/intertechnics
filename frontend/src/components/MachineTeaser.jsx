@@ -96,6 +96,7 @@ export default function MachineTeaser() {
               decoding="async"
             />
           ))}
+          <span className="machine-teaser-badge">{heading}</span>
           {count > 1 && (
             <>
               <button
@@ -118,7 +119,6 @@ export default function MachineTeaser() {
           )}
         </div>
         <div className="machine-teaser-copy">
-          <span className="eyebrow">{heading}</span>
           <div key={current.key} className="machine-teaser-text" aria-live={paused ? "polite" : "off"}>
             <h2>{current.name}</h2>
             <p>{current.body}</p>
