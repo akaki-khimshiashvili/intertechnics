@@ -46,6 +46,16 @@ export default function Nav() {
     return () => observer.disconnect();
   }, [location.pathname, basePath]);
 
+  // A section counts as current for its own path and anything nested under
+  // it (e.g. /machines/:slug keeps "machines" lit); home only matches exactly.
+  const isActive = (link) =>
+    !link.startsWith("#") &&
+    (link === "/"
+      ? basePath === "/"
+      : basePath === link || basePath.startsWith(`${link}/`));
+  const activeProps = (link) =>
+    isActive(link) ? { className: "is-active", "aria-current": "page" } : {};
+
   const handleClick = (element, source = "nav") => {
     if (element.link === "/contact")
       track("contact_click", { source, lang });
@@ -92,6 +102,7 @@ export default function Nav() {
                         ? item.link
                         : localize(item.link)
                     }
+                    {...activeProps(item.link)}
                     onClick={(e) => {
                       e.preventDefault();
                       handleClick(item);
@@ -135,6 +146,7 @@ export default function Nav() {
                 href={
                   item.link.startsWith("#") ? item.link : localize(item.link)
                 }
+                {...activeProps(item.link)}
                 onClick={(e) => {
                   e.preventDefault();
                   handleClick(item, "mobile_menu");
@@ -147,6 +159,7 @@ export default function Nav() {
           <li style={{ transitionDelay: `${navItems.length * 60 + 80}ms` }}>
             <a
               href={localize("/machines")}
+              {...activeProps("/machines")}
               onClick={(e) => {
                 e.preventDefault();
                 navigate(localize("/machines"));

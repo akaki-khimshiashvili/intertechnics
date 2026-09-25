@@ -27,5 +27,10 @@ export default defineConfig({
   build: {
     // netlify.toml publishes "build".
     outDir: "build",
+    // Vite inlines assets under 4 KB as data: URIs — that would include the
+    // smaller font subsets, which the CSP (font-src 'self') blocks. Always
+    // emit fonts as real files; other assets keep the default behavior.
+    assetsInlineLimit: (filePath) =>
+      /\.(woff2?|ttf|otf)$/.test(filePath) ? false : undefined,
   },
 });

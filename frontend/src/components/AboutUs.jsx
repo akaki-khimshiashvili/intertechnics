@@ -18,7 +18,7 @@ export default function AboutUs() {
       <div className="about-layout">
         <figure className="about-media">
           <img
-            src="/images/paata.jpg"
+            src="/images/paata.webp"
             alt=""
             decoding="async"
             fetchPriority="high"

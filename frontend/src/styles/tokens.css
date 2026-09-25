@@ -12,6 +12,8 @@
   --color-accent: #f70606;
   --color-accent-hover: #e24747;
   --color-accent-ink: #17160f;
+  --color-accent-on-dark: #ff6b5e; /* softer red for text/lines on charcoal */
+  --color-focus: var(--color-accent); /* keyboard focus ring; white on dark surfaces (base.css) */
   --color-white: #ffffff;
   --color-safety: #f2b705; /* hazard-stripe / rating yellow */
 

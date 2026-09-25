@@ -1,35 +1,63 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LangContext } from "LangContext";
 import Socials from "./Socials";
 import { track } from "lib/analytics";
 
 const heroImages = [
-  "/images/hero-image.jpg",
-  "/images/1.jpg",
-  "/images/kubota-5.jpg",
-  "/images/3.jpg",
+  "/images/hero-image.webp",
+  "/images/1.webp",
+  "/images/kubota-5.webp",
+  "/images/3.webp",
 ];
 
 export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
   const navigate = useNavigate();
   const { localize, lang } = useContext(LangContext);
+  const heroRef = useRef(null);
+  const [offscreen, setOffscreen] = useState(false);
+
+  // Pause the crossfade while the hero is scrolled out of view — no point
+  // compositing four full-screen layers nobody can see.
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setOffscreen(!entry.isIntersecting),
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="hero">
+    <section ref={heroRef} className={`hero ${offscreen ? "is-paused" : ""}`}>
       {/* Marks the top of the page so Nav can tell, via IntersectionObserver,
           when the hero has scrolled out from under the header. */}
       <div id="hero-sentinel" aria-hidden="true" />
       <div className="hero-slides" aria-hidden="true">
         {heroImages.map((src, i) => (
-          <div
+          <picture
             key={src}
             className="hero-slide"
-            style={{
-              backgroundImage: `url(${src})`,
-              animationDelay: `${i * 6}s`,
-            }}
-          />
+            style={{ animationDelay: `${i * 6}s` }}
+          >
+            {/* The main photo is a 3:1 panorama — on portrait phones it'd be
+                blown up ~3x, so they get the dedicated portrait crop. */}
+            {i === 0 && (
+              <source
+                media="(max-width: 600px) and (orientation: portrait)"
+                srcSet="/images/hero-image-sm.webp"
+              />
+            )}
+            <img
+              src={src}
+              alt=""
+              decoding="async"
+              // Only the first slide is on screen at load; the rest shouldn't
+              // compete with it for bandwidth.
+              fetchPriority={i === 0 ? "high" : "low"}
+            />
+          </picture>
         ))}
       </div>
       <div className="hero-scrim" />
