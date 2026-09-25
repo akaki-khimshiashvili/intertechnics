@@ -65,42 +65,73 @@
 .site-header-links ul {
   display: flex;
   align-items: center;
-  gap: var(--space-400);
+  /* Tighter than before: the pills' own padding supplies the breathing room. */
+  gap: var(--space-50);
 }
 
+/* Text stays white in every state (red text reads poorly over the hero
+   photo); a frosted pill behind the label carries the state instead:
+   rest   – dimmed white, no pill
+   hover  – full white, faint pill
+   active – full white, stronger pill + red dot (the only red in the nav) */
 .site-header-links a {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   white-space: nowrap;
-  color: var(--color-white);
+  color: rgba(255, 255, 255, 0.75);
   font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.2px;
-  padding-block: var(--space-50);
-  transition: color var(--dur-base) ease;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  transition:
+    color var(--dur-base) ease,
+    background-color var(--dur-base) ease,
+    border-color var(--dur-base) ease;
 }
 
-.site-header-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: 0;
-  height: 1px;
-  background: var(--color-accent-on-dark);
-  transition: right var(--dur-base) var(--ease-out);
+.site-header-links a:hover,
+.site-header-links a:focus-visible,
+.site-header-links a.is-active {
+  color: var(--color-white);
 }
 
-.site-header-links a:hover {
-  color: var(--color-accent-on-dark);
+@media (hover: hover) and (pointer: fine) {
+  .site-header-links a:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
 }
 
-.site-header-links a:hover::after,
-.site-header-links a.is-active::after {
-  right: 0;
+.site-header-links a:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
 }
 
 .site-header-links a.is-active {
-  color: var(--color-accent-on-dark);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+.site-header-links a.is-active::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(247, 6, 6, 0.25);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header-links a.is-active {
+    background: var(--color-ink-soft);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .site-header-actions {
@@ -135,10 +166,75 @@
   height: auto;
 }
 
+/* Same white sweep-fill as the hero's .cta-secondary. */
 .site-header .lang-switcher button {
-  border: 1px solid currentColor;
+  border: 1px solid var(--color-white);
   color: var(--color-white);
   padding: 2px 4px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  transition:
+    color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.site-header .lang-switcher button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header .lang-switcher button:hover {
+    color: var(--color-ink);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .site-header .lang-switcher button:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+.site-header .lang-switcher button:focus-visible {
+  color: var(--color-ink);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.site-header .lang-switcher button:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.site-header .lang-switcher button:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  transition-duration: 80ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header .lang-switcher button {
+    transform: none !important;
+  }
+
+  .site-header .lang-switcher button::before {
+    transform: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) linear;
+  }
+
+  .site-header .lang-switcher button:hover::before,
+  .site-header .lang-switcher button:focus-visible::before {
+    opacity: 1;
+  }
 }
 
 .site-header-cta {

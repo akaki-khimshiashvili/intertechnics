@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
           lang === "ka" ? "Switch to English" : "ქართულ ენაზე გადართვა"
         }
       >
-        {lang === "ka" ? "Eng" : "ქართ"}
+        {lang === "ka" ? "Eng" : "ᲥᲐᲠᲗ"}
       </button>
     </div>
   );
