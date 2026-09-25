@@ -192,16 +192,21 @@
       },
       {
         "id": 1,
+        "name": "კატალოგი",
+        "link": "/machines"
+      },
+      {
+        "id": 2,
         "name": "პარტნიორი კომპანიები",
         "link": "/partners"
       },
       {
-        "id": 2,
+        "id": 3,
         "name": "ჩვენ შესახებ",
         "link": "/about"
       },
       {
-        "id": 3,
+        "id": 4,
         "name": "კონტაქტი",
         "link": "/contact"
       }
