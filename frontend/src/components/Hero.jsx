@@ -66,7 +66,7 @@ export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
           <p className="hero-title">{company}</p>
           <h1>{heading}</h1>
           <div className="hero-actions">
-            <a className="cta-primary" href="tel:">
+            <a className="cta-primary" href="tel:+995599502517">
               <span>{ctaPrimary}</span>
             </a>
             <button
