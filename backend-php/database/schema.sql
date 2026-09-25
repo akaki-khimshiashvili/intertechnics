@@ -14,7 +14,9 @@ CREATE TABLE IF NOT EXISTS users (
 -- capacity"); `specs` is a JSON array of {label, value} pairs for anything
 -- category-specific that doesn't have its own column, e.g. an asphalt
 -- plant's "Throughput: 120 t/h". `images` is a JSON array of gallery image
--- URLs in addition to `main_image`.
+-- URLs in addition to `main_image`. `price` is the base price; `vat_percent`
+-- (e.g. 18 for Georgian დღგ) is shown next to it as "+ 18% VAT", NULL = no
+-- VAT note. `contact_phone` overrides the default number on the machine page.
 CREATE TABLE IF NOT EXISTS machines (
     id                   INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug                 VARCHAR(220) NOT NULL UNIQUE,
@@ -28,6 +30,8 @@ CREATE TABLE IF NOT EXISTS machines (
     price                DECIMAL(12,2) NULL,
     currency             VARCHAR(10) NOT NULL DEFAULT 'USD',
     price_negotiable     TINYINT(1) NOT NULL DEFAULT 0,
+    vat_percent          DECIMAL(5,2) NULL,
+    contact_phone        VARCHAR(30) NULL,
     engine               VARCHAR(150) NULL,
     power_hp             DECIMAL(8,2) NULL,
     operating_weight_kg  DECIMAL(10,2) NULL,

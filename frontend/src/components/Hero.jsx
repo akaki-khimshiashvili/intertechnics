@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LangContext } from "LangContext";
 import Socials from "./Socials";
+import { track } from "lib/analytics";
 
 const heroImages = [
   "/images/hero-image.jpg",
@@ -12,7 +13,7 @@ const heroImages = [
 
 export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
   const navigate = useNavigate();
-  const { localize } = useContext(LangContext);
+  const { localize, lang } = useContext(LangContext);
 
   return (
     <section className="hero">
@@ -38,7 +39,11 @@ export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
           <p className="hero-title">{company}</p>
           <h1>{heading}</h1>
           <div className="hero-actions">
-            <a className="cta-primary" href="tel:">
+            <a
+              className="cta-primary"
+              href="tel:+995597787815"
+              onClick={() => track("phone_click", { source: "hero", lang })}
+            >
               <span>{ctaPrimary}</span>
             </a>
             <button

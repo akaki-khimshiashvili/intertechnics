@@ -32,6 +32,16 @@ async function resolvePhoto(item: PhotoItem): Promise<string> {
   return item.kind === 'existing' ? item.url : uploadImage(item.file)
 }
 
+const STANDARD_VAT = 18
+
+// 'none' = price shown as-is, 'standard' = "+ 18% დღგ", 'custom' = any other rate.
+type VatMode = 'none' | 'standard' | 'custom'
+
+function vatModeFromPercent(percent: number | null | undefined): VatMode {
+  if (percent === null || percent === undefined) return 'none'
+  return percent === STANDARD_VAT ? 'standard' : 'custom'
+}
+
 type FormState = {
   name: string
   name_en: string
@@ -45,6 +55,9 @@ type FormState = {
   price: string
   currency: string
   price_negotiable: boolean
+  vat_mode: VatMode
+  vat_custom: string
+  contact_phone: string
   engine: string
   power_hp: string
   operating_weight_kg: string
@@ -73,6 +86,9 @@ const emptyForm: FormState = {
   price: '',
   currency: 'USD',
   price_negotiable: false,
+  vat_mode: 'none',
+  vat_custom: '',
+  contact_phone: '',
   engine: '',
   power_hp: '',
   operating_weight_kg: '',
@@ -103,6 +119,9 @@ function formStateFromMachine(machine: Machine | undefined): FormState {
     price: machine.price?.toString() ?? '',
     currency: machine.currency,
     price_negotiable: machine.price_negotiable,
+    vat_mode: vatModeFromPercent(machine.vat_percent),
+    vat_custom: vatModeFromPercent(machine.vat_percent) === 'custom' ? String(machine.vat_percent) : '',
+    contact_phone: machine.contact_phone ?? '',
     engine: machine.engine ?? '',
     power_hp: machine.power_hp?.toString() ?? '',
     operating_weight_kg: machine.operating_weight_kg?.toString() ?? '',
@@ -144,6 +163,7 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   const [knownCategories, setKnownCategories] = useState<string[]>([])
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const nameInputRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const objectUrls = useRef<string[]>([])
   useEffect(() => {
@@ -192,6 +212,13 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
     const errors: Partial<Record<keyof FormState, string>> = {}
     if (form.name.trim() === '') {
       errors.name = 'ეს ველი სავალდებულოა — გთხოვთ შეავსოთ'
+    }
+    if (form.vat_mode === 'custom') {
+      const vat = toNumberOrNull(form.vat_custom)
+      if (vat === null || vat < 0 || vat > 100) errors.vat_custom = 'მიუთითეთ პროცენტი 0-დან 100-მდე'
+    }
+    if (form.contact_phone.trim() !== '' && !/^\+?[\d\s()-]{5,30}$/.test(form.contact_phone.trim())) {
+      errors.contact_phone = 'მიუთითეთ სწორი ნომერი, მაგ. 599 12 34 56'
     }
     return errors
   }
@@ -250,9 +277,10 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
     const errors = validate()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
-      setError('გთხოვთ შეავსოთ ყველა სავალდებულო ველი')
-      nameInputRef.current?.focus()
-      nameInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setError('გთხოვთ შეასწოროთ მონიშნული ველები')
+      const firstInvalid = errors.name ? nameInputRef.current : formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')
+      firstInvalid?.focus()
+      firstInvalid?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
     setFieldErrors({})
@@ -275,6 +303,9 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
         price: toNumberOrNull(form.price),
         currency: form.currency.trim() || 'USD',
         price_negotiable: form.price_negotiable,
+        vat_percent:
+          form.vat_mode === 'standard' ? STANDARD_VAT : form.vat_mode === 'custom' ? toNumberOrNull(form.vat_custom) : null,
+        contact_phone: form.contact_phone.trim() || null,
         engine: form.engine.trim() || null,
         power_hp: toNumberOrNull(form.power_hp),
         operating_weight_kg: toNumberOrNull(form.operating_weight_kg),
@@ -309,7 +340,7 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
   }
 
   return (
-    <form className="machine-form" onSubmit={handleSubmit} noValidate>
+    <form className="machine-form" ref={formRef} onSubmit={handleSubmit} noValidate>
       <section className="machine-form-section">
         <h2>ძირითადი ინფორმაცია</h2>
         <div className="machine-form-grid">
@@ -389,7 +420,7 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
         <h2>ფასი</h2>
         <div className="machine-form-grid">
           <label className="machine-field">
-            <span>ფასი</span>
+            <span>საბაზისო ფასი</span>
             <input type="number" min="0" step="0.01" {...field('price')} placeholder="დატოვეთ ცარიელი, თუ არ ეხება" />
           </label>
           <label className="machine-field">
@@ -403,7 +434,40 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
               ]}
             />
           </label>
+          <label className="machine-field">
+            <span>დღგ (არჩევითი)</span>
+            <Select
+              {...selectField('vat_mode')}
+              options={[
+                { value: 'none', label: 'არ მიეთითოს' },
+                { value: 'standard', label: `+ ${STANDARD_VAT}% დღგ` },
+                { value: 'custom', label: 'სხვა პროცენტი...' },
+              ]}
+            />
+          </label>
+          {form.vat_mode === 'custom' && (
+            <label className={`machine-field${fieldErrors.vat_custom ? ' machine-field-invalid' : ''}`}>
+              <span>დღგ (%)</span>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                {...field('vat_custom')}
+                placeholder="მაგ. 20"
+                aria-invalid={Boolean(fieldErrors.vat_custom)}
+              />
+              {fieldErrors.vat_custom && <span className="machine-field-error">{fieldErrors.vat_custom}</span>}
+            </label>
+          )}
         </div>
+        {form.vat_mode !== 'none' && (
+          <p className="machine-form-hint">
+            საიტზე გამოჩნდება: „{form.price ? Number(form.price).toLocaleString() : '10,000'} {form.currency} + {
+              form.vat_mode === 'standard' ? STANDARD_VAT : form.vat_custom || '…'
+            }% დღგ“ (ინგლისურად — „+ … % VAT“)
+          </p>
+        )}
         <label className="machine-checkbox">
           <input
             type="checkbox"
@@ -411,6 +475,25 @@ export function MachineForm({ machine }: MachineFormProps = {}) {
             onChange={(e) => setForm((prev) => ({ ...prev, price_negotiable: e.target.checked }))}
           />
           <span>ფასი შეთანხმებადია</span>
+        </label>
+      </section>
+
+      <section className="machine-form-section">
+        <h2>საკონტაქტო ნომერი</h2>
+        <p className="machine-form-hint">
+          ნომერი, რომელზეც მომხმარებელი დარეკავს ტექნიკის გვერდიდან. ცარიელი დატოვების შემთხვევაში გამოჩნდება
+          ძირითადი ნომერი (599 50 25 17).
+        </p>
+        <label className={`machine-field${fieldErrors.contact_phone ? ' machine-field-invalid' : ''}`}>
+          <span>ტელეფონის ნომერი</span>
+          <input
+            type="tel"
+            {...field('contact_phone')}
+            placeholder="599 50 25 17"
+            maxLength={30}
+            aria-invalid={Boolean(fieldErrors.contact_phone)}
+          />
+          {fieldErrors.contact_phone && <span className="machine-field-error">{fieldErrors.contact_phone}</span>}
         </label>
       </section>
 

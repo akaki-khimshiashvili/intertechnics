@@ -32,10 +32,27 @@ export function buildSpecLines(machine, labels) {
   return lines;
 }
 
+const DEFAULT_PHONE = "599 50 25 17";
+
+/** The number to call about a machine: its own contact_phone, else the main line. */
+export function machinePhone(machine) {
+  const display = machine.contact_phone?.trim() || DEFAULT_PHONE;
+  let digits = display.replace(/[^\d+]/g, "");
+  // Local Georgian numbers (599502517, 032 2 12 34 56) get the +995 prefix.
+  if (!digits.startsWith("+")) {
+    digits = digits.replace(/^0+/, "");
+    digits = digits.startsWith("995") ? `+${digits}` : `+995${digits}`;
+  }
+  return { display, href: `tel:${digits}` };
+}
+
 export function formatPrice(machine, t) {
   if (machine.price === null || machine.price === undefined) {
     return machine.price_negotiable ? t.price_negotiable : t.price_on_request;
   }
-  const formatted = `${Number(machine.price).toLocaleString()} ${machine.currency}`;
+  const vat = machine.vat_percent !== null && machine.vat_percent !== undefined
+    ? ` + ${machine.vat_percent}% ${t.vat}`
+    : "";
+  const formatted = `${Number(machine.price).toLocaleString()} ${machine.currency}${vat}`;
   return machine.price_negotiable ? `${formatted} · ${t.price_negotiable}` : formatted;
 }

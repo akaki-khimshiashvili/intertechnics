@@ -30,6 +30,8 @@ class MachineValidator
             'price' => self::optionalDecimal($input, 'price'),
             'currency' => self::optionalString($input, 'currency', 10) ?? 'USD',
             'price_negotiable' => self::optionalBool($input, 'price_negotiable') ?? false,
+            'vat_percent' => self::optionalVatPercent($input),
+            'contact_phone' => self::optionalPhone($input),
             'engine' => self::optionalString($input, 'engine', 150),
             'power_hp' => self::optionalDecimal($input, 'power_hp'),
             'operating_weight_kg' => self::optionalDecimal($input, 'operating_weight_kg'),
@@ -101,6 +103,12 @@ class MachineValidator
             }
         }
 
+        if (array_key_exists('vat_percent', $input)) {
+            $data['vat_percent'] = self::optionalVatPercent($input);
+        }
+        if (array_key_exists('contact_phone', $input)) {
+            $data['contact_phone'] = self::optionalPhone($input);
+        }
         if (array_key_exists('price_negotiable', $input)) {
             $data['price_negotiable'] = self::optionalBool($input, 'price_negotiable') ?? false;
         }
@@ -174,6 +182,24 @@ class MachineValidator
             throw new ValidationException("Field '{$field}' must not be negative");
         }
         return $floatValue;
+    }
+
+    private static function optionalVatPercent(array $input): ?float
+    {
+        $value = self::optionalDecimal($input, 'vat_percent');
+        if ($value !== null && $value > 100) {
+            throw new ValidationException("Field 'vat_percent' must be between 0 and 100");
+        }
+        return $value;
+    }
+
+    private static function optionalPhone(array $input): ?string
+    {
+        $value = self::optionalString($input, 'contact_phone', 30);
+        if ($value !== null && !preg_match('/^\+?[\d\s()-]{5,30}$/', $value)) {
+            throw new ValidationException("Field 'contact_phone' must be a phone number, e.g. 599 12 34 56");
+        }
+        return $value;
     }
 
     private static function optionalBool(array $input, string $field): ?bool

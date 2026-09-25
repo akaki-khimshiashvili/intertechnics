@@ -47,6 +47,7 @@ const STRINGS = {
     machinesDesc:
       "Intertechnics-ის ტექნიკის კატალოგი: ახალი და მეორადი სამშენებლო და საგზაო ტექნიკა — Bobcat, Kubota, AMMANN, Putzmeister და სხვა. ფასები, მახასიათებლები და ფოტოები.",
     negotiable: "ფასი შეთანხმებადია",
+    vat: "დღგ",
     onRequest: "ფასი მოთხოვნისას",
     back: "ტექნიკის სიაში დაბრუნება",
     home: "მთავარი",
@@ -89,6 +90,7 @@ const STRINGS = {
     machinesDesc:
       "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",
     negotiable: "Price negotiable",
+    vat: "VAT",
     onRequest: "Price on request",
     back: "Back to machines",
     home: "Home",
@@ -195,7 +197,8 @@ function machineDescription(m, lang) {
 
 function formatPrice(m, s) {
   if (m.price === null || m.price === undefined) return m.price_negotiable ? s.negotiable : s.onRequest;
-  const formatted = `${Number(m.price).toLocaleString("en-US")} ${m.currency}`;
+  const vat = m.vat_percent !== null && m.vat_percent !== undefined ? ` + ${m.vat_percent}% ${s.vat}` : "";
+  const formatted = `${Number(m.price).toLocaleString("en-US")} ${m.currency}${vat}`;
   return m.price_negotiable ? `${formatted} · ${s.negotiable}` : formatted;
 }
 

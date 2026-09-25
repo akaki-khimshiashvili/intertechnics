@@ -1,8 +1,9 @@
 /* ---------- Prerendered content ---------- */
 
 /* Written into #root by the SEO edge function so crawlers/link previews get
-   real content; React replaces it on mount. App.css is render-blocking, so
-   in the brief moment before that it still looks tidy. */
+   real content; React replaces it on mount. index.html hides it from
+   visitors (visibility: hidden) so it doesn't flash before that; these
+   styles apply when JavaScript is off. */
 .prerender {
   max-width: 880px;
   margin: 0 auto;

@@ -247,6 +247,7 @@ class MachineRepository
         $row['price_negotiable'] = (bool) $row['price_negotiable'];
         $row['featured'] = (bool) $row['featured'];
         $row['price'] = $row['price'] !== null ? (float) $row['price'] : null;
+        $row['vat_percent'] = $row['vat_percent'] !== null ? (float) $row['vat_percent'] : null;
         $row['power_hp'] = $row['power_hp'] !== null ? (float) $row['power_hp'] : null;
         $row['operating_weight_kg'] = $row['operating_weight_kg'] !== null ? (float) $row['operating_weight_kg'] : null;
         $row['load_capacity_kg'] = $row['load_capacity_kg'] !== null ? (float) $row['load_capacity_kg'] : null;

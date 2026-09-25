@@ -153,6 +153,8 @@ export type Machine = {
   price: number | null
   currency: string
   price_negotiable: boolean
+  vat_percent: number | null
+  contact_phone: string | null
   engine: string | null
   power_hp: number | null
   operating_weight_kg: number | null

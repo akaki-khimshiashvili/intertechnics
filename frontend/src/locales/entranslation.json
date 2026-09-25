@@ -242,6 +242,7 @@
     "sort_price_desc": "Price: high to low",
     "price_negotiable": "Price negotiable",
     "price_on_request": "Price on request",
+    "vat": "VAT",
     "load_more": "Load more",
     "showing_count": "Showing {shown} of {total}",
     "reset_filters": "Reset filters",

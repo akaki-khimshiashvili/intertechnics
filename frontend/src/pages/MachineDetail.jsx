@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LangContext } from "LangContext";
 import { assetUrl, getMachine } from "lib/api";
-import { buildSpecLines, formatPrice } from "lib/machineDisplay";
+import { buildSpecLines, formatPrice, machinePhone } from "lib/machineDisplay";
 import useDocumentMeta from "hooks/useDocumentMeta";
 import Footer from "components/Footer";
 import Lightbox from "components/Lightbox";
@@ -69,6 +69,7 @@ export default function MachineDetail() {
 
   const specLines = buildSpecLines(machine, mt.field_labels || {});
   const priceLabel = formatPrice(machine, mt);
+  const phone = machinePhone(machine);
   const gallery = [machine.main_image, ...(machine.images || [])].filter((img) => assetUrl(img));
   const mainImage = activeImage && gallery.includes(activeImage) ? activeImage : gallery[0];
   const galleryUrls = gallery.map((img) => assetUrl(img));
@@ -127,8 +128,8 @@ export default function MachineDetail() {
               ))}
             </ul>
 
-            <a className="btn-primary" href="tel:+995599502517" onClick={() => track("phone_click", { source: "machine_page", lang })}>
-              {t.company.contacts[0]?.phone ?? ""}
+            <a className="btn-primary" href={phone.href} onClick={() => track("phone_click", { source: "machine_page", lang })}>
+              {phone.display}
             </a>
           </div>
         </Reveal>

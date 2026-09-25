@@ -34,4 +34,25 @@ foreach ($statements as $statement) {
     $pdo->exec($statement);
 }
 
+// CREATE TABLE IF NOT EXISTS leaves existing tables untouched, so columns
+// added to schema.sql later are added here for databases created before them.
+$addedColumns = [
+    'machines' => [
+        'vat_percent' => 'DECIMAL(5,2) NULL AFTER price_negotiable',
+        'contact_phone' => 'VARCHAR(30) NULL AFTER vat_percent',
+    ],
+];
+$columnExists = $pdo->prepare(
+    'SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = :table AND COLUMN_NAME = :column'
+);
+foreach ($addedColumns as $table => $columns) {
+    foreach ($columns as $column => $definition) {
+        $columnExists->execute(['table' => $table, 'column' => $column]);
+        if ($columnExists->fetchColumn() === false) {
+            $pdo->exec("ALTER TABLE {$table} ADD COLUMN {$column} {$definition}");
+            echo "Added column {$table}.{$column}\n";
+        }
+    }
+}
+
 echo "Database schema applied successfully.\n";

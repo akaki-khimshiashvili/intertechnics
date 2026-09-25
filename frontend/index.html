@@ -30,6 +30,37 @@
     <link rel="manifest" href="/manifest.json" />
     <title>Intertechnics LTD — Construction Equipment, Georgia</title>
 
+    <!-- Fonts load in parallel with the app CSS instead of via a chained
+         @import inside it. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
+    />
+
+    <!-- Critical CSS, applied before anything paints. The SEO edge function
+         writes plain prerendered content into #root for crawlers; visitors
+         would see it flash as unstyled text until React mounts and replaces
+         it, so it's kept invisible (still in the DOM for bots). Background
+         matches --color-paper so there's no white flash either. -->
+    <style>
+      html,
+      body {
+        background-color: #fafaf7;
+      }
+      .prerender {
+        visibility: hidden;
+      }
+    </style>
+    <noscript>
+      <style>
+        .prerender {
+          visibility: visible;
+        }
+      </style>
+    </noscript>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

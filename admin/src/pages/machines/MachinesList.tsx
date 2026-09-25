@@ -13,7 +13,8 @@ const STATUS_LABELS: Record<Machine['status'], string> = {
 
 function formatPrice(machine: Machine): string {
   if (machine.price === null) return machine.price_negotiable ? 'შეთანხმებით' : '—'
-  const price = `${machine.price.toLocaleString('ka-GE')} ${machine.currency}`
+  const vat = machine.vat_percent !== null ? ` + ${machine.vat_percent}% დღგ` : ''
+  const price = `${machine.price.toLocaleString('ka-GE')} ${machine.currency}${vat}`
   return machine.price_negotiable ? `${price} (შეთანხმებადი)` : price
 }
 
