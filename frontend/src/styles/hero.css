@@ -12,6 +12,12 @@
   padding-block: calc(var(--space-900) + var(--space-300)) var(--space-600);
 }
 
+@media (max-width: 720px) {
+  .hero {
+    min-height: 70svh;
+  }
+}
+
 .hero-slides {
   position: absolute;
   inset: 0;
@@ -74,6 +80,14 @@
     transform var(--dur-fast) var(--ease-out);
 }
 
+@media (max-width: 720px) {
+
+  .cta-primary,
+  .cta-secondary {
+    padding: .85rem 1rem;
+  }
+}
+
 /* The hover fill: a panel parked off the left edge that sweeps across on
    hover/focus. It sits under the label (z-index -1 inside the isolated
    button) so the text color can flip over it. */
@@ -88,8 +102,8 @@
   transition: transform var(--dur-slow) var(--ease-out);
 }
 
-.cta-primary > span,
-.cta-secondary > span {
+.cta-primary>span,
+.cta-secondary>span {
   display: inline-block;
   transition: transform var(--dur-base) var(--ease-out);
 }
@@ -115,6 +129,7 @@
 /* Hover only on devices that really hover, so taps don't leave the button
    stuck in its filled state; keyboard focus gets the same treatment. */
 @media (hover: hover) and (pointer: fine) {
+
   .cta-primary:hover,
   .cta-secondary:hover {
     transform: translateY(-2px);
@@ -126,8 +141,8 @@
     transform: scaleX(1);
   }
 
-  .cta-primary:hover > span,
-  .cta-secondary:hover > span {
+  .cta-primary:hover>span,
+  .cta-secondary:hover>span {
     transform: translateX(2px);
   }
 
@@ -171,10 +186,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .cta-primary,
   .cta-secondary,
-  .cta-primary > span,
-  .cta-secondary > span {
+  .cta-primary>span,
+  .cta-secondary>span {
     transform: none !important;
   }
 
@@ -203,12 +219,15 @@
     opacity: 0;
     transform: scale(1);
   }
+
   4% {
     opacity: 1;
   }
+
   22% {
     opacity: 1;
   }
+
   26%,
   100% {
     opacity: 0;
@@ -221,6 +240,7 @@
     animation: none;
     opacity: 0;
   }
+
   .hero-slide:first-child {
     opacity: 1;
   }

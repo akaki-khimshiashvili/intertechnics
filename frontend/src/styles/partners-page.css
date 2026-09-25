@@ -31,7 +31,7 @@
 /* One-time entrance on page load: the cards rise in with a short stagger
    (--i is each card's index, set inline). No scroll trigger — once they're
    in, they stay put. */
-.partners-grid > li {
+.partners-grid>li {
   display: flex;
   animation: partner-card-in 500ms var(--ease-out) both;
   animation-delay: calc(var(--i, 0) * 60ms);
@@ -45,7 +45,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .partners-grid > li {
+  .partners-grid>li {
     animation-name: partner-card-fade;
     animation-duration: 200ms;
   }
@@ -150,6 +150,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .partner-card,
   .partner-card-logo img,
   .partner-card-link svg {

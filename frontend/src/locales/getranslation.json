@@ -151,7 +151,7 @@
         "name": "Hbm-Nobas",
         "description": "სხვადასხვა ტიპისა და ზომის გრეიდერები.",
         "website": "http://www.gp.ag/hbm-nobas/Start/",
-        "companyLogo": "/images/hbm-nobas-logo1.png"
+        "companyLogo": "/images/hbm-nobas-logo.webp"
       },
       {
         "id": 5,
@@ -165,7 +165,7 @@
         "name": "Kaeser Gmbh",
         "description": "ჰაერის ინდუსტრიული დანიშნულების სტაციონარული და სამშენებლო დანიშნულების მობილური კომპრესორები.",
         "website": "https://www.kaeser.com/int-en/",
-        "companyLogo": "/images/kaeser-logo.png"
+        "companyLogo": "/images/kaeser-logo.webp"
       },
       {
         "id": 7,
