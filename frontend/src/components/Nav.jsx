@@ -57,8 +57,7 @@ export default function Nav() {
     isActive(link) ? { className: "is-active", "aria-current": "page" } : {};
 
   const handleClick = (element, source = "nav") => {
-    if (element.link === "/contact")
-      track("contact_click", { source, lang });
+    if (element.link === "/contact") track("contact_click", { source, lang });
     const isHashLink = element.link.startsWith("#");
     if (isHashLink) {
       const scrollToId = element.link.substring(1);
@@ -156,19 +155,6 @@ export default function Nav() {
               </a>
             </li>
           ))}
-          <li style={{ transitionDelay: `${navItems.length * 60 + 80}ms` }}>
-            <a
-              href={localize("/machines")}
-              {...activeProps("/machines")}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(localize("/machines"));
-                setOpen(false);
-              }}
-            >
-              {machinesLabel}
-            </a>
-          </li>
         </ul>
 
         <div
