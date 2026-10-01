@@ -69,27 +69,31 @@ export default function Testimonials({ standalone = false }) {
             as="li"
             key={review.id}
             index={Math.min(i + 1, 4)}
-            className={`testimonial-card${i === 0 ? " is-featured" : ""}`}
+            className="testimonial-item"
           >
-            <div className="testimonial-inner">
-              <span className="testimonial-avatar" data-tone={i % 4} aria-hidden="true">
-                {review.name.trim().charAt(0)}
-              </span>
-              <header className="testimonial-head">
-                <span className="testimonial-name">{review.name}</span>
-                <span className="testimonial-meta">
-                  <Stars label={copy.starsLabel} size={12} />
-                  <span className="testimonial-source">
-                    {[copy.source, formatDate(review.date, lang)]
-                      .filter(Boolean)
-                      .join(" · ")}
-                  </span>
+            {/* The card lives inside the <li> so its hover transform doesn't
+                fight the reveal animation (and its stagger delay) on the li. */}
+            <div className={`testimonial-card${i === 0 ? " is-featured" : ""}`}>
+              <div className="testimonial-inner">
+                <span className="testimonial-avatar" data-tone={i % 4} aria-hidden="true">
+                  {review.name.trim().charAt(0)}
                 </span>
-              </header>
-              <Quote className="testimonial-quote" width={26} height={26} aria-hidden="true" />
-              <blockquote className="testimonial-text">
-                <p>{review.text}</p>
-              </blockquote>
+                <header className="testimonial-head">
+                  <span className="testimonial-name">{review.name}</span>
+                  <span className="testimonial-meta">
+                    <Stars label={copy.starsLabel} size={12} />
+                    <span className="testimonial-source">
+                      {[copy.source, formatDate(review.date, lang)]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </span>
+                  </span>
+                </header>
+                <Quote className="testimonial-quote" width={26} height={26} aria-hidden="true" />
+                <blockquote className="testimonial-text">
+                  <p>{review.text}</p>
+                </blockquote>
+              </div>
             </div>
           </Reveal>
         ))}
