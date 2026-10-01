@@ -10,6 +10,7 @@ import Testimonials from "components/Testimonials";
 import ContactUsInfo from "components/ContactUsInfo";
 import LocationMap from "components/LocationMap";
 import Footer from "components/Footer";
+import { ArrowRight } from "lucide-react";
 import { track } from "lib/analytics";
 
 export default function Home() {
@@ -56,7 +57,7 @@ export default function Home() {
             {t.company.title}
           </h2>
           <a
-            className="btn-primary"
+            className="section-link"
             href={localize("/contact")}
             onClick={(e) => {
               e.preventDefault();
@@ -64,7 +65,8 @@ export default function Home() {
               navigate(localize("/contact"));
             }}
           >
-            {t.company.cta}
+            <span>{t.company.cta}</span>
+            <ArrowRight width={18} height={18} strokeWidth={2.25} aria-hidden="true" />
           </a>
         </div>
         <div className="contact-layout">

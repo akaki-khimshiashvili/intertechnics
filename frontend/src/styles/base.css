@@ -63,3 +63,32 @@ button {
 .lightbox-overlay {
   --color-focus: var(--color-white);
 }
+
+/* Uppercase text link with an arrow, used in section headers ("View full
+   catalog", "Get in touch"). */
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--dur-base) ease;
+}
+
+.section-link svg {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .section-link:hover {
+    color: var(--color-accent);
+  }
+
+  .section-link:hover svg {
+    transform: translateX(3px);
+  }
+}

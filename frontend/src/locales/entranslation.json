@@ -1,7 +1,7 @@
 {
   "company": {
     "title": "Contact Us",
-    "cta": "Send a request",
+    "cta": "Get in touch",
     "machines": {
       "name": "Machines Catalog",
       "link": "/machines"

@@ -121,7 +121,7 @@ export default function MachineTeaser() {
         <h2 id="machine-teaser-title" className="machine-teaser-title">
           {heading}
         </h2>
-        <Link className="machine-teaser-all" to={localize("/machines")}>
+        <Link className="section-link" to={localize("/machines")}>
           <span>{t.machineTeaser.viewAll}</span>
           <ArrowRight width={18} height={18} strokeWidth={2.25} aria-hidden="true" />
         </Link>
