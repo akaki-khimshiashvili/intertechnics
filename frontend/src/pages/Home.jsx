@@ -4,6 +4,7 @@ import { LangContext } from "LangContext";
 import useDocumentMeta from "hooks/useDocumentMeta";
 import Hero from "components/Hero";
 import PartnerCompanies from "components/PartnerCompanies";
+import Services from "components/Services";
 import MachineTeaser from "components/MachineTeaser";
 import Testimonials from "components/Testimonials";
 import ContactUsInfo from "components/ContactUsInfo";
@@ -43,6 +44,7 @@ export default function Home() {
       />
 
       <PartnerCompanies partnerCompanies={t.partnerCompanies.companies} />
+      <Services />
 
       <MachineTeaser />
       <Testimonials />

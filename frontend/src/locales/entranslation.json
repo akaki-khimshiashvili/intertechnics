@@ -212,6 +212,23 @@
       }
     ]
   },
+  "services": {
+    "title": "Our services",
+    "items": [
+      {
+        "id": "new",
+        "title": "Brand-new machinery",
+        "body": "New construction and road-building equipment straight from the manufacturers we represent, with full factory warranty.",
+        "cta": "Browse the catalog"
+      },
+      {
+        "id": "service",
+        "title": "Service & repair",
+        "body": "Maintenance, diagnostics and repairs by trained technicians, backed by original spare parts.",
+        "cta": "Request service"
+      }
+    ]
+  },
   "machineTeaser": {
     "heading": "Featured machine",
     "body": "A compact, reliable choice for tight job sites, with high lift, low weight, and a heated cab built for long shifts.",
