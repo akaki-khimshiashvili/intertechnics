@@ -57,6 +57,8 @@
   /* Vertical padding above and below each page section, so neighbouring
      sections end up twice this apart (~7rem on phones, ~13rem on desktop). */
   --section-space: clamp(3.5rem, 2.25rem + 4.5vw, 6.5rem);
+  /* Gap between a section's title and its content. */
+  --section-title-space: clamp(2rem, 1.25rem + 2.5vw, 3.75rem);
 
   /* Radius */
   --radius-sm: 6px;

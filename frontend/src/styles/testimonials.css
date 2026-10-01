@@ -6,7 +6,7 @@
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: center;
-  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem) var(--space-600);
+  gap: var(--section-title-space) var(--space-600);
   padding-block: var(--section-space);
 }
 

@@ -233,9 +233,10 @@
     ]
   },
   "machineTeaser": {
-    "heading": "Featured machine",
+    "heading": "Featured machines",
     "body": "A compact, reliable choice for tight job sites, with high lift, low weight, and a heated cab built for long shifts.",
-    "cta": "See full specs"
+    "cta": "See full specs",
+    "viewAll": "View full catalog"
   },
   "machines": {
     "meta_description": "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",
