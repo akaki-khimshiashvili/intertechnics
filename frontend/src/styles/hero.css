@@ -225,6 +225,7 @@
 }
 
 @media (max-width: 720px) {
+
   .cta-primary,
   .cta-secondary {
     padding: 0.85rem 1rem;
@@ -245,8 +246,8 @@
   transition: transform var(--dur-slow) var(--ease-out);
 }
 
-.cta-primary > span,
-.cta-secondary > span {
+.cta-primary>span,
+.cta-secondary>span {
   display: inline-block;
   transition: transform var(--dur-base) var(--ease-out);
 }
@@ -272,6 +273,7 @@
 /* Hover only on devices that really hover, so taps don't leave the button
    stuck in its filled state; keyboard focus gets the same treatment. */
 @media (hover: hover) and (pointer: fine) {
+
   .cta-primary:hover,
   .cta-secondary:hover {
     transform: translateY(-2px);
@@ -283,8 +285,8 @@
     transform: scaleX(1);
   }
 
-  .cta-primary:hover > span,
-  .cta-secondary:hover > span {
+  .cta-primary:hover>span,
+  .cta-secondary:hover>span {
     transform: translateX(2px);
   }
 
@@ -328,10 +330,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .cta-primary,
   .cta-secondary,
-  .cta-primary > span,
-  .cta-secondary > span {
+  .cta-primary>span,
+  .cta-secondary>span {
     transform: none !important;
   }
 
@@ -354,6 +357,7 @@
 /* Reduced motion: no wipe, no drift, no autoplay (the fill never runs, so
    it never ends and never advances). The bars still switch photos. */
 @media (prefers-reduced-motion: reduce) {
+
   .hero-slide.is-wiping,
   .hero-slide.is-active img,
   .hero-slide.is-prev img,
@@ -409,13 +413,10 @@
   max-width: 760px;
   margin-bottom: 0;
   font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-  line-height: 1.2;
+  line-height: 1.3;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(90deg, #ffffff, #cfcfc4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-white);
   text-wrap: balance;
   text-align: left;
 }
@@ -429,76 +430,13 @@
   text-wrap: pretty;
 }
 
-/* ---------- Hero proof row: rating chip + socials ---------- */
+/* ---------- Hero socials row ---------- */
 
 .hero-proof {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-200);
   margin-top: var(--space-300);
-}
-
-/* Frosted pill, same family as the header: dark glass, hairline border. */
-.hero-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-75);
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius-full);
-  background: rgba(23, 22, 15, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px) saturate(140%);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-lh);
-  text-decoration: none;
-  transition:
-    background-color var(--dur-base) ease,
-    border-color var(--dur-base) ease;
-}
-
-.hero-rating strong {
-  font-weight: 700;
-  color: var(--color-white);
-}
-
-.hero-rating-stars {
-  display: inline-flex;
-  gap: 1px;
-  fill: var(--color-safety);
-}
-
-.hero-rating-sep {
-  width: 3px;
-  height: 3px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-@media (hover: hover) {
-  .hero-rating:hover {
-    background: rgba(23, 22, 15, 0.7);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-}
-
-.hero-rating:focus-visible {
-  outline: 2px solid var(--color-white);
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .hero-rating {
-    background: var(--color-ink);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
-.hero-proof-divider {
-  width: 1px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.25);
+  /* The icons carry 10px of hit-area padding; pull the row back so the
+     first glyph lines up with the buttons' left edge. */
+  margin-left: -10px;
 }
