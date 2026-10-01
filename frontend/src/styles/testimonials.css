@@ -1,94 +1,242 @@
 /* ---------- Testimonials ---------- */
 
+/* Heading on the left, the stacked cards on the right; one column below
+   900px with the heading on top. */
 .testimonials {
-  padding-block: var(--space-700);
-}
-
-/* 4 across on wide screens, then 2, then 1 — auto-fit decides from the
-   space available, min(100%, …) keeps one column from overflowing. */
-.testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem) var(--space-600);
+  padding-block: var(--section-space);
 }
 
-/* Static cards: nothing here is pressable, so no hover or press motion —
-   the craft goes into type and spacing instead. */
-.testimonial-card {
+@media (max-width: 900px) {
+  .testimonials {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Title + Google line. */
+.testimonials-header {
+  display: flex;
+}
+
+.testimonials-heading {
   display: flex;
   flex-direction: column;
-  gap: var(--space-200);
-  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  gap: var(--space-100);
+  flex: 1 1 320px;
+}
+
+.testimonials-title {
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* A plain sentence rather than a widget: stars, score, link. */
+.testimonials-google {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-50) var(--space-75);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  color: var(--color-ink-muted);
+}
+
+.testimonials-google strong {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.testimonials-google a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-steel);
+  transition:
+    color var(--dur-base) ease,
+    text-decoration-color var(--dur-base) ease;
+}
+
+.testimonials-google a:hover {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+}
+
+/* One card per row, staggered left and right like a conversation so the
+   stack doesn't read as a plain list. */
+.testimonials-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+  max-width: 640px;
+  width: 100%;
+  justify-self: center;
+}
+
+.testimonials-stack > :nth-child(odd) {
+  margin-right: clamp(1rem, 4vw, 3rem);
+}
+
+.testimonials-stack > :nth-child(even) {
+  margin-left: clamp(1rem, 4vw, 3rem);
+}
+
+/* Static cards: nothing here is pressable, so no hover or press motion.
+   A hazard stripe runs down the left edge like the band on the service
+   panels; the featured card keeps it in colour, the rest go quiet grey. */
+.testimonial-card {
+  --card-stripe: var(--color-steel);
+  --card-quote: var(--color-steel);
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+  padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  padding-left: calc(clamp(1.25rem, 1rem + 1vw, 1.5rem) + 8px);
   background: var(--color-white);
+  color: var(--color-ink);
   border: 1px solid var(--color-steel);
   border-radius: var(--radius-lg);
   box-shadow: 0 1px 2px rgba(23, 22, 15, 0.04);
 }
 
-.testimonial-stars {
-  display: inline-flex;
-  gap: 2px;
-  fill: #f2b705;
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 8px;
+  background: var(--card-stripe);
 }
 
-.testimonial-text {
-  flex: 1;
-  white-space: pre-line;
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--color-ink);
-  text-wrap: pretty;
+.testimonial-card.is-featured {
+  --card-quote: var(--color-accent);
+  box-shadow: 0 18px 40px -22px rgba(23, 22, 15, 0.35);
 }
 
-.testimonial-text p::before {
-  content: "“";
+.testimonial-card.is-featured::before {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-safety) 0 12px,
+    var(--color-ink) 12px 24px
+  );
 }
 
-.testimonial-text p::after {
-  content: "”";
+/* Avatar on the left; name and quote mark across the top; the review sits
+   under the name. */
+.testimonial-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "avatar head quote"
+    "avatar text text";
+  column-gap: var(--space-200);
+  row-gap: var(--space-100);
+  height: 100%;
 }
 
-/* Hairline divider + pinned to the bottom so authors line up across a
-   row even when the quotes differ in length. */
-.testimonial-author {
-  display: flex;
-  align-items: center;
-  gap: var(--space-100);
-  padding-top: var(--space-200);
-  border-top: 1px solid var(--color-steel);
+/* Too narrow to keep the text beside the avatar (e.g. four across on a
+   laptop): let the review run the card's full width instead. */
+@container (max-width: 300px) {
+  .testimonial-inner {
+    grid-template-areas:
+      "avatar head quote"
+      "text text text";
+    row-gap: var(--space-200);
+  }
 }
 
 .testimonial-avatar {
-  flex-shrink: 0;
+  grid-area: avatar;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   border-radius: var(--radius-full);
   background: var(--color-paper-dim);
   color: var(--color-ink);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: var(--text-lg);
+  font-weight: 700;
   text-transform: uppercase;
 }
 
-.testimonial-meta {
+@container (max-width: 300px) {
+  .testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-base);
+  }
+}
+
+/* A different tint per card so the row doesn't read as four copies. */
+.testimonial-avatar[data-tone="0"] {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+.testimonial-avatar[data-tone="1"] {
+  background: var(--color-safety);
+}
+
+.testimonial-avatar[data-tone="2"] {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.testimonial-head {
+  grid-area: head;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 2px;
   min-width: 0;
 }
 
 .testimonial-name {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  line-height: var(--text-sm-lh);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.testimonial-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-75);
+}
+
+.testimonial-stars {
+  display: inline-flex;
+  gap: 2px;
+  fill: var(--color-safety);
 }
 
 .testimonial-source {
   font-size: var(--text-xs);
   line-height: var(--text-xs-lh);
   color: var(--color-ink-muted);
+}
+
+.testimonial-quote {
+  grid-area: quote;
+  color: var(--card-quote);
+  fill: currentColor;
+  stroke: none;
+}
+
+.testimonial-text {
+  grid-area: text;
+  white-space: pre-line;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
 }

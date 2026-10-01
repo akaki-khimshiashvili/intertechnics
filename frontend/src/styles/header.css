@@ -29,6 +29,8 @@
 .site-header.is-solid {
   padding-block: var(--space-100);
   background: rgba(23, 22, 15, 0.94);
+  background-image: var(--grain);
+  background-size: var(--grain-size);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow:

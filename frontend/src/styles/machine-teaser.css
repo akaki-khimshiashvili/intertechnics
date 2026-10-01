@@ -1,7 +1,7 @@
 /* ---------- Machine teaser ---------- */
 
 .machine-teaser-section {
-  padding-block: var(--space-700);
+  padding-block: var(--section-space);
 }
 
 .machine-teaser {

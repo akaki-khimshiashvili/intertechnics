@@ -3,12 +3,21 @@
 /* Info card on the left, map on the right. The map stretches to the card's
    height so both columns end on the same line. */
 .contact-section {
-  padding-bottom: var(--space-700);
+  padding-block: var(--section-space);
+}
+
+/* Heading on the left, the link to the full contact page on the right. */
+.contact-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-200) var(--space-400);
+  margin-bottom: var(--space-400);
 }
 
 .contactus-h2 {
   font-size: var(--text-4xl);
-  margin-block: var(--space-600) var(--space-400);
 }
 
 .contact-layout {

@@ -1,6 +1,7 @@
 {
   "company": {
     "title": "კონტაქტი",
+    "cta": "მოთხოვნის გაგზავნა",
     "name": "Intertechnics Ltd",
     "machines": {
       "name": "ტექნიკის კატალოგი",
@@ -116,7 +117,9 @@
     "again": "ახალი მოთხოვნის გაგზავნა"
   },
   "testimonials": {
-    "title": "რას ამბობენ ჩვენი კლიენტები",
+    "title": "რას ამბობენ ჩვენზე ჩვენი მომხმარებლები",
+    "ratingLabel": "Google-ზე",
+    "seeAll": "ყველას ნახვა",
     "source": "Google-ის შეფასება",
     "starsLabel": "შეფასება 5-დან 5"
   },

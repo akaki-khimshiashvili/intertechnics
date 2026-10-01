@@ -54,6 +54,10 @@
   --space-800: 5rem;
   --space-900: 6rem;
 
+  /* Vertical padding above and below each page section, so neighbouring
+     sections end up twice this apart (~7rem on phones, ~13rem on desktop). */
+  --section-space: clamp(3.5rem, 2.25rem + 4.5vw, 6.5rem);
+
   /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -68,4 +72,10 @@
   --dur-fast: 160ms;
   --dur-base: 220ms;
   --dur-slow: 400ms;
+
+  /* Faint film grain for dark surfaces (footer, solid header): tiled SVG
+     noise, white specks at low opacity. Raise the rect's opacity to make it
+     stronger. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2 0 0 0 -0.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  --grain-size: 160px 160px;
 }

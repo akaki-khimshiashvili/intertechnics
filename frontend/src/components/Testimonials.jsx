@@ -1,16 +1,20 @@
 import React, { useContext } from "react";
+import { Quote } from "lucide-react";
 import { LangContext } from "LangContext";
-import testimonials from "data/testimonials";
+import testimonials, { GOOGLE_REVIEWS_URL } from "data/testimonials";
 import Reveal from "./Reveal";
 
 const STAR_PATH =
   "M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z";
 
-function Stars({ label }) {
+// Every review in data/testimonials is a 5-star Google review.
+const RATING = 5;
+
+function Stars({ label, size = 16 }) {
   return (
     <div className="testimonial-stars" role="img" aria-label={label}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <svg key={i} viewBox="0 0 24 24" width={16} height={16} aria-hidden="true">
+      {Array.from({ length: RATING }, (_, i) => (
+        <svg key={i} viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
           <path fillRule="evenodd" clipRule="evenodd" d={STAR_PATH} />
         </svg>
       ))}
@@ -29,54 +33,65 @@ function formatDate(date, lang) {
   );
 }
 
-// `standalone` (the About page) shows the heading and staggers the cards
-// in on scroll; on the home page the cards sit quietly without either.
+// `standalone` (the About page) only changes the section's spacing.
 export default function Testimonials({ standalone = false }) {
   const { t, lang } = useContext(LangContext);
   const copy = t.testimonials;
 
   if (!testimonials.length) return null;
 
-  const Card = standalone ? Reveal : "li";
-
   return (
-    // On the home page there's no visible heading — the cards stand on their
-    // own; the title stays as the section's accessible name.
     <section
       className={`container testimonials ${standalone ? "is-standalone" : ""}`}
-      aria-label={standalone ? undefined : copy.title}
-      aria-labelledby={standalone ? "testimonials-title" : undefined}
+      aria-labelledby="testimonials-title"
     >
-      {standalone && (
-        <Reveal as="h2" id="testimonials-title" className="testimonials-title">
-          {copy.title}
-        </Reveal>
-      )}
-      <ul className="testimonials-grid">
+      <Reveal as="header" className="testimonials-header">
+        <div className="testimonials-heading">
+          <h2 id="testimonials-title" className="testimonials-title">
+            {copy.title}
+          </h2>
+          <p className="testimonials-google">
+            <Stars label={copy.starsLabel} size={15} />
+            <span>
+              <strong>{RATING.toFixed(1)}</strong> {copy.ratingLabel}
+            </span>
+            <span aria-hidden="true">·</span>
+            <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+              {copy.seeAll}
+            </a>
+          </p>
+        </div>
+      </Reveal>
+
+      <ul className="testimonials-stack">
         {testimonials.map((review, i) => (
-          <Card
+          <Reveal
+            as="li"
             key={review.id}
-            className="testimonial-card"
-            {...(standalone && { as: "li", index: i + 1 })}
+            index={Math.min(i + 1, 4)}
+            className={`testimonial-card${i === 0 ? " is-featured" : ""}`}
           >
-            <Stars label={copy.starsLabel} />
-            <blockquote className="testimonial-text">
-              <p>{review.text}</p>
-            </blockquote>
-            <footer className="testimonial-author">
-              <span className="testimonial-avatar" aria-hidden="true">
+            <div className="testimonial-inner">
+              <span className="testimonial-avatar" data-tone={i % 4} aria-hidden="true">
                 {review.name.trim().charAt(0)}
               </span>
-              <span className="testimonial-meta">
+              <header className="testimonial-head">
                 <span className="testimonial-name">{review.name}</span>
-                <span className="testimonial-source">
-                  {[copy.source, formatDate(review.date, lang)]
-                    .filter(Boolean)
-                    .join(" · ")}
+                <span className="testimonial-meta">
+                  <Stars label={copy.starsLabel} size={12} />
+                  <span className="testimonial-source">
+                    {[copy.source, formatDate(review.date, lang)]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </span>
                 </span>
-              </span>
-            </footer>
-          </Card>
+              </header>
+              <Quote className="testimonial-quote" width={26} height={26} aria-hidden="true" />
+              <blockquote className="testimonial-text">
+                <p>{review.text}</p>
+              </blockquote>
+            </div>
+          </Reveal>
         ))}
       </ul>
     </section>

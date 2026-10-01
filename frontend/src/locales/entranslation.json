@@ -1,6 +1,7 @@
 {
   "company": {
     "title": "Contact Us",
+    "cta": "Send a request",
     "machines": {
       "name": "Machines Catalog",
       "link": "/machines"
@@ -116,7 +117,9 @@
     "again": "Send another request"
   },
   "testimonials": {
-    "title": "What our clients say",
+    "title": "What our customers have to say about us",
+    "ratingLabel": "on Google",
+    "seeAll": "read them all",
     "source": "Google review",
     "starsLabel": "Rated 5 out of 5"
   },

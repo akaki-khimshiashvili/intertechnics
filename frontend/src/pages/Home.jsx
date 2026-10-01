@@ -10,9 +10,10 @@ import Testimonials from "components/Testimonials";
 import ContactUsInfo from "components/ContactUsInfo";
 import LocationMap from "components/LocationMap";
 import Footer from "components/Footer";
+import { track } from "lib/analytics";
 
 export default function Home() {
-  const { t, lang } = useContext(LangContext);
+  const { t, lang, localize } = useContext(LangContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -50,9 +51,22 @@ export default function Home() {
       <Testimonials />
 
       <section className="container contact-section">
-        <h2 className="contactus-h2" id="contactus-id">
-          {t.company.title}
-        </h2>
+        <div className="contact-header">
+          <h2 className="contactus-h2" id="contactus-id">
+            {t.company.title}
+          </h2>
+          <a
+            className="btn-primary"
+            href={localize("/contact")}
+            onClick={(e) => {
+              e.preventDefault();
+              track("contact_click", { source: "home_contact", lang });
+              navigate(localize("/contact"));
+            }}
+          >
+            {t.company.cta}
+          </a>
+        </div>
         <div className="contact-layout">
           <ContactUsInfo
             contacts={t.company.contacts}

@@ -2,6 +2,8 @@
 
 .footer {
   background-color: var(--color-ink);
+  background-image: var(--grain);
+  background-size: var(--grain-size);
   padding-block: var(--space-500);
   color: var(--color-white);
   display: flex;

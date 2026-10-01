@@ -1,6 +1,7 @@
 // Real 5-star Google reviews of Intertechnics, copied by hand from the
-// Google Business profile. Static on purpose — no live fetching. Keep 3–4
-// short ones; the section stays hidden while this list is empty.
+// Google Business profile. Static on purpose — no live fetching. The home
+// page scrolls them sideways, so add as many as you like; the section stays
+// hidden while this list is empty.
 //
 // Text is verbatim (line breaks are kept). Google only shows relative
 // dates ("3 years ago"), so `date` is the approximate year.
@@ -30,5 +31,8 @@ const testimonials = [
     date: "2023",
   },
 ];
+
+// Google Business profile, where the reviews above live.
+export const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/4neRQhCwSaEWtPbv7";
 
 export default testimonials;
