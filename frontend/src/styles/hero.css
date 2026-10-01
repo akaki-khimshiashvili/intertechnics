@@ -9,7 +9,8 @@
   /* The header is fixed, so reserve its height up top (same offset the
      other pages use) — otherwise tall hero copy on short screens slides
      up underneath it. */
-  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-600);
+  /* Bottom padding leaves room for the progress bars. */
+  padding-block: calc(var(--space-900) + var(--space-300)) var(--space-800);
 }
 
 @media (max-width: 720px) {
@@ -17,28 +18,51 @@
     min-height: 80svh;
   }
 
-  .hero-title {
-    margin-bottom: 0.85rem;
-  }
-
   h1 {
     margin-bottom: 2rem;
   }
 }
 
+/* z-index 0 makes this its own stacking context, so the slides' z-indexes
+   only order them among themselves and they stay under the scrim. */
 .hero-slides {
   position: absolute;
   inset: 0;
+  z-index: 0;
 }
 
+/* Hidden slides sit out of the way; the outgoing one (`is-prev`) stays
+   visible underneath while the incoming one wipes in over it. */
 .hero-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  /* Promote each slide to its own layer up front so the crossfade and zoom
-     run on the compositor instead of repainting the photo every frame. */
-  will-change: opacity, transform;
-  animation: hero-crossfade 24s infinite;
+  visibility: hidden;
+}
+
+.hero-slide.is-prev {
+  visibility: visible;
+  z-index: 1;
+}
+
+.hero-slide.is-active {
+  visibility: visible;
+  z-index: 2;
+}
+
+/* Diagonal wipe, slanted like the hazard stripes: the new photo's leading
+   edge sweeps left to right across the old one. */
+.hero-slide.is-wiping {
+  animation: hero-wipe 1100ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes hero-wipe {
+  from {
+    clip-path: polygon(0 0, 0 0, -20% 100%, -20% 100%);
+  }
+
+  to {
+    clip-path: polygon(0 0, 120% 0, 100% 100%, -20% 100%);
+  }
 }
 
 .hero-slide img {
@@ -49,22 +73,134 @@
   object-position: center;
 }
 
-.hero.is-paused .hero-slide {
+/* A barely-there push-in while a photo is up — enough to feel alive, not
+   enough to notice as a zoom. The same animation applies to the outgoing
+   (`is-prev`) photo, so when a slide hands over it keeps drifting under the
+   wipe instead of restarting or snapping. It runs long enough to cover its
+   own wipe in, its time up, and the next slide's wipe over it. */
+.hero-slide.is-active img,
+.hero-slide.is-prev img {
+  animation: hero-drift calc(var(--slide-ms) + 2200ms) linear both;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.025);
+  }
+}
+
+.hero.is-paused .hero-slide,
+.hero.is-paused .hero-slide img,
+.hero.is-paused .hero-bar-fill {
   animation-play-state: paused;
 }
 
+/* Bottom strip: "01 / 04" and a bar per photo. */
+.hero-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-400);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  color: var(--color-white);
+}
+
+.hero-counter {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-counter span {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.hero-bars {
+  display: flex;
+  gap: var(--space-75);
+  flex: 0 1 320px;
+}
+
+/* The button is a tall hit area; the visible bar is its 3px ::before. */
+.hero-bar {
+  position: relative;
+  flex: 1;
+  height: 24px;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.hero-bar::before,
+.hero-bar-fill {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: var(--radius-full);
+}
+
+.hero-bar::before {
+  background: rgba(255, 255, 255, 0.3);
+  transition: background-color var(--dur-base) ease;
+}
+
+.hero-bar:hover::before {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-bar-fill {
+  background: var(--color-white);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.hero-bar.is-done .hero-bar-fill {
+  transform: scaleX(1);
+}
+
+.hero-bar.is-active .hero-bar-fill {
+  animation: hero-bar-fill var(--slide-ms) linear both;
+}
+
+@keyframes hero-bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Spacing rhythm, top to bottom: small eyebrow right on the headline, then
+   one larger step to the buttons, a smaller one to the proof row. */
 .hero-copy .hero-title {
-  font-size: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Two equal 1fr columns in a shrink-wrapped grid: both buttons take the
    width of the wider one, so they always match. */
 .hero-actions {
-  margin-block-start: clamp(1.25rem, 1rem + 1vw, 2rem);
+  margin-block-start: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
   align-self: flex-start;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(0.75rem, 0.5rem + 1vw, 2rem);
+  gap: clamp(0.75rem, 0.5rem + 0.6vw, 1.25rem);
 }
 
 .cta-primary,
@@ -75,7 +211,7 @@
   text-align: center;
   font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border: 1px solid var(--color-white);
   position: relative;
   overflow: hidden;
@@ -215,39 +351,18 @@
   }
 }
 
-/* Each slide is visible for 0–26% of the cycle. The zoom runs only across
-   that window and then holds — otherwise the hidden slides would keep
-   easing back to scale(1) for the rest of the loop, animating off-screen.
-   The snap back to 1 at 0% happens while the slide is invisible. */
-@keyframes hero-crossfade {
-  0% {
-    opacity: 0;
-    transform: scale(1);
-  }
-
-  4% {
-    opacity: 1;
-  }
-
-  22% {
-    opacity: 1;
-  }
-
-  26%,
-  100% {
-    opacity: 0;
-    transform: scale(1.04);
-  }
-}
-
+/* Reduced motion: no wipe, no drift, no autoplay (the fill never runs, so
+   it never ends and never advances). The bars still switch photos. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide {
+  .hero-slide.is-wiping,
+  .hero-slide.is-active img,
+  .hero-slide.is-prev img,
+  .hero-bar.is-active .hero-bar-fill {
     animation: none;
-    opacity: 0;
   }
 
-  .hero-slide:first-child {
-    opacity: 1;
+  .hero-bar.is-active .hero-bar-fill {
+    transform: scaleX(1);
   }
 }
 
@@ -291,11 +406,12 @@
 }
 
 .hero-copy h1 {
-  max-width: 680px;
-  font-size: clamp(1.5rem, 1rem + 2.5vw, 2.25rem);
-  line-height: 1.3;
+  max-width: 760px;
+  margin-bottom: 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+  line-height: 1.2;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
   background: linear-gradient(90deg, #ffffff, #cfcfc4);
   -webkit-background-clip: text;
   background-clip: text;
@@ -311,4 +427,78 @@
   line-height: var(--text-lg-lh);
   font-weight: 300;
   text-wrap: pretty;
+}
+
+/* ---------- Hero proof row: rating chip + socials ---------- */
+
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-200);
+  margin-top: var(--space-300);
+}
+
+/* Frosted pill, same family as the header: dark glass, hairline border. */
+.hero-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-75);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-full);
+  background: rgba(23, 22, 15, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-base) ease,
+    border-color var(--dur-base) ease;
+}
+
+.hero-rating strong {
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.hero-rating-stars {
+  display: inline-flex;
+  gap: 1px;
+  fill: var(--color-safety);
+}
+
+.hero-rating-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@media (hover: hover) {
+  .hero-rating:hover {
+    background: rgba(23, 22, 15, 0.7);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.hero-rating:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hero-rating {
+    background: var(--color-ink);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+.hero-proof-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.25);
 }

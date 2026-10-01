@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Mail } from "lucide-react";
+import { LangContext } from "LangContext";
 
 const socialLinks = [
   {
@@ -26,11 +28,17 @@ const socialLinks = [
 ];
 
 export default function Socials({ className = "" }) {
+  const { lang } = useContext(LangContext);
   return (
     <ul className={`socials-ul ${className}`.trim()}>
       {socialLinks.map((item) => (
         <li key={item.id}>
-          <a href={item.link} target="_blank" rel="noopener noreferrer">
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={item.label[lang] || item.label.en}
+          >
             <span className="icon">{item.icon}</span>
           </a>
         </li>

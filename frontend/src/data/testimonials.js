@@ -34,5 +34,8 @@ const testimonials = [
 
 // Google Business profile, where the reviews above live.
 export const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/4neRQhCwSaEWtPbv7";
+// Total reviews on that profile (more than are quoted above) — update when
+// new ones come in.
+export const GOOGLE_REVIEW_COUNT = 12;
 
 export default testimonials;

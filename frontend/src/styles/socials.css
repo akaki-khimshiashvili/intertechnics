@@ -50,11 +50,23 @@
   transform: scale(0.94);
 }
 
-.google-reviews {
-  margin-block-start: 0.85rem;
-  display: flex;
-  align-items: center;
-  color: #fff;
+/* Hero variant: no chip background, just the icon, so the rating pill
+   beside it stays the focal point. */
+.socials--hero {
+  margin: 0;
+  gap: var(--space-50);
+}
+
+.socials--hero li a {
+  padding: 10px;
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.socials--hero .icon {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Sticky-footer shell: whatever height the actual page content ends up
