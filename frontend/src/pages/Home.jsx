@@ -10,6 +10,7 @@ import Testimonials from "components/Testimonials";
 import ContactUsInfo from "components/ContactUsInfo";
 import LocationMap from "components/LocationMap";
 import Footer from "components/Footer";
+import Reveal from "components/Reveal";
 import { ArrowRight } from "lucide-react";
 import { track } from "lib/analytics";
 
@@ -52,8 +53,8 @@ export default function Home() {
       <Testimonials />
 
       <section className="container contact-section">
-        <div className="contact-header">
-          <h2 className="contactus-h2" id="contactus-id">
+        <Reveal as="header" className="section-header">
+          <h2 className="section-title" id="contactus-id">
             {t.company.title}
           </h2>
           <a
@@ -68,7 +69,7 @@ export default function Home() {
             <span>{t.company.cta}</span>
             <ArrowRight width={18} height={18} strokeWidth={2.25} aria-hidden="true" />
           </a>
-        </div>
+        </Reveal>
         <div className="contact-layout">
           <ContactUsInfo
             contacts={t.company.contacts}

@@ -15,8 +15,6 @@ export default function ContactUsInfo({ address, contacts, contactUs }) {
       <a
         className="contact-email"
         href={contactUs.email}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <span className="contact-icon" aria-hidden="true">
           <Mail width={18} />

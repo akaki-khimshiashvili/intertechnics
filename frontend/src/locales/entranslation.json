@@ -41,13 +41,14 @@
         "icon": "spare_parts_icon.png"
       }
     ],
-    "email": "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com"
+    "email": "mailto:intertechnicsltd@gmail.com"
   },
   "hero": {
     "company": "INTERTECHNICS",
     "heading": "Official dealer of high-quality construction machinery in Georgia since 2005",
     "ctaPrimary": "Get in touch",
-    "ctaSecondary": "View machines"
+    "ctaSecondary": "View machines",
+    "photoLabel": "Photo {n} of {total}"
   },
   "aboutUs": {
     "title": "About Us",
@@ -115,6 +116,10 @@
     "successTitle": "Request received",
     "successBody": "Thank you — we'll call you back shortly.",
     "again": "Send another request"
+  },
+  "socials": {
+    "facebook": "Facebook",
+    "email": "Email"
   },
   "testimonials": {
     "title": "What our customers have to say about us",
@@ -236,7 +241,9 @@
     "heading": "Featured machines",
     "body": "A compact, reliable choice for tight job sites, with high lift, low weight, and a heated cab built for long shifts.",
     "cta": "See full specs",
-    "viewAll": "View full catalog"
+    "viewAll": "View full catalog",
+    "prev": "Previous machine",
+    "next": "Next machine"
   },
   "machines": {
     "meta_description": "Intertechnics machine catalog: new and used construction and road-building equipment — Bobcat, Kubota, AMMANN, Putzmeister and more. Prices, specs and photos.",

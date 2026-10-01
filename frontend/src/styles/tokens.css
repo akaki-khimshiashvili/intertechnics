@@ -57,6 +57,10 @@
   /* Vertical padding above and below each page section, so neighbouring
      sections end up twice this apart (~7rem on phones, ~13rem on desktop). */
   --section-space: clamp(3.5rem, 2.25rem + 4.5vw, 6.5rem);
+  /* Card elevation: resting on the page, and lifted (hover / featured). */
+  --shadow-rest: 0 1px 2px rgba(23, 22, 15, 0.04);
+  --shadow-raised: 0 18px 40px -20px rgba(23, 22, 15, 0.4);
+
   /* Gap between a section's title and its content. */
   --section-title-space: clamp(2rem, 1.25rem + 2.5vw, 3.75rem);
 

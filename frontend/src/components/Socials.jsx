@@ -5,7 +5,7 @@ import { LangContext } from "LangContext";
 const socialLinks = [
   {
     id: 1,
-    label: { ka: "Facebook", en: "Facebook" },
+    labelKey: "facebook",
     link: "https://www.facebook.com/intertechnicsLTD",
     icon: (
       <svg
@@ -21,23 +21,25 @@ const socialLinks = [
   },
   {
     id: 2,
-    label: { ka: "ელფოსტა", en: "Email" },
-    link: "https://mail.google.com/mail/?view=cm&fs=1&to=intertechnicsltd@gmail.com",
+    labelKey: "email",
+    link: "mailto:intertechnicsltd@gmail.com",
     icon: <Mail width={20} height={20} />,
   },
 ];
 
 export default function Socials({ className = "" }) {
-  const { lang } = useContext(LangContext);
+  const { t } = useContext(LangContext);
   return (
     <ul className={`socials-ul ${className}`.trim()}>
       {socialLinks.map((item) => (
         <li key={item.id}>
           <a
             href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={item.label[lang] || item.label.en}
+            // mailto: hands off to the mail app; only web links get a new tab.
+            {...(item.link.startsWith("http")
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+            aria-label={t.socials[item.labelKey]}
           >
             <span className="icon">{item.icon}</span>
           </a>

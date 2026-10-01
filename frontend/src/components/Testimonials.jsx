@@ -47,7 +47,7 @@ export default function Testimonials({ standalone = false }) {
     >
       <Reveal as="header" className="testimonials-header">
         <div className="testimonials-heading">
-          <h2 id="testimonials-title" className="testimonials-title">
+          <h2 id="testimonials-title" className="section-title">
             {copy.title}
           </h2>
           <p className="testimonials-google">

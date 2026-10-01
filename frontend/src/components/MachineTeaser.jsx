@@ -117,8 +117,8 @@ export default function MachineTeaser() {
       id="machines-id"
       aria-labelledby="machine-teaser-title"
     >
-      <Reveal as="header" className="machine-teaser-header">
-        <h2 id="machine-teaser-title" className="machine-teaser-title">
+      <Reveal as="header" className="section-header">
+        <h2 id="machine-teaser-title" className="section-title">
           {heading}
         </h2>
         <Link className="section-link" to={localize("/machines")}>
@@ -160,7 +160,7 @@ export default function MachineTeaser() {
               <button
                 type="button"
                 className="machine-teaser-arrow machine-teaser-arrow--prev"
-                aria-label={lang === "en" ? "Previous machine" : "წინა ტექნიკა"}
+                aria-label={t.machineTeaser.prev}
                 onClick={() => go(index - 1)}
               >
                 <ChevronLeft width={22} height={22} strokeWidth={2.25} aria-hidden="true" />
@@ -168,7 +168,7 @@ export default function MachineTeaser() {
               <button
                 type="button"
                 className="machine-teaser-arrow machine-teaser-arrow--next"
-                aria-label={lang === "en" ? "Next machine" : "შემდეგი ტექნიკა"}
+                aria-label={t.machineTeaser.next}
                 onClick={() => go(index + 1)}
               >
                 <ChevronRight width={22} height={22} strokeWidth={2.25} aria-hidden="true" />

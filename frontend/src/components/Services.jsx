@@ -21,8 +21,10 @@ export default function Services() {
       id="services-id"
       aria-labelledby="services-title"
     >
-      <Reveal as="h2" id="services-title" className="services-title">
-        {copy.title}
+      <Reveal as="header" className="section-header">
+        <h2 id="services-title" className="section-title">
+          {copy.title}
+        </h2>
       </Reveal>
       <ul className="services-grid">
         {copy.items.map((item, i) => {

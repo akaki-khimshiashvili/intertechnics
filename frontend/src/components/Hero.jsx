@@ -18,7 +18,7 @@ const SLIDE_MS = 6000;
 
 export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
   const navigate = useNavigate();
-  const { localize, lang } = useContext(LangContext);
+  const { t, localize, lang } = useContext(LangContext);
   const heroRef = useRef(null);
   const [offscreen, setOffscreen] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -125,9 +125,9 @@ export default function Hero({ heading, company, ctaPrimary, ctaSecondary }) {
               key={src}
               type="button"
               className={`hero-bar${i === index ? " is-active" : ""}${i < index ? " is-done" : ""}`}
-              aria-label={
-                lang === "en" ? `Photo ${i + 1} of ${count}` : `ფოტო ${i + 1} / ${count}`
-              }
+              aria-label={t.hero.photoLabel
+                .replace("{n}", i + 1)
+                .replace("{total}", count)}
               aria-current={i === index}
               onClick={() => goTo(i)}
             >
